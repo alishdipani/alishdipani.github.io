@@ -20,4 +20,4 @@ My CV can be viewed and downloaded from this [[Link]](https://drive.google.com/f
   
   
 Feel free to get in touch for collaborating or for a chat!  
-My email: alish.dipani@{gmail.com, uploadai.com, bcm.edu}
+My email: alish.dipani@{gmail.com, uploadai.com, bcm.edu} or a.dipani@{northeastern.edu}
