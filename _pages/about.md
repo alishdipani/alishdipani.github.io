@@ -22,4 +22,4 @@ My CV can be viewed and downloaded from this [[Link]](https://drive.google.com/f
 Feel free to get in touch for collaborating or for a chat!  
 My email: alish.dipani@{gmail.com, uploadai.com, bcm.edu} or a.dipani@{northeastern.edu}
 
-[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Falishdipani.github.io&count_bg=%234D68DF&title_bg=%23000000&icon=phabricator.svg&icon_color=%23F0FD09&title=page+visits&edge_flat=false)](https://hits.seeyoufarm.com)
+![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Falishdipani.github.io&count_bg=%234D68DF&title_bg=%23000000&icon=phabricator.svg&icon_color=%23F0FD09&title=page+visits&edge_flat=false)
