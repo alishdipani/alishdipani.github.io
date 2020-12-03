@@ -10,6 +10,7 @@ author_profile: true
 * **Upload AI**
   * Position: Machine Learning Engineer
   * Duration: August 2020 - Present
+  * Mentors: [Dr. Andreas Tolias](https://toliaslab.org/), [Dr. Xaq Pitkow](https://xaqlab.com/)
   * Links: [Website](https://uploadai.com/)
 
 * **Northeastern University, USA**
