@@ -7,18 +7,18 @@ author_profile: true
 
 {% include base_path %}
 
-* **Upload AI**
-  * Position: Machine Learning Engineer
-  * Duration: August 2020 - Present
-  * Mentors: [Dr. Andreas Tolias](https://toliaslab.org/), [Dr. Xaq Pitkow](https://xaqlab.com/)
-  * Links: [Website](https://uploadai.com/)
-
 * **Northeastern University, USA**
   * Position: Research Assistant
   * Duration: August 2020 - Present
   * Mentor: [Dr. MiYoung Kwon](https://scholar.google.com/citations?user=TdeKEGYAAAAJ&hl=en)
-  * Affiliation: The Laboratory of Low Vision and Brain Research
-  * Links: [Website](https://kwonlab.sites.northeastern.edu/), [Offer Letter](https://drive.google.com/file/d/1SGjyaA3Z_GSp_HrHO7djiwjivoKfV7a7/view?usp=sharing)
+  * Affiliation: [The Laboratory of Low Vision and Brain Research](https://kwonlab.sites.northeastern.edu/)
+  * Links: [Website](https://kwonlab.sites.northeastern.edu/), [Offer Letter](https://drive.google.com/file/d/1SGjyaA3Z_GSp_HrHO7djiwjivoKfV7a7/view?usp=sharing)  
+  
+* **Upload AI**
+  * Position: Machine Learning Engineer
+  * Duration: August 2020 - Feb 2021
+  * Mentors: [Dr. Andreas Tolias](https://toliaslab.org/), [Dr. Xaq Pitkow](https://xaqlab.com/)
+  * Links: [Website](https://uploadai.com/)
 
 * **TCS Innovation Labs, Kolkata, India**
   * Position: Research Assistant
