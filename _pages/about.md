@@ -16,7 +16,7 @@ I work as a Research Assistant at [The Laboratory of Low Vision and Brain Resear
   
 <!--- My resume can be viewed and downloaded from this [[Link]](https://drive.google.com/file/d/1n93N_m47miXbX5KnYSLxW8JbxBOlPnlo/view?usp=sharing). --->
 
-My CV can be viewed and downloaded from this [[Link]](https://drive.google.com/file/d/1qSLwNRHp0uGyrPDYPRteDlYZpPczjw-d/view?usp=sharing) (Updated July 2020).
+My CV can be viewed and downloaded from this [[Link]](https://drive.google.com/file/d/1qSLwNRHp0uGyrPDYPRteDlYZpPczjw-d/view?usp=sharing) (Updated February 2021).
   
   
 Feel free to get in touch for collaborating or for a chat!  
