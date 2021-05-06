@@ -12,7 +12,7 @@ I am a recent graduate from [BITS Pilani, Goa Campus, India](https://www.bits-pi
   
 My Research Interests are Machine Learning, Deep Learning, Reinforcement Learning, Psychology, Computation Neuroscience and Cognitive Neuroscience; especially intersection of these fields.
 
-I work as a Research Assistant at [The Laboratory of Low Vision and Brain Research, Northeastern University](https://kwonlab.sites.northeastern.edu/)
+I work as a Project Assistant at [The National Brain Research Centre, India](http://www.nbrc.ac.in/newweb/research/groups/Nivethida/) and as a Research Assistant at [The Laboratory of Low Vision and Brain Research, Northeastern University](https://kwonlab.sites.northeastern.edu/).
   
 <!--- My resume can be viewed and downloaded from this [[Link]](https://drive.google.com/file/d/1n93N_m47miXbX5KnYSLxW8JbxBOlPnlo/view?usp=sharing). --->
 
