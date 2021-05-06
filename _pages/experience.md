@@ -7,11 +7,17 @@ author_profile: true
 
 {% include base_path %}
 
+* **National Brain Research Centre, India**
+  * Position: Project Assistant
+  * Duration: May 2021 - Present
+  * Mentor: [Dr. Nivethida Thirugnanasambandam](https://scholar.google.co.in/citations?user=eV-11KsAAAAJ&hl=en)
+  * Links: [Website](http://www.nbrc.ac.in/newweb/research/groups/Nivethida), [Offer Letter](https://drive.google.com/file/d/16Cy53vJCgyzY8ki5ixBD9EJGksOvttax/view?usp=sharing)
+
 * **Northeastern University, USA**
   * Position: Research Assistant
   * Duration: August 2020 - Present
   * Mentor: [Dr. MiYoung Kwon](https://scholar.google.com/citations?user=TdeKEGYAAAAJ&hl=en)
-  * Affiliation: [The Laboratory of Low Vision and Brain Research](https://kwonlab.sites.northeastern.edu/)
+  * Affiliation: [The Laboratory of Low Vision and Brain Research](https://kwonlab.sites.northeastern.edu/), Department of Psychology
   * Links: [Website](https://kwonlab.sites.northeastern.edu/), [Offer Letter](https://drive.google.com/file/d/1SGjyaA3Z_GSp_HrHO7djiwjivoKfV7a7/view?usp=sharing)  
   
 * **Upload AI**
