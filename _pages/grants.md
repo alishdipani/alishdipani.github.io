@@ -7,11 +7,11 @@ author_profile: true
 
 {% include base_path %}
 
-* **Intel Early Innovation Grant**
+<!-- * **Intel Early Innovation Grant**
   * Project:  Analysis and reconstruction of audio perceived by the brain using EEG signals 
   * Project Description: The project aims to study and analyse how our brain perceives audio being listened by a subject and the extraction of meaningful information from the EEG signals. Further aim is to Explore Reconstruction of the audio using Generative Deep Learning models.
   * Grant Amount: 5,000$
-  * Links: [Intel Devmesh](https://devmesh.intel.com/projects/analysis-and-reconstruction-of-music-percieved-by-the-brain-using-eeg-signals)
+  * Links: [Intel Devmesh](https://devmesh.intel.com/projects/analysis-and-reconstruction-of-music-percieved-by-the-brain-using-eeg-signals) -->
 
 * **Ruby Association Grant 2019**
   * Grant Description: This is a grant by [The Ruby Association](https://www.ruby.or.jp/en/) with the aim to improve Ruby and its environment. Five recipients were selected with applicants from all around the world .
