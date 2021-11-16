@@ -7,10 +7,10 @@ author_profile: true
 
 {% include base_path %}
 
-* **Neuromatch Academy 2020: An online school for Computational Neuroscience**
+* **Neuromatch Academy: An online school for Computational Neuroscience and Deep Learning**
   * Position: Organizer
   * Duration: April 2020 - Present
-  * Links: [Website](https://www.neuromatchacademy.org/)
+  * Links: [Website](https://academy.neuromatch.io/)
   
 * **Cognitive Systems Journal**
   * Position: Reviewer
