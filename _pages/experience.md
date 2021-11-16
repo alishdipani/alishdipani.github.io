@@ -10,20 +10,21 @@ author_profile: true
 * **National Brain Research Centre, India**
   * Position: Project Assistant
   * Duration: May 2021 - Present
-  * Mentor: [Dr. Nivethida Thirugnanasambandam](https://scholar.google.co.in/citations?user=eV-11KsAAAAJ&hl=en)
+  * PI: [Dr. Nivethida Thirugnanasambandam](https://scholar.google.co.in/citations?user=eV-11KsAAAAJ&hl=en)
+  * Affiliation: [Human Motor Neurophysiology and Neuromodulation Lab ](http://www.nbrc.ac.in/newweb/research/groups/Nivethida)
   * Links: [Website](http://www.nbrc.ac.in/newweb/research/groups/Nivethida), [Offer Letter](https://drive.google.com/file/d/16Cy53vJCgyzY8ki5ixBD9EJGksOvttax/view?usp=sharing)
 
 * **Northeastern University, USA**
   * Position: Research Assistant
   * Duration: August 2020 - Present
-  * Mentor: [Dr. MiYoung Kwon](https://scholar.google.com/citations?user=TdeKEGYAAAAJ&hl=en)
+  * PI: [Dr. MiYoung Kwon](https://scholar.google.com/citations?user=TdeKEGYAAAAJ&hl=en)
   * Affiliation: [The Laboratory of Low Vision and Brain Research](https://kwonlab.sites.northeastern.edu/), Department of Psychology
   * Links: [Website](https://kwonlab.sites.northeastern.edu/), [Offer Letter](https://drive.google.com/file/d/1SGjyaA3Z_GSp_HrHO7djiwjivoKfV7a7/view?usp=sharing)  
   
-* **Upload AI**
+* **Baylor College of Medicine & Upload AI, USA**
   * Position: Machine Learning Engineer
   * Duration: August 2020 - Feb 2021
-  * Mentors: [Dr. Andreas Tolias](https://toliaslab.org/), [Dr. Xaq Pitkow](https://xaqlab.com/)
+  * PIs: [Dr. Andreas Tolias](https://toliaslab.org/), [Dr. Xaq Pitkow](https://xaqlab.com/)
   * Links: [Website](https://uploadai.com/)
 
 * **TCS Innovation Labs, Kolkata, India**
