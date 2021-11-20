@@ -1,9 +1,6 @@
 # main links links
 main:
 
-  - title: "Blog Posts"
-    url: /year-archive/
-    
 #   - title: "CV"
 #     url: /cv/
 
@@ -15,18 +12,21 @@ main:
     
   - title: "Experience"
     url: /experience/
-    
-  - title: "Projects"
-    url: /projects/
   
   - title: "Grants"
     url: /grants/
     
+  - title: "Teaching"
+    url: /teaching/
+    
   - title: "Initiatives"
     url: /initiatives/
-
-  - title: "Teaching"
-    url: /teaching/    
+    
+  - title: "Projects"
+    url: /projects/      
+  
+  - title: "Blog Posts"
+    url: /year-archive/
     
 #   - title: "Portfolio"
 #     url: /portfolio/
