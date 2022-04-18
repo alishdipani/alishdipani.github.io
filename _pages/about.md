@@ -7,10 +7,11 @@ redirect_from:
   - /about/
   - /about.html
 ---
+I am an incoming Psychology PhD student at the [Department of Psychology, Northeastern University](https://cos.northeastern.edu/psychology/). I will be a part of [The Laboratory of Low Vision and Brain Research](https://kwonlab.sites.northeastern.edu/).
 
-I am a recent graduate from [BITS Pilani, Goa Campus, India](https://www.bits-pilani.ac.in/goa/) with a Bachelor of Engineering (B.E.) in Computer Science.  
+Previously, I graduate with a Bachelor of Engineering (B.E.) in Computer Science from [BITS Pilani, Goa Campus, India](https://www.bits-pilani.ac.in/goa/).  
   
-My research interest lies at the intersection of cognititve science and Artificial Intelligence, particularly human vision. Broadly, my research interests are Machine Learning, Deep Learning, Reinforcement Learning, Psychology, Computation Neuroscience and Cognitive Neuroscience; especially intersection of these fields.
+My research interest lies at the intersection of Vision Science, Neuroscience and Artificial Intelligence.
 
 I work as a Project Assistant at [The National Brain Research Centre, India](http://www.nbrc.ac.in/newweb/research/groups/Nivethida/) and as a Research Assistant at [The Laboratory of Low Vision and Brain Research, Northeastern University](https://kwonlab.sites.northeastern.edu/).
   
