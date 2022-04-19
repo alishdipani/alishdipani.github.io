@@ -9,7 +9,7 @@ redirect_from:
 ---
 I am an incoming Psychology PhD student at the [Department of Psychology, Northeastern University](https://cos.northeastern.edu/psychology/). I will be a part of [The Laboratory of Low Vision and Brain Research](https://kwonlab.sites.northeastern.edu/).
 
-Previously, I graduate with a Bachelor of Engineering (B.E.) in Computer Science from [BITS Pilani, Goa Campus, India](https://www.bits-pilani.ac.in/goa/).  
+Previously, I graduated with a Bachelor of Engineering (B.E.) in Computer Science from [BITS Pilani, Goa Campus, India](https://www.bits-pilani.ac.in/goa/).  
   
 My research interest lies at the intersection of Vision Science, Neuroscience and Artificial Intelligence.
 
