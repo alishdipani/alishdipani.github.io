@@ -7,6 +7,16 @@ author_profile: true
 
 {% include base_path %}
 
+* **ECMWF Summer of Weather Code (ESoWC) 2022**
+  * Grant Description: This is a grant by [The European Centre for Medium-Range Weather Forecasts (ECMWF)](https://www.ecmwf.int/) with the aim to develop innovative open-source software for meteorology, climate & atmosphere applications. Six recipients were selected with applicants from all around the world .
+  * Project: [Bringing Magics Weather maps to Matplotlib](https://github.com/ecmwf/magics-python)
+  * Project Description: Magics is a meteorologically oriented graphical library that can visualise data
+coded on GRIB and NetCDF on different projections of the globe. This project aimed at improving the Python interface to magics i.e. magics-python.
+  * Duration: May 2022 - August 2022
+  * Mentor: James Varndell, [Sylvie Lamy-Thepaut](https://www.ecmwf.int/en/about/who-we-are/staff-profiles/sylvie-lamy-thepaut), [Stephan Siemen](https://www.ecmwf.int/en/about/who-we-are/staff-profiles/stephan-siemen), [Baudouin Raoult](https://www.ecmwf.int/en/about/who-we-are/staff-profiles/baudouin-raoult)
+  * Grant Amount: £5000
+  * Links: [Grant Website](https://esowc.ecmwf.int/), [Proposal](https://github.com/alishdipani/magics-python/files/9720458/ESoWC22_Challenge22.pdf), [Final Presentation](https://github.com/alishdipani/magics-python/files/9720462/ESoWC2022_final_presentation.pdf), [Github Repository](https://github.com/ecmwf/magics-python)
+
 <!-- * **Intel Early Innovation Grant**
   * Project:  Analysis and reconstruction of audio perceived by the brain using EEG signals 
   * Project Description: The project aims to study and analyse how our brain perceives audio being listened by a subject and the extraction of meaningful information from the EEG signals. Further aim is to Explore Reconstruction of the audio using Generative Deep Learning models.
