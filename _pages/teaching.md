@@ -6,6 +6,10 @@ author_profile: true
 ---
 
 {% include base_path %}
+* **Teaching Assistant** at Neuromatch Academy 2022, Computational Neuroscience
+  * Duration: July 2022
+  * Links: [Certificate](https://drive.google.com/file/d/1MSEJMozLFtguVCxWT3yoWq7_ujkv74Xb/view?usp=sharing), [Website](https://academy.neuromatch.io/), [Course](https://compneuro.neuromatch.io/tutorials/intro.html)
+
 * **Teaching Assistant** at Neuromatch Academy 2021, Deep Learning
   * Duration: August 2021
   * Links: [Certificate](https://drive.google.com/file/d/1lND0jNKz_WLTXqABLfqS5je7vqXk2yJY/view?usp=sharing), [Website](https://academy.neuromatch.io/), [Course](https://deeplearning.neuromatch.io/tutorials/intro.html)
