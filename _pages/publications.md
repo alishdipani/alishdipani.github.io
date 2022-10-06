@@ -11,7 +11,7 @@ author_profile: true
 
 {% include base_path %}
 
-* 't Hart et al. (2021) **Neuromatch Academy: a 3-week, online summer school in computational neuroscience**. Journal of Open Source Education, 4(44), 118. doi: [10.21105/jose.00118](https://doi.org/10.21105/jose.00118) **(Under Review)**  
+* 't Hart et al. (2021) **Neuromatch Academy: a 3-week, online summer school in computational neuroscience**. Journal of Open Source Education, 4(44), 118. doi: [10.21105/jose.00118](https://doi.org/10.21105/jose.00118)  
 Links: [Review](https://github.com/openjournals/jose-reviews/issues/118), [Paper](https://github.com/openjournals/jose-papers/blob/jose.00118/jose.00118/10.21105.jose.00118.pdf)  
 * Hu S.X., Arefin M.R., Nguyen V.-N., **Dipani A.**, Pitkow X., Tolias A.S. (2021) **AvaTr: One-Shot Speaker Extraction with Transformers**, Proc. Interspeech 2021, 3510-3514. doi: [10.21437/Interspeech.2021-1378](http://doi.org/10.21437/Interspeech.2021-1378)  
 Links: [Abstract](https://www.isca-speech.org/archive/interspeech_2021/hu21_interspeech.html), [Paper](https://www.isca-speech.org/archive/pdfs/interspeech_2021/hu21_interspeech.pdf)  
