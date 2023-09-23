@@ -11,22 +11,20 @@ author_profile: true
 
 {% include base_path %}
 
-<h1>Publications</h1>
 <h2>Journals</h2>
 
 * Sarkar, A., **Dipani, A.**, Leodori, G., Popa, T., Kassavetis, P., Hallett, M., Thirugnanasambandam, N. (2022). <em>Inter-Individual
 Variability in Motor Output Is Driven by Recruitment Gain in the Corticospinal Tract Rather Than Motor Threshold</em>. Brain
 Sciences, 12(10), 1401  
-* t Hart, B., ..., **Dipani, A.**, ... et al. (2022). <em>Neuromatch Academy: a 3-week, online summer school in computational neuroscience</em>.
-Journal of Open Source Education, 5(49), 118
+* t Hart, B., ..., **Dipani, A.**, ... et al. (2022). <em>Neuromatch Academy: a 3-week, online summer school in computational neuroscience</em>. Journal of Open Source Education, 5(49), 118
 
 <h2>Conferences</h2>
 
 * Hu S.X., Arefin M.R., Nguyen V.-N., **Dipani, A.**, Pitkow X., Tolias A.S. (2021). <em>AvaTr: One-Shot Speaker Extraction with
 Transformers</em>, Proc. Interspeech 2021, 3510-3514
 
-<h1>Presentations</h1>
 
+<h1>Presentations</h1>
 <h2>Talks</h2>
 
 * **Dipani, A.**, Jaing, H., Kwon, M. (2023). <em>Local texture manipulation further illuminates the intrinsic difference between CNNs
