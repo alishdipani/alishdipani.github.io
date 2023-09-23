@@ -13,7 +13,7 @@ My research interests are visual perception, computational cognitive neuroscienc
   
 <!--- My resume can be viewed and downloaded from this [[Link]](https://drive.google.com/file/d/1n93N_m47miXbX5KnYSLxW8JbxBOlPnlo/view?usp=sharing). --->
 
-My CV can be viewed and downloaded from this [[Link]](https://drive.google.com/file/d/1qSLwNRHp0uGyrPDYPRteDlYZpPczjw-d/view?usp=sharing) (Updated November 2021).
+My CV can be viewed and downloaded from this [[Link]](https://drive.google.com/file/d/18nf8CLy36zcO-LPo7dlnoNE5Pxt_DCEo/view?usp=sharing) (Updated September 2023).
   
   
 Feel free to get in touch to collaborate or for a chat!  
