@@ -7,16 +7,16 @@ redirect_from:
   - /about/
   - /about.html
 ---
-I am a Psychology PhD student at the [Department of Psychology, Northeastern University](https://cos.northeastern.edu/psychology/) advised by [Dr. MiYoung Kwon](https://scholar.google.com/citations?user=TdeKEGYAAAAJ) at [The Laboratory of Low Vision and Brain Research](https://kwonlab.sites.northeastern.edu/). I am working on understanding human visual perception using computational approaches.
+I am a Research Assistant at the [Project Prakash](https://www.projectprakash.org/) working with [Dr. Pawan Sinha](https://scholar.google.com/citations?user=lQKHQV0AAAAJ) at the [Department of Brain and Cognitive Sciences, MIT](https://www.sinhalab.mit.edu/pawan-bio). We work on treating kids with congenital cataracts, and with their help, answer questions about visual perception and development. 
 
-Previously, I graduated with a Bachelor of Engineering (B.E.) in Computer Science from [BITS Pilani, Goa Campus, India](https://www.bits-pilani.ac.in/goa/).  
+My research interests are visual perception, computational cognitive neuroscience, and artificial/natural intelligence.
   
 <!--- My resume can be viewed and downloaded from this [[Link]](https://drive.google.com/file/d/1n93N_m47miXbX5KnYSLxW8JbxBOlPnlo/view?usp=sharing). --->
 
 My CV can be viewed and downloaded from this [[Link]](https://drive.google.com/file/d/1qSLwNRHp0uGyrPDYPRteDlYZpPczjw-d/view?usp=sharing) (Updated November 2021).
   
   
-Feel free to get in touch for collaborating or for a chat!  
-My email: alish.dipani@{gmail.com} or dipani.a@{northeastern.edu}
+Feel free to get in touch to collaborate or for a chat!  
+My email: alish.dipani@{gmail.com}
 
 ![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Falishdipani.github.io&count_bg=%234D68DF&title_bg=%23000000&icon=phabricator.svg&icon_color=%23F0FD09&title=page+visits&edge_flat=false)
