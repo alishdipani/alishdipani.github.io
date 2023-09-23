@@ -7,15 +7,14 @@ author_profile: true
 
 {% include base_path %}
 
-* **ECMWF Summer of Weather Code (ESoWC) 2022**
-  * Grant Description: This is a grant by [The European Centre for Medium-Range Weather Forecasts (ECMWF)](https://www.ecmwf.int/) with the aim to develop innovative open-source software for meteorology, climate & atmosphere applications. Six recipients were selected with applicants from all around the world .
+* **Code for Earth, European Centre for Medium-Range Weather Forecasts (ECMWF) 2022**
   * Project: [Bringing Magics Weather maps to Matplotlib](https://github.com/ecmwf/magics-python)
-  * Project Description: Magics is a meteorologically oriented graphical library that can visualise data
-coded on GRIB and NetCDF on different projections of the globe. This project aimed at improving the Python interface to magics i.e. magics-python.
+  * Integrated Matplotlib to Python interface of Magics, ECMWF’s meteorological plotting software that supports plotting
+contours, wind fields, observations, and satellite images. This project made Magics more pythonic, user-friendly, customizable, and extensible to interactive plotting. Also improved documentation and created tutorials.
   * Duration: May 2022 - August 2022
-  * Mentor: James Varndell, [Sylvie Lamy-Thepaut](https://www.ecmwf.int/en/about/who-we-are/staff-profiles/sylvie-lamy-thepaut), [Stephan Siemen](https://www.ecmwf.int/en/about/who-we-are/staff-profiles/stephan-siemen), [Baudouin Raoult](https://www.ecmwf.int/en/about/who-we-are/staff-profiles/baudouin-raoult)
+  * Mentors: James Varndell, [Sylvie Lamy-Thepaut](https://www.ecmwf.int/en/about/who-we-are/staff-profiles/sylvie-lamy-thepaut), [Stephan Siemen](https://www.ecmwf.int/en/about/who-we-are/staff-profiles/stephan-siemen), [Baudouin Raoult](https://www.ecmwf.int/en/about/who-we-are/staff-profiles/baudouin-raoult)
   * Grant Amount: £5000
-  * Links: [Grant Website](https://esowc.ecmwf.int/), [Proposal](https://github.com/alishdipani/magics-python/files/9720458/ESoWC22_Challenge22.pdf), [Final Presentation](https://github.com/alishdipani/magics-python/files/9720462/ESoWC2022_final_presentation.pdf), [Github Repository](https://github.com/ecmwf/magics-python)
+  * Links: [Grant Website](https://codeforearth.ecmwf.int/), [Proposal](https://github.com/alishdipani/magics-python/files/9720458/ESoWC22_Challenge22.pdf), [Final Presentation](https://github.com/alishdipani/magics-python/files/9720462/ESoWC2022_final_presentation.pdf), [Github Repository](https://github.com/ecmwf/magics-python)
 
 <!-- * **Intel Early Innovation Grant**
   * Project:  Analysis and reconstruction of audio perceived by the brain using EEG signals 
@@ -24,13 +23,22 @@ coded on GRIB and NetCDF on different projections of the globe. This project aim
   * Links: [Intel Devmesh](https://devmesh.intel.com/projects/analysis-and-reconstruction-of-music-percieved-by-the-brain-using-eeg-signals) -->
 
 * **Ruby Association Grant 2019**
-  * Grant Description: This is a grant by [The Ruby Association](https://www.ruby.or.jp/en/) with the aim to improve Ruby and its environment. Five recipients were selected with applicants from all around the world .
   * Project: [Rubyplot: An advanced plotting library for Ruby](https://github.com/SciRuby/rubyplot)
-  * Project Description: Rubyplot is a plotting library for Ruby inspired from the library Matplotlib for Python which aims to provide platform-independent data visualizations to be used for scientific computing and web development. This project aims to advance Rubyplot as the defacto standard plotting library in the Ruby community. By the end of the project, Rubyplot will have a large variety of good looking plots which would be well documented and easy to use, support for NMatrix and Numo arrays and basic Image Processing functionality.
+  * Further improved Rubyplot: Added image loading and manipulation functionality, support for Numo Array (inspired by
+Numpy). Improved documentation, tests, plot appearance, and made them compatible with multiple Ruby versions.
   * Duration: November 2019 - March 2020
   * Mentor: [Kenta Murata](https://github.com/mrkn)
   * Grant Amount: JPY500,000
   * Links: [Grant Announcement](https://www.ruby.or.jp/en/news/20190805), [Proposal](https://github.com/alishdipani/rubyplot/wiki/Ruby-Grant-2019-Proposal), [Selection Announcement](https://www.ruby.or.jp/en/news/20191031), [Final Report](https://github.com/alishdipani/rubyplot/wiki/Ruby-Grant-2019-Final-Report), [Results Announcement](https://www.ruby.or.jp/en/news/20200508), [Github Repository](https://github.com/SciRuby/rubyplot)
+
+* **Google Summer of Code (GSoC) 2019**
+  * Duration: May 2019 - August 2019
+  * Project Title: Adding Magick back-end support and iruby integration to Rubyplot: An advanced plotting library for Ruby
+  * Improved Rubyplot: An advanced plotting library for Ruby (inspired by Matplotlib). Improved front-end to make it
+compatible with multiple back-ends. Added ImageMagick backend and integrated the library with IRuby notebooks.
+  * Mentoring Organisation: [The Ruby Science Foundation (SciRuby)](http://sciruby.com/)
+  * Mentors: [Sameer Deshmukh](https://github.com/v0dro), [Shekhar Prasad Rajak](https://github.com/Shekharrajak)
+  * Links: [Project](https://summerofcode.withgoogle.com/archive/2019/projects/6622714041729024/), [Proposal](https://github.com/alishdipani/rubyplot/wiki/GSoC-2019-Proposal), [Final Report](https://alishdipani.github.io/gsoc2019/2019/08/22/Wrapping-up-GSoC-2019/), [Github Repo](https://github.com/SciRuby/rubyplot), [Daily Updates](https://discourse.ruby-data.org/t/gsoc-2019-project-rubyplot-discussion/57) 
 
 * **Linux Foundation Travel Grant**
   * Grant Description: This Grant from [The Linux Foundation](https://www.linuxfoundation.org/) assists attendees by providing Financial Aid for Travel.
