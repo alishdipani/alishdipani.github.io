@@ -1,7 +1,7 @@
 ---
 layout: archive
-title: "Grants"
-permalink: /grants/
+title: "Open-Source Development"
+permalink: /osd/
 author_profile: true
 ---
 
