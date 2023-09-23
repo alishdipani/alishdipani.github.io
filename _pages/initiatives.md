@@ -7,8 +7,13 @@ author_profile: true
 
 {% include base_path %}
 
+* **Shared Visual Representations in Human & Machine Intelligence (SVRHM) @ NeurIPS**
+  * Position: Reviewer
+  * Duration: 2022
+  * Links: [Workshop](https://www.svrhm.com/)
+
 * **Neuromatch Academy: An online school for Computational Neuroscience and Deep Learning**
-  * Position: Organizer
+  * Position: Organizer, Content Developer & Reviewer
   * Duration: April 2020 - Present
   * Links: [Website](https://academy.neuromatch.io/)
   
