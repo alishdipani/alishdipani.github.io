@@ -13,19 +13,19 @@ main:
   - title: "Experience"
     url: /experience/
   
-  - title: "Grants"
-    url: /grants/
+  - title: "Open-Source Development"
+    url: /osd/
     
   - title: "Teaching"
     url: /teaching/
     
-  - title: "Initiatives"
+  - title: "Service"
     url: /initiatives/
     
-  - title: "Projects"
-    url: /projects/      
+  # - title: "Projects"
+  #   url: /projects/      
   
-  - title: "Blog Posts"
+  - title: "Blog"
     url: /year-archive/
     
 #   - title: "Portfolio"
