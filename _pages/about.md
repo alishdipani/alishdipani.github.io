@@ -7,7 +7,7 @@ redirect_from:
   - /about/
   - /about.html
 ---
-I am a Research Assistant at the [Project Prakash](https://www.projectprakash.org/) working with [Dr. Pawan Sinha](https://scholar.google.com/citations?user=lQKHQV0AAAAJ) at the [Department of Brain and Cognitive Sciences, MIT](https://www.sinhalab.mit.edu/pawan-bio). We work on treating kids with congenital cataracts, and with their help, answer questions about visual perception and development. 
+I am a Research Assistant at the [Project Prakash](https://www.projectprakash.org/) working with [Dr. Pawan Sinha](https://scholar.google.com/citations?user=lQKHQV0AAAAJ) at the [Department of Brain and Cognitive Sciences, MIT](https://www.sinhalab.mit.edu/pawan-bio). I'm based at the Shroff Charity Eye Hospital, Delhi. We work on treating kids with congenital cataracts, and with their help, answering questions about visual perception and development. 
 
 My research interests are visual perception, computational cognitive neuroscience, and artificial/natural intelligence.
   
