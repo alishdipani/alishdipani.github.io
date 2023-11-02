@@ -6,9 +6,16 @@ author_profile: true
 ---
 
 {% include base_path %}
+* **Project Prakash, India & MIT, USA**
+  * Position: Research Assistant
+  * Duration: September 2023 - Present
+  * PI: [Dr.Pawan Sinha](https://scholar.google.com/citations?user=lQKHQV0AAAAJ)
+  * Affiliation: [The Sinha Lab for Developmental Research, Department of Brain and Cognitive Sciences](https://www.sinhalab.mit.edu/), [Dr. Shroff Charity Eye Hospital](https://sceh.net/)
+  * Links: [Website](https://www.sinhalab.mit.edu/)
+
 * **Northeastern University, USA**
-  * Position: Part-time Research Assistant (2020-22), Ph.D. Student (2022-23)
-  * Duration: August 2020 - August 2023
+  * Position: Graduate Research Assistant
+  * Duration: August 2022 - August 2023
   * PI: [Dr. MiYoung Kwon](https://scholar.google.com/citations?user=TdeKEGYAAAAJ&hl=en)
   * Affiliation: [The Laboratory of Low Vision and Brain Research](https://kwonlab.sites.northeastern.edu/), Department of Psychology
   * Links: [Website](https://kwonlab.sites.northeastern.edu/)
@@ -39,11 +46,3 @@ author_profile: true
   * Mentors: Dr. Charles-Henri Lecellier, Dr. Laurent Bréhélin, Dr. Sophie Lèbre
   * Affiliations: [Institute of Molecular Genetics of Montpellier](http://www.igmm.cnrs.fr/) (IGMM), [Laboratory of Informatics, Robotics and Microelectronics of Montpellier](http://www.lirmm.fr) (LIRMM), [Montpellier Alexander Grothendieck Institute](http://imag.edu.umontpellier.fr/) (IMAG)
   * Links: [Team Website](http://www.igmm.cnrs.fr/en/service/biogenese-micro-arns/), [Offer Letter](https://drive.google.com/file/d/1x9UTYSv2D6JTOMRVSK9_zYdxP0jlTvfD/view?usp=sharing), [Presentation](https://drive.google.com/file/d/1YMWKQA6bm2lW-alsdFLkqAM51jZPcnTF/view?usp=sharing), [Report](https://drive.google.com/open?id=1wyWnNp_XJCjfb0dSpBSMuvFjsmCERima)
-
-* **Google Summer of Code (GSoC) 2019**
-  * Position: Open Source Developer
-  * Duration: May 2019 - August 2019
-  * Project Title: Adding Magick back-end support and iruby integration to Rubyplot: An advanced plotting library for Ruby
-  * Mentoring Organisation: [The Ruby Science Foundation (SciRuby)](http://sciruby.com/)
-  * Mentors: [Sameer Deshmukh](https://github.com/v0dro), [Shekhar Prasad Rajak](https://github.com/Shekharrajak)
-  * Links: [Project](https://summerofcode.withgoogle.com/archive/2019/projects/6622714041729024/), [Proposal](https://github.com/alishdipani/rubyplot/wiki/GSoC-2019-Proposal), [Final Report](https://alishdipani.github.io/gsoc2019/2019/08/22/Wrapping-up-GSoC-2019/), [Github Repo](https://github.com/SciRuby/rubyplot), [Daily Updates](https://discourse.ruby-data.org/t/gsoc-2019-project-rubyplot-discussion/57) 
