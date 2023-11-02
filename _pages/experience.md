@@ -10,7 +10,8 @@ author_profile: true
   * Position: Research Assistant
   * Duration: September 2023 - Present
   * PI: [Dr.Pawan Sinha](https://scholar.google.com/citations?user=lQKHQV0AAAAJ)
-  * Affiliation: [The Sinha Lab for Developmental Research, Department of Brain and Cognitive Sciences](https://www.sinhalab.mit.edu/), [Dr. Shroff Charity Eye Hospital](https://sceh.net/)
+  * Affiliation: [The Sinha Lab for Developmental Research, Department of Brain and Cognitive Sciences](https://www.sinhalab.mit.edu/)
+  * Affiliation: [Dr. Shroff Charity Eye Hospital](https://sceh.net/)
   * Links: [Website](https://www.sinhalab.mit.edu/)
 
 * **Northeastern University, USA**
