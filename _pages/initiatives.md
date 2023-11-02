@@ -7,7 +7,7 @@ author_profile: true
 
 {% include base_path %}
 
-* **Project SHORT ((Students for Higher Education Opportunities and Representation in Training))**
+* **Project SHORT (Students for Higher Education Opportunities and Representation in Training)**
   * Position: Mentor
   * Duration: 2022 - Present
   * Links: [Website](https://www.project-short.com/)
