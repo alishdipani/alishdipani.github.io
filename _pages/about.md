@@ -13,7 +13,7 @@ My research interests are computational cognitive neuroscience, human/machine in
   
 <!--- My resume can be viewed and downloaded from this [[Link]](https://drive.google.com/file/d/1n93N_m47miXbX5KnYSLxW8JbxBOlPnlo/view?usp=sharing). --->
 
-My CV can be viewed and downloaded from this [[Link]](https://drive.google.com/file/d/18nf8CLy36zcO-LPo7dlnoNE5Pxt_DCEo/view?usp=sharing) (Updated November 2023).
+My CV can be viewed and downloaded from this [[Link]](https://drive.google.com/file/d/15s30n_O6cHSKVYm-3lO_9BS3PyalfNe9/view?usp=sharing) (Updated December 2023).
   
   
 Feel free to get in touch to collaborate or for a chat!  
