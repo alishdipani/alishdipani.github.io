@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://alishdipani.github.io//sitemap.xml
+Sitemap: https://alishdipani.github.io/sitemap.xml
