@@ -1,16 +1,16 @@
 ---
 layout: page
-title: submenus
+title: More
 nav: true
-nav_order: 8
+nav_order: 7
 dropdown: true
 children:
-  - title: publications
-    permalink: /publications/
+  - title: Invited Talks
+    permalink: /invited-talks/
   - title: divider
-  - title: projects
-    permalink: /projects/
+  - title: Experience
+    permalink: /experience/
   - title: divider
-  - title: blog
-    permalink: /blog/
+  - title: Open-source
+    permalink: /open-source/
 ---
