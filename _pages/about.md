@@ -19,7 +19,7 @@ I am a Psychology PhD student at Georgia Tech funded by [the Centre of Excellenc
 
 My research interests are computational cognitive neuroscience, human/machine intelligence, and vision science.
 
-My CV can be viewed and downloaded from this [[Link]](https://drive.google.com/file/d/15s30n_O6cHSKVYm-3lO_9BS3PyalfNe9/view?usp=sharing) (Updated December 2023).
+My CV can be viewed and downloaded from this [[Link]](https://drive.google.com/file/d/15s30n_O6cHSKVYm-3lO_9BS3PyalfNe9/view?usp=sharing) (Updated August 2024).
   
   
 Feel free to get in touch to collaborate or for a chat!  
