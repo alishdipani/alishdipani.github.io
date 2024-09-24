@@ -8,9 +8,13 @@ nav_order: 5
 ---
 
 ## Ad-hoc Reviewing
-* <em> [The European Conference on Computer Vision (ECCV)](https://eccv.ecva.net/) </em>
-* <em> [The Annual Meeting of the Cognitive Science Society (CogSci)](https://cognitivesciencesociety.org/cogsci-2024/) </em>
-* <em> [Shared Visual Representations in Human & Machine Intelligence (SVRHM)](https://openreview.net/group?id=NeurIPS.cc/2022/Workshop/SVRHM) @ NeurIPS </em>
+#### Conferences
+* <em> [The European Conference on Computer Vision (ECCV)](https://eccv.ecva.net/) </em> (2024)
+* <em> [The Annual Meeting of the Cognitive Science Society (CogSci)](https://cognitivesciencesociety.org/cogsci-2024/) </em> (2024)
+#### Workshops
+* <em> [Unifying Representations in Neural Models (UniReps)](https://unireps.org/2024/)  @ [NeurIPS](https://neurips.cc/) </em> (2024)
+* <em> [Workshop on Behavioral Machine Learning](https://sites.google.com/view/behavioralml/) @ [NeurIPS](https://neurips.cc/) </em> (2024)
+* <em> [Shared Visual Representations in Human & Machine Intelligence (SVRHM)](https://openreview.net/group?id=NeurIPS.cc/2022/Workshop/SVRHM) @ [NeurIPS](https://neurips.cc/) </em> (2022)
 
 ## Diversity, Equity, and Inclusion
 * Mentor, <em> [Project SHORT (Students for Higher Education Opportunities and Representation in Training)](https://www.project-short.com/) </em>
