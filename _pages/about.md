@@ -23,4 +23,4 @@ My CV can be viewed and downloaded from this [[Link]](https://drive.google.com/f
   
   
 Feel free to get in touch to collaborate or for a chat!  
-My email: alish.dipani@gmail.com
+My email: alish.dipani@gmail.com or alishdipani@gatech.edu
