@@ -34,6 +34,6 @@ nav_order: 5
 
 ## Societies & Clubs
 * Co-Founder & Ex-President, <em> [Society of Artificial Intelligence and Deep Learning (SAiDL)](https://www.saidl.in/) </em>
-* Co-Founder, <em> Blockchain Club @ BITS Pilani </em>
+* Co-Founder & Ex-President, <em> Blockchain Club @ BITS Pilani </em>
 * Core Member, <em> [Sandbox](https://sandbox-bpgc.netlify.app/) @ BITS Pilani </em>
 * Core Member, <em> IEEE Student Branch @ BITS Pilani </em>
