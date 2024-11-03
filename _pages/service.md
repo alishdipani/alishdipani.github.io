@@ -33,7 +33,7 @@ nav_order: 5
 * Registrar;<em> [Computational Neuroscience](https://compneuro.neuromatch.io/), [Deep Learning](https://deeplearning.neuromatch.io/), [NeuroAI](https://neuroai.neuromatch.io/) </em>
 
 ## Societies & Clubs
-* Co-Founder, <em> [Society of Artificial Intelligence and Deep Learning (SAiDL)](https://www.saidl.in/) </em>
+* Co-Founder & President, <em> [Society of Artificial Intelligence and Deep Learning (SAiDL)](https://www.saidl.in/) </em>
 * Co-Founder, <em> Blockchain Club @ BITS Pilani </em>
 * Core Member, <em> [Sandbox](https://sandbox-bpgc.netlify.app/) @ BITS Pilani </em>
 * Core Member, <em> IEEE Student Branch @ BITS Pilani </em>
