@@ -11,6 +11,7 @@ nav_order: 5
 #### Conferences
 * <em> [The European Conference on Computer Vision (ECCV)](https://eccv.ecva.net/) </em> (2024) [[Outstanding Reviewer](https://eccv.ecva.net/Conferences/2024/Reviewers#all-outstanding-reviewers)]
 * <em> [The Annual Meeting of the Cognitive Science Society (CogSci)](https://cognitivesciencesociety.org/cogsci-2024/) </em> (2024)
+
 #### Workshops
 * <em> [Unifying Representations in Neural Models (UniReps)](https://unireps.org/2024/)  @ [NeurIPS](https://neurips.cc/) </em> (2024)
 * <em> [Workshop on Behavioral Machine Learning](https://sites.google.com/view/behavioralml/) @ [NeurIPS](https://neurips.cc/) </em> (2024)
