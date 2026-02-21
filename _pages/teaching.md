@@ -8,7 +8,7 @@ nav_order: 3
 ---
 
 ## Neuromatch Academy
-- Lead TA, <em> [NeuroAI](https://neuroai.neuromatch.io/) </em> (Summer 2024)
+- Lead TA, <em> [NeuroAI](https://neuroai.neuromatch.io/) </em> (Summer 2025, Summer 2024)
 - TA, <em> [Computational Neuroscience](https://compneuro.neuromatch.io/) </em> (Summer 2022, Summer 2021, Summer 2020)
 - TA, <em> [Deep Learning](https://deeplearning.neuromatch.io/) </em> (Summer 2022)
 
