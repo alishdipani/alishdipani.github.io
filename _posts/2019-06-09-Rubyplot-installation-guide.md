@@ -3,7 +3,9 @@ layout: post
 title: Rubyplot installation guide
 date: 2019-06-09 12:00:00
 permalink: /gsoc2019/2019/06/09/Rubyplot-installation-guide/
-tags: gsoc2019, rubyplot
+tags: gsoc2019 rubyplot
+category: open-source development
+nodename: 2. Installation
 ---
 
 Summary: Installation guide for Rubyplot.  

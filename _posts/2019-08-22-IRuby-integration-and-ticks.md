@@ -3,7 +3,10 @@ layout: post
 title: IRuby integration and ticks
 date: 2019-08-22 12:00:00
 permalink: /gsoc2019/2019/08/22/IRuby-integration-and-ticks/
-tags: gsoc2019, rubyplot
+tags: gsoc2019 rubyplot
+nodename: IRuby integration and ticks
+category: open-source development
+nodename: 7. IRuby notebook integration
 ---
 
 Summary: iruby integration and ticks.  

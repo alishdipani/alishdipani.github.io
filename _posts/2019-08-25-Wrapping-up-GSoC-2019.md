@@ -3,7 +3,9 @@ layout: post
 title: Wrapping up GSoC 2019
 date: 2019-08-22 12:00:00
 permalink: /gsoc2019/2019/08/22/Wrapping-up-GSoC-2019/
-tags: gsoc2019, rubyplot
+tags: gsoc2019 rubyplot
+category: open-source development
+nodename: 8. Wrap up
 ---
 
 Summary: The final blog for GSoC 2019.  

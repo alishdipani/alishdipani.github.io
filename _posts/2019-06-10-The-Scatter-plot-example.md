@@ -3,7 +3,9 @@ layout: post
 title: The Scatter plot example
 date: 2019-06-10 12:00:00
 permalink: /gsoc2019/2019/06/10/The-Scatter-plot-example/
-tags: gsoc2019, rubyplot
+tags: gsoc2019 rubyplot
+category: open-source development
+nodename: 3. Internal workings of a plot
 ---
 
 Summary: Explaining the scatter plot example.  

@@ -3,7 +3,8 @@ layout: post
 title: Neural Style Transfer on Audio Signals
 date: 2018-08-29 12:00:00
 permalink: projects/2018/08/Neural-Style-Transfer-Audio/
-tags: style-transfer, audio-processing
+tags: audio-ml deep-learning
+category: science
 ---
 
 Summary: Generation of new music using Neural Style Transfer Algorithm.  

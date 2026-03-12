@@ -3,7 +3,9 @@ layout: post
 title: The show and the plot functions
 date: 2019-07-26 12:00:00
 permalink: /gsoc2019/2019/07/26/The-show-and-the-plot-functions/
-tags: gsoc2019, rubyplot
+tags: gsoc2019 rubyplot
+category: open-source development
+nodename: 6. Showing and saving a plot
 ---
 
 Summary: Multi plots in Rubyplot.  

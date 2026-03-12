@@ -3,7 +3,9 @@ layout: post
 title: Simple Plots in Rubyplot
 date: 2019-06-28 12:00:00
 permalink: /gsoc2019/2019/06/28/Simple-Plots-in-Rubyplot/
-tags: gsoc2019, rubyplot
+tags: gsoc2019 rubyplot
+category: open-source development
+nodename: 4. Simple plots
 --- 
 
 Summary: Simple plots in Rubyplot.  

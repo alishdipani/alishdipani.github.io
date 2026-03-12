@@ -3,7 +3,9 @@ layout: post
 title: Multi plots in Rubyplot
 date: 2019-07-13 12:00:00
 permalink: /gsoc2019/2019/07/13/Multi-plots-in-Rubyplot/
-tags: gsoc2019, rubyplot
+tags: gsoc2019 rubyplot
+category: open-source development
+nodename: 5. Multi plots
 ---
 
 Summary: Multi plots in Rubyplot.  

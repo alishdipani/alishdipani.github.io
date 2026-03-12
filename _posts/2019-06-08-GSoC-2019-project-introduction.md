@@ -3,7 +3,9 @@ layout: post
 title: GSoC 2019 project introduction
 date: 2019-06-08 12:00:00
 permalink: /gsoc2019/2019/06/08/GSoC-2019-project-introduction/
-tags: gsoc2019, rubyplot
+tags: gsoc2019 rubyplot
+category: open-source development
+nodename: 1. Introduction
 ---
 
 Summary: Introducing my project for GSoC 2019.  
