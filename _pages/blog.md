@@ -56,6 +56,12 @@ pagination:
   </div>
   {% endif %}
 
+{% include blog_graph.liquid %}
+
+<br>
+<hr>
+<br>
+
 {% assign featured_posts = site.posts | where: "featured", "true" %}
 {% if featured_posts.size > 0 %}
 <br>
