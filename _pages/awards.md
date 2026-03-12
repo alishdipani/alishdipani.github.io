@@ -4,7 +4,7 @@ permalink: /awards/
 title: Awards
 description:
 nav: true
-nav_order: 4
+nav_order: 5
 ---
 
 * <em> CoCo Fellowship </em>, [The Center of Excellence in Computational Cognition](https://coco.psych.gatech.edu/), Georgia Tech, 2024

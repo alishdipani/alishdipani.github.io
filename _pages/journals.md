@@ -4,7 +4,7 @@ permalink: /journals/
 title: Journals
 description:
 nav: true
-nav_order: 1
+nav_order: 2
 ---
 
 Check out all my publications at [Google Scholar](https://scholar.google.com/citations?user=i028n20AAAAJ&hl=en)
