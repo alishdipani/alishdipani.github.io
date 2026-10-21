@@ -20,8 +20,9 @@ export const NAV = [
   { href: '/cv/', label: 'CV' },
 ];
 
-export async function getPosts() {
-  const posts = await getCollection('blog', ({ data }) => !data.draft);
+// Listed posts (blog index, Home, feed, sitemap). Pass { unlisted: true } to also get unlisted ones.
+export async function getPosts({ unlisted = false } = {}) {
+  const posts = await getCollection('blog', ({ data }) => !data.draft && (unlisted || !data.unlisted));
   return posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 }
 

@@ -1,12 +1,21 @@
 ---
+// Self-hosted fonts (latin subset, only the weights in use).
+import '@fontsource/nunito-sans/latin-400.css';
+import '@fontsource/nunito-sans/latin-600.css';
+import '@fontsource/nunito-sans/latin-700.css';
+import '@fontsource/source-serif-4/latin-400.css';
+import '@fontsource/source-serif-4/latin-400-italic.css';
+import '@fontsource/source-serif-4/latin-600.css';
+import '@fontsource/source-code-pro/latin-400.css';
 import '../styles/global.css';
 import { SITE, NAV, PREVIEW, url } from '../lib/site';
 
 interface Props {
   title?: string;
   description?: string;
+  noindex?: boolean;
 }
-const { title, description = SITE.description } = Astro.props;
+const { title, description = SITE.description, noindex = false } = Astro.props;
 const pageTitle = title ? `${title} · ${SITE.name}` : SITE.name;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const path = Astro.url.pathname;
@@ -19,7 +28,7 @@ const isCurrent = (href: string) => (href === '/' ? path === url('/') : path.sta
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
-    {PREVIEW && <meta name="robots" content="noindex, nofollow" />}
+    {(PREVIEW || noindex) && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="data:," />
     <link rel="alternate" type="application/rss+xml" title={`${SITE.name} · Blog`} href={url('/feed.xml')} />

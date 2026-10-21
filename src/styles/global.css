@@ -1,32 +1,70 @@
-/* Plain skeleton styling. The visual design comes in later tasks. */
+/* Site theme. Colors and fonts from Alish's Decisions (Oct 21); derived shades
+   keep text at WCAG AA (≥ 4.5:1) on both the page and surface backgrounds. */
 :root {
-  --text: #1f1f1f;
-  --muted: #666;
-  --rule: #ddd;
-  --link: #1a5fb4;
-  --todo-bg: #fff6d5;
-  --todo-border: #e0c050;
-  --measure: 44rem;
+  color-scheme: light dark;
+
+  /* Light (default) */
+  --bg: #f1f4f8;
+  --text: #1b2430;
+  --link: #1f4e8c;
+  --muted: #4d5969;     /* 6.5:1 on bg */
+  --surface: #e4e9f0;   /* code, figures, cards */
+  --border: #c5ceda;
+  --todo-bg: #fbefc5;
+  --todo-text: #4a3b00;
+
+  --font-ui: 'Nunito Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --font-mono: 'Source Code Pro', ui-monospace, Menlo, monospace;
+
+  --page: 46rem;        /* header, footer and regular pages */
+  --measure: 68ch;      /* post reading column */
+  --wide: 62rem;        /* wide figures */
+  --margin-note: 15rem; /* sidenote column on wide screens */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0e1624;
+    --text: #e3e8ef;
+    --link: #8db8f0;
+    --muted: #a1adbd;   /* 8:1 on bg */
+    --surface: #162236;
+    --border: #2c3a50;
+    --todo-bg: #33290c;
+    --todo-text: #f1de9c;
+  }
 }
 
 * { box-sizing: border-box; }
 
+html { -webkit-text-size-adjust: 100%; }
+
 body {
   margin: 0;
-  font: 1.0625rem/1.6 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
   color: var(--text);
-  background: #fff;
+  font: 400 1.125rem/1.65 var(--font-body);
+  overflow-x: clip; /* full-width figures use 100vw */
 }
 
-a { color: var(--link); }
-img { max-width: 100%; height: auto; }
+a { color: var(--link); text-underline-offset: 0.15em; }
+img, svg { max-width: 100%; height: auto; }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+/* Header, footer, regular pages */
 .site-header,
 main,
 .site-footer {
-  max-width: var(--measure);
+  max-width: var(--page);
   margin: 0 auto;
-  padding: 0 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .site-header {
@@ -37,53 +75,71 @@ main,
   gap: 0.5rem 1.5rem;
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;
-  border-bottom: 1px solid var(--rule);
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-ui);
 }
-.site-name { font-weight: 600; color: inherit; text-decoration: none; }
-.site-header nav { display: flex; flex-wrap: wrap; gap: 1rem; }
+.site-name { font-weight: 700; color: inherit; text-decoration: none; }
+.site-header nav { display: flex; flex-wrap: wrap; gap: 1.1rem; font-weight: 600; font-size: 1rem; }
 .site-header nav a { text-decoration: none; }
-.site-header nav a[aria-current='page'] { text-decoration: underline; }
+.site-header nav a[aria-current='page'] { text-decoration: underline; text-decoration-thickness: 2px; }
 
 main { padding-top: 1.5rem; padding-bottom: 3rem; }
 
 .site-footer {
-  border-top: 1px solid var(--rule);
+  border-top: 1px solid var(--border);
   padding-top: 1rem;
   padding-bottom: 2rem;
   color: var(--muted);
-  font-size: 0.875rem;
+  font: 0.875rem/1.5 var(--font-ui);
 }
 
 section { margin: 2.5rem 0; }
-h1, h2, h3 { line-height: 1.25; }
 .muted { color: var(--muted); }
+time, .meta { font-family: var(--font-ui); color: var(--muted); font-size: 0.9rem; }
 
 .todo {
   background: var(--todo-bg);
-  border: 1px dashed var(--todo-border);
+  color: var(--todo-text);
+  border: 1px dashed currentColor;
   padding: 0.5rem 0.75rem;
-  font-family: ui-monospace, Menlo, monospace;
-  font-size: 0.875rem;
+  font: 0.875rem/1.5 var(--font-mono);
 }
 
 .button {
   display: inline-block;
-  padding: 0.4rem 0.9rem;
+  padding: 0.35rem 0.9rem;
   border: 1px solid currentColor;
   border-radius: 4px;
+  font: 600 1rem/1.5 var(--font-ui);
   text-decoration: none;
 }
 
 .post-list { list-style: none; padding: 0; }
-.post-list li { margin: 0.75rem 0; }
-.post-list time { display: block; color: var(--muted); font-size: 0.875rem; }
+.post-list li { margin: 0.9rem 0; }
+.post-list a { font-family: var(--font-ui); font-weight: 600; }
+.post-list time { display: block; }
 
+/* Code (Shiki dual themes: light by default, dark via the media query) */
+pre, code { font-family: var(--font-mono); }
+code { font-size: 0.88em; }
+:not(pre) > code { background: var(--surface); padding: 0.1em 0.3em; border-radius: 3px; }
 pre {
   overflow-x: auto;
-  padding: 0.75rem;
-  background: #f5f5f5;
-  font-size: 0.875rem;
+  padding: 0.9rem 1rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  line-height: 1.55;
 }
-code { font-family: ui-monospace, Menlo, monospace; }
+pre.astro-code { background-color: var(--surface) !important; }
+@media (prefers-color-scheme: dark) {
+  .astro-code, .astro-code span {
+    color: var(--shiki-dark) !important;
+    font-style: var(--shiki-dark-font-style) !important;
+    font-weight: var(--shiki-dark-font-weight) !important;
+  }
+}
+
 .katex-display { overflow-x: auto; overflow-y: hidden; }
 table { display: block; overflow-x: auto; border-collapse: collapse; }
+th, td { border-bottom: 1px solid var(--border); padding: 0.3rem 0.6rem; text-align: left; }
+hr { border: 0; border-top: 1px solid var(--border); }

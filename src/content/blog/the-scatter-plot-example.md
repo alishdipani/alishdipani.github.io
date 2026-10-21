@@ -7,13 +7,13 @@ category: "open-source development"
 Summary: Explaining the scatter plot example.  
 
 
-# Introduction
+## Introduction
 In the project introduction blog [[Link]](/blog/gsoc-2019-project-introduction/) a scatter plot example was given, I will be explaining the technical details for that example which involves explaining the code for the library using **Magick backend**.  
   
 **P.S. - This blog is targeted towards new developers who want to get familiar with the codebase of the library or anyone who is extremely interested in technical code details as this blog is very technical and requires some familiarity with Rubyplot and rmagick.**  
 P.S. - The version of the library used for this example is of date 9 June.  
   
-# The Example code
+## The Example code
 ```ruby
 require 'Rubyplot'
 @xdata = [1, 2, 3, 4, 5] # Defining X data
@@ -36,7 +36,7 @@ axes.y_title = "Y data" # defining title of Y axis
 The output using Magick backend is:  
 <img src="/blog/resources/GSoC_2019_project_introduction/scatter_Magick.png" width="600">  
   
-# An overview
+## An overview
 An overview of how the code works is that it first creates the canvas(figure) on which everything will be drawn, then the space for subplots is created in this figure and then the subplots are added. When a subplot is added, the type of the subplot (i.e. the plots in this particular subplot), the properties of the subplot, the data for the plots in this subplot, the title for the X axis, Y axis and the subplot itself etc. are defined. After setting the properties of all the subplots, the write function is called to actually draw and save the figure. During drawing everything is drawn including the Legendbox of the subplots.  
   
 So, creating any figure in Rubyplot can be broken down into these steps:  
@@ -45,7 +45,7 @@ So, creating any figure in Rubyplot can be broken down into these steps:
 3. Create the subplots one by one and set the desired properties of all the subplots.  
 4. Call the `write` function to actually draw the Figure and thus the desired figure is created, drawn and saved.  
 
-# Code Explanation
+## Code Explanation
 
 So to go through the code let's start with the first 3 lines
 ```ruby
@@ -55,7 +55,7 @@ require 'Rubyplot'
 ```
 First Rubyplot is included which is similar to import in Python, this allows us to use Rubyplot.  Next, we define 2 arrays *xdata* and *ydata* which store the X and Y coordinates to be plotted. So, the points to be plotted are (1,11), (2,2), (3,33), (4,4) and (5,65).  
   
-## Figure
+### Figure
 After this, we create a new Figure object which will act as the canvas on which image will be drawn.
 ```ruby
 @figure = Rubyplot::Figure.new # Creating the canvas
@@ -136,7 +136,7 @@ end
 ```
 The *subplots* array is of dimension *nrows* x *ncols*.  
   
-## Adding a subplot
+### Adding a subplot
 After creating the figure, we move to adding subplots. To add a subplot the function **add_subplot!** is called
 ```ruby
 axes = @figure.add_subplot! 0,0
@@ -159,7 +159,7 @@ end
 ```
 This function takes input the row and coloumn for the subplot which is 1,1 in our case but is stored as 0,0 in the *subplots* array. First, *plottable_width* and *plottable_length* are calculated in Rubyplot coordinate units which define the total space measurements in which plotting is allowed i.e. incorporating the spacing for the figure. Then a new Axes object is made and is stored in the *subplots* array at the index 0,0. The function then returns the *subplots* array at index 0,0 which is stored in *axes* variable.  
   
-### Axes
+#### Axes
 Now the *axes* variable contains an initialized Axes object which is also stored in *subplots* array at index 0,0. The Axes initialization is as follows:
 ```ruby
 def initialize(figure, abs_x:, abs_y:, width:, height:)
@@ -203,7 +203,7 @@ The inputs are the figure to which this axes belongs which was given by self, ax
 Other important variables initialized margin variables which define the margin for this subplot(axes object), *plots* array which stores the plots to be drawn in this subplot, *xaxis* and *yaxis* which are an object of *XAxis* and *YAxis* respectively.  
 So, after initializing this axes object is stored in *axes* variable and *subplots* array at index 0,0.  
 
-#### X Axis and Y axis
+##### X Axis and Y axis
 We have initialized the variables *x_axis* and *y_axis* with new XAxis and YAxis objects, so when these objects are created, their constructor is called i.e. initialize function:
 ```ruby
 # X Axis constructor
@@ -234,7 +234,7 @@ end
 ```
 This constructor sets various useful properties of X and Y axes to their default values. It takes the axes object as an input to store it into *axes* variable to store the axes object to which it belongs, next the *title* is set to empty and the *max_val* and the *min_val* are stored to nil which store the maximum and minimum value of the X and the Y axes, next the number of major and minor ticks (between two major ticks) are stored, then two arrays are initialized *texts* and *lines* (not actually used) to store the texts and lines (tick lines not actual axis lines) for the X and Y axes, then the variables *major_ticks* and *minor_ticks* are set to nil which are used as arrays to store XTick and YTick objects corresponding to major(and minor) ticks of X-axis and major(and minor) ticks of Y-axis respectively. Finally, the font size of the title is set to 25 points.
   
-## The Plot
+### The Plot
 Now, we have defined the subplot i.e. the axes object in which we want to draw our plot. The next lines of code are:
 ```ruby
 axes.scatter! do |p| # Setting scatter as the type of subplot
@@ -271,7 +271,7 @@ end
 The **add_plot!** function takes input as the class name for the plot which is Scatter in this example and the block is passed, then using Kernel a new object of the input class is created and is stored in *plot* variable which in this example is Scatter plot and so a *Scatter* object is created and stored in *plot* variable.  
 Then yield executes the block if block is given i.e. block_given?==true. After executing the block i.e. creating the plot and setting up the characteristics of the blog, the *plot* is appended in *plots* array.  
   
-### Scatter Plot
+#### Scatter Plot
 Now, before executing to the block, a Scatter object is initialized:
 ```ruby
 def initialize(*)
@@ -310,7 +310,7 @@ end
 ```
 This initialized function sets the absolute values (i.e. in Rubyplot coordinates) of the origin of this axes object i.e. of this subplot (which is the upper left corner for Magick backend).  
   
-#### The Block (properties of the scatter plot)
+##### The Block (properties of the scatter plot)
 Now, the scatter object has been initialized and the block will be executed which sets the data to be plotted and other properties of the scatter plot. The block is:  
 ```ruby
 p.data @x1, @y1 # setting data to be plotted
@@ -339,7 +339,7 @@ Next, *marker_border_color* is set which is a variable of scatter plot which des
 Next, *marker_fill_color* is set which is a variable of scatter plot which describes the colour to be filled in the markers. So, in this example the colour is set to blue i.e. the variable *marker_fill_color* is set to the symbol *:blue*.  
 Finally, the marker type is set to circle i.e. the variable *marker_type* is set to the symbol *:circle*.  
   
-## Axes properties (properties of the subplot)
+### Axes properties (properties of the subplot)
 Finally after setting the scatter plot properties, the properties of the subplot i.e. the axes object are set:
 ```ruby
 axes.title = "Nice plot" # defining title of the plot
@@ -348,7 +348,7 @@ axes.y_title = "Y data" # defining title of Y axis
 ```
 Axes object has these variables *title*, *x_title*, *y_title* which store a string which defines the title of the subplot, title of X-axis and title of Y-axis respectively.  
   
-## Writing Figure
+### Writing Figure
 Till now we have only defined the properties and the data of the figure and have not actually plotted anything. Also notice that till now we haven't actually made of the use of backend and have only used the frontend, one aim of Rubyplot is having a backend-agnostic frontend i.e. frontend should not be dependent on the backend.  
 Now we finally call the write function of the figure which actually draws everything and stores the figure as an Image:
 ```ruby
@@ -373,7 +373,7 @@ end
 Now, we start using the backend (it is initialized) and setting its properties, first the variables *canvas_height* and *canvas_width* are sset as the height and width of the canvas (figure), then the *figure* variable points to the Figure object.  
 Now the function **set_background_gradient** is called which is exclusive to Magick backend and its purpose is to make the canvas i.e. an Magick::Image object (P.S. - In future, this function will be shifted to the backend so that both backends are consistent).  
   
-### Initializing the backend
+#### Initializing the backend
 When any function or variable of the backend is called for the first time, the backend is initialized and its constructor is called:
 ```ruby
 def initialize
@@ -382,7 +382,7 @@ end
 ```
 In Magick backend, during initialization an *axes_map* hash is defined which will later be used to store properties for X and Y axis corresponding to this particular axes which are currently being used.  
   
-### Setting up the background gradient (creating the Figure)
+#### Setting up the background gradient (creating the Figure)
 Now, the **set_background_gradient** function is:
 ```ruby
 def set_background_gradient
@@ -446,7 +446,7 @@ PIXEL_MULTIPLIERS = {
 }.freeze
 ```
   
-### Setting up the Output device
+#### Setting up the Output device
 After setting up the background gradient, the **init_output_device** function is called:
 ```ruby
 Rubyplot.backend.init_output_device(file_name, device: :file)
@@ -463,7 +463,7 @@ end
 ```
 This first modifies the *canvas_width* and the *canvas_height* variables according to the unit of the figure (**scale_figure** function was explained earlier). Then three new variables are defined *draw*, *axes* and *text* which are Magick::Draw objects which are used to draw shapes, X/Y axes and text respectively. Finally the *file_name* variable stores the file name string.  
   
-### Processing the data in subplots
+#### Processing the data in subplots
 Now, First the data in subplots is processed:
 ```ruby
 @subplots.each { |i| i.each(&:process_data) }
@@ -579,7 +579,7 @@ end
 ```
 Both of these functions first check if the corresponding maximum and minimum values are nil or not (which they are by default) in *x_axis* and *y_axis* which store the XAxis and YAxis objects respectively, and if they are nil (which they are in this example currently) then it calculates the minimum and maximum values across all the plots present in this subplot(i.e. in the *plots* array) and then sets the corresponding variables to the corresponding values.  
   
-### Drawing the Subplots
+#### Drawing the Subplots
 Next each subplot in *subplots* array is drawn:
 ```ruby
 @subplots.each { |i| i.each(&:draw) }
@@ -641,7 +641,7 @@ end
 ```
 This sets all the required variables including the rotation for text if required and the alignment too.  
   
-#### Legend Box
+##### Legend Box
 After configuring the label, the function **configure_legends** is called:
 ```ruby
 # Figure out co-ordinates of the legends
@@ -818,7 +818,7 @@ end
 ```
 This function creates the bounding box which is the outer rectangle of the legend box. The *bounding_box* is a Rectangle object (which was discussed earlier).  
   
-### X and Y ticks  
+#### X and Y ticks  
 Finally, the LegendBox object is created and we continue to the draw function of the axes i.e. the subplot.  
 Next the functions **assign_x_ticks** and **assign_y_ticks** are called which assign the ticks to the X and Y axes. The functions are:
 ```ruby
@@ -861,7 +861,7 @@ end
 These functions decide the coordinates for the ticks according to the number of ticks required and then these functions create an array to store the ticks which are *XTick* and *YTick* objects. The ticks are of two types (both for X and Y axes), minor tick and major tick which represent a smaller and a bigger tick relatively (the size of the major tick is twice the size of minor tick).  
 **P.S. - Currently the ticks are not implemented for Magick backend and changes are required in the frontend of ticks as well and hence ticks will be discussed in detail in a later blog.**  
   
-### X axis and Y axis
+#### X axis and Y axis
 Now, returning to the draw function of the axes, we actually start to draw the plots (Notice, till now we haven't actually drawn anything). So the next lines of code are:
 ```ruby
 @x_axis.draw
@@ -1174,7 +1174,7 @@ end
 ```
 In this function, the *legend_color_box* and *text* call their **draw** function which is actually Rectangle and Text objects. We have already discussed the explanation for drawing these objects.  
   
-### Drawing plots
+#### Drawing plots
 Returning to the **draw** function of the axes, the final line of code is:
 ```ruby
 @plots.each(&:draw)
@@ -1234,7 +1234,7 @@ The *:circle* Lambda first sets the colour of the border and the colour to be fi
   
 We now return to the **write** function of the Figure.  
   
-### Writing Figure (Backend)
+#### Writing Figure (Backend)
 Now, the **write** function of the backend is called:
 ```ruby
 def write
@@ -1268,7 +1268,7 @@ Finally, the *axes* Magick::Draw object is drawn using the **draw** function on 
   
 We now return to the **write** function of the Figure to execute the last line of code. Notice that we have already drawn and saved the figure.  
   
-## Finishing up 
+### Finishing up 
 Finally the backend's **stop_output_device** function is called:
 ```ruby
 def stop_output_device

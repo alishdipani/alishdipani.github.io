@@ -7,11 +7,11 @@ category: "open-source development"
 Summary: Simple plots in Rubyplot.  
 
 
-# Introduction
+## Introduction
 This blog lists down the simple plots in Rubyplot with ImageMagick as backend and highlights the work done in Week 3 and 4 for GSoC 2019.  
 P.S. - The version of Rubyplot used in this blog is dated 28th June.  
 
-# Scatter plot
+## Scatter plot
 An example of Scatter plot with code is:
 ```ruby
 @x1 = [1, 2, 3, 4, 5]
@@ -97,7 +97,7 @@ Marker types implemented till now for ImageMagick bacckend are: circle, plus, do
   
 Marker types not yet implemented for ImageMagick backend are: star, solid_star, asterisk, tri_up_down, pentagon, hexagon, heptagon, octagon, star_4, star_5, star_6, star_7, star_8.  
   
-# Area plot
+## Area plot
 An example of Area plot with code is:
 ```ruby
 @figure = Rubyplot::Figure.new
@@ -144,7 +144,7 @@ end
 ```
 Thsi function first transforms the coordiantes and then combines the coordiantes which were two different sets before (x values = [0, 1, 2, 3, 4, 5, 6, 7, 0, 7] and y values = [30, 36, 86, 39, 27, 31, 79, 88, 27, 27]), the `zip` Ruby function is used to combine the points (now coords = [[0, 30], [1, 36], [2, 86], [3, 39], [4, 27], [5, 31], [6, 79], [7, 88], [0, 27], [7, 27]]). After this the properties of the polygon are set and the coordinates are given as an input to the polygon function of rmagick, but first the coordiantes array is flattened (now coords = [0, 30, 1, 36, 2, 86, 3, 39, 4, 27, 5, 31, 6, 79, 7, 88, 0, 27, 7, 27]) so that input is converted into the way that polygon function accepts, the splat operator (\*) is used to give the coords array as an argument to the function. Finally, the opacity of `Magick::Draw` object is set again to 1 (initial value).
 
-# Bar plot
+## Bar plot
 An example of Bar plot with code is:
 ```ruby
 @figure = Rubyplot::Figure.new
@@ -224,7 +224,7 @@ end
 ```
 Here, first the coordinates are transformed and then the properties of the rectangle are set and if `fill_color` is not given then a hollow rectangle is drawn by setting the `fill_opacity` to 0. Finally, `Magick::Draw`'s **rectangle** function is used to draw the rectangle. If the fill_color is not given then the `fill_opacity` is reset to 1.
 
-# Bubble plot
+## Bubble plot
 An example of Bubble plot with code is:
 ```ruby
 @figure = Rubyplot::Figure.new
@@ -299,7 +299,7 @@ First the coordinates are transformed, then the properties of the circle are set
 Here the radius of the circle is multiplied by a nominal factor in order to match the Magick backend and GR backend sizes. The nominal factor `NOMINAL_FACTOR_CIRCLE` is hardcoded to **27.5**.
 
 
-# Candle-stick plot
+## Candle-stick plot
 An example of Candle-stick plot with code is:
 ```ruby
 @figure = Rubyplot::Figure.new
@@ -397,7 +397,7 @@ Till now, only solid line type is implemented for Magick backend, rest all will 
   
 Hence, the `Rectangle` and `Line2D` objects are drawn which are the candle and the stick respectively.
 
-# Histogram
+## Histogram
 An example of Histogram with code is:
 ```ruby
 @figure = Rubyplot::Figure.new
@@ -421,7 +421,7 @@ Example - [1,4,7,10] then the bins will be [1,4), [4,7), [7,10] i.e. the startig
 
 After calculating the bins, the combined frequencies of the bins are calculated which are the heights of the bars for each bin. Hence, the `Rectangle` objects are drawn(as explained previously) with each bar representing a bin and the height representing the frequency of the bin.
 
-# Line plot
+## Line plot
 An example of Line plot with code is:
 ```ruby
 @figure = Rubyplot::Figure.new
@@ -443,7 +443,7 @@ If only one array is given to the line plot as the data then the X coordinate va
 
 The **draw** function calls the **draw_lines** backend function to create the lines, which is as explained before and hence the Line plot is drawn.
 
-# Error-bar plot
+## Error-bar plot
 An example of Error-bar plot with code is:
 ```ruby
 @figure = Rubyplot::Figure.new
@@ -463,7 +463,7 @@ The inputs taken are two arrays for X coordinate values and Y coordinate values 
   
 The line and the errors are all `Line2D` objects which are explained previously. The coordinates for the error lines are calculated by adding and subtraicting the error to the coordinates i.e. suppose at the first point (1,1) the X error is 0.5 then the X error line will be between the points (0.5,1) and (0.5,1) and similarly the Y error is 0.6 then the Y error line is between the points (1,0.4) and (1,1.6).
 
-# Box plot
+## Box plot
 An example of Box plot with code is:
 ```ruby
 figure = Rubyplot::Figure.new

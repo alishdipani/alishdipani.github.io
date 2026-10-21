@@ -1,0 +1,44 @@
+---
+// Hover previews for footnote and citation links (Distill-style). Pointer
+// devices only; on touch screens the links simply jump to the note.
+---
+<script>
+  const links = document.querySelectorAll<HTMLAnchorElement>('a[data-footnote-ref], a.citation');
+  if (links.length && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    const card = document.createElement('div');
+    card.className = 'hover-card';
+    card.setAttribute('role', 'tooltip');
+    card.id = 'hover-card';
+    card.hidden = true;
+    document.body.append(card);
+    let hideTimer: number | undefined;
+
+    const hide = () => {
+      hideTimer = window.setTimeout(() => (card.hidden = true), 120);
+    };
+    const show = (link: HTMLAnchorElement) => {
+      const target = document.getElementById(decodeURIComponent(link.hash.slice(1)));
+      if (!target) return;
+      window.clearTimeout(hideTimer);
+      const clone = target.cloneNode(true) as HTMLElement;
+      clone.querySelectorAll('[data-footnote-backref]').forEach((n) => n.remove());
+      clone.querySelectorAll('[id]').forEach((n) => n.removeAttribute('id'));
+      card.replaceChildren(...clone.childNodes);
+      card.hidden = false;
+      const r = link.getBoundingClientRect();
+      const left = Math.min(window.scrollX + r.left, window.scrollX + document.documentElement.clientWidth - card.offsetWidth - 16);
+      card.style.left = `${Math.max(window.scrollX + 16, left)}px`;
+      card.style.top = `${window.scrollY + r.bottom + 8}px`;
+      link.setAttribute('aria-describedby', card.id);
+    };
+
+    links.forEach((link) => {
+      link.addEventListener('mouseenter', () => show(link));
+      link.addEventListener('focus', () => show(link));
+      link.addEventListener('mouseleave', hide);
+      link.addEventListener('blur', hide);
+    });
+    card.addEventListener('mouseenter', () => window.clearTimeout(hideTimer));
+    card.addEventListener('mouseleave', hide);
+  }
+</script>

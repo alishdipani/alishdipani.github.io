@@ -1,0 +1,18 @@
+---
+// <Figure src="/images/x.png" alt="…" caption="…" width="wide" />
+// width: "text" (reading column, default), "wide" (breaks out of the column) or "full" (edge to edge).
+// Without src, the slot is the figure body (e.g. an interactive component).
+import { url } from '../lib/site';
+
+interface Props {
+  src?: string;
+  alt?: string;
+  caption?: string;
+  width?: 'text' | 'wide' | 'full';
+}
+const { src, alt = '', caption, width = 'text' } = Astro.props;
+---
+<figure class:list={['figure', width !== 'text' && `figure-${width}`]}>
+  {src ? <img src={src.startsWith('/') ? url(src) : src} alt={alt} loading="lazy" /> : <slot />}
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>

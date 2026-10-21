@@ -7,10 +7,10 @@ category: "open-source development"
 Summary: Installation guide for Rubyplot.  
 
 
-# Introduction
+## Introduction
 This blog is a guide for Developer installation of Rubyplot and testing including both GR and ImageMagick backends.  
 
-# Installation
+## Installation
 P.S.- Make sure you have installed Ruby and have updated it to the latest version.  
   
 Installation steps:
@@ -62,13 +62,13 @@ export RUBYPLOT_BACKEND="GR" # For GR backend
 export RUBYPLOT_BACKEND="MAGICK" # For ImageMagick backend
 ```
   
-# Testing
-## Running all tests at once
+## Testing
+### Running all tests at once
 To run all the tests at once, run this command in the rubyplot folder:
 ```bash
 rspec
 ```
-## Running specific tests
+### Running specific tests
 For running specific tests follow these instructions:
 1. Make sure you are in the rubyplot folder.  
 2. Change the backend to desired one by following step 10 of Installation.  
@@ -143,7 +143,7 @@ Append it in front of all tests which you want to run.
 rspec --t=focus`
 ```
 
-# Refrences
+## Refrences
 1. [GRRuby](https://github.com/pgtgrly/GRruby-extension)  
 2. [Rubyplot](https://github.com/SciRuby/rubyplot)  
 3. [Rmagick](https://rmagick.github.io/)

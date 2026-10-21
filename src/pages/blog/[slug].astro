@@ -1,33 +1,55 @@
 ---
 import 'katex/dist/katex.min.css';
+import '../../styles/post.css';
 import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import { getPosts, formatDate } from '../../lib/site';
+import HoverCards from '../../components/HoverCards.astro';
+import { getPosts, formatDate, url } from '../../lib/site';
 
 export async function getStaticPaths() {
-  const posts = await getPosts();
+  const posts = await getPosts({ unlisted: true });
   return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
 }
 
 const { post } = Astro.props;
 const { Content, headings } = await render(post);
-const toc = headings.filter((h) => h.depth <= 2);
+const { title, subtitle, date, description, ngc, unlisted } = post.data;
+// Numbered table of contents from the ## headings (back matter excluded).
+const toc = headings.filter((h) => h.depth === 2 && !['footnote-label', 'bib-references'].includes(h.slug));
+const num = (i: number) => String(i + 1).padStart(2, '0');
 ---
-<Base title={post.data.title} description={post.data.description}>
-  <article>
-    <h1>{post.data.title}</h1>
-    <p class="muted">
-      <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
-      {post.data.tags.length > 0 && <> · {post.data.tags.join(', ')}</>}
-    </p>
+<Base title={title} description={description ?? subtitle} noindex={unlisted}>
+  <article class="post">
+    <div class="post-top">
+      <a href={url('/blog/')}>← Blog</a>
+      <time datetime={date.toISOString()}>{formatDate(date)}</time>
+    </div>
+    <h1 class="post-title">{title}</h1>
+    {subtitle && <p class="post-subtitle">{subtitle}</p>}
+
+    {ngc && (
+      <figure class="ngc">
+        <img src={url(ngc.image)} alt={`${ngc.name}: ${ngc.description}`} />
+        <figcaption>
+          <a href={ngc.objectUrl}>{ngc.name}</a>, {ngc.description}. Image: <a href={ngc.creditUrl}>{ngc.credit}</a>
+        </figcaption>
+      </figure>
+    )}
+
     {toc.length > 1 && (
       <nav class="toc" aria-label="Contents">
-        <strong>Contents</strong>
-        <ul>
-          {toc.map((h) => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}
-        </ul>
+        <p class="toc-title">Contents</p>
+        <ol>
+          {toc.map((h, i) => (
+            <li><span class="toc-num">{num(i)}</span><a href={`#${h.slug}`}>{h.text.replace(/#$/, '')}</a></li>
+          ))}
+        </ol>
       </nav>
     )}
-    <Content />
+
+    <div class="post-body">
+      <Content />
+    </div>
   </article>
+  <HoverCards />
 </Base>

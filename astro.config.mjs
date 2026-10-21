@@ -1,9 +1,11 @@
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
-import { unified } from '@astrojs/markdown-remark';
+import { unified, rehypeHeadingIds } from '@astrojs/markdown-remark';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import rehypeBase from './src/lib/rehype-base.mjs';
+import remarkCitations from './src/lib/remark-citations.mjs';
+import rehypePost from './src/lib/rehype-post.mjs';
 import legacy from './integrations/legacy.mjs';
 
 // SITE_PREVIEW=1 builds the online preview: served under /website-preview/,
@@ -23,9 +25,12 @@ export default defineConfig({
     // remark/rehype pipeline (not Sätteri) so posts can use the remark/rehype plugin ecosystem.
     // Old posts use kramdown-style $$…$$ only; a single $ is literal text.
     processor: unified({
-      remarkPlugins: [[remarkMath, { singleDollarTextMath: false }]],
-      rehypePlugins: [rehypeKatex, [rehypeBase, { base }]],
+      remarkPlugins: [[remarkMath, { singleDollarTextMath: false }], remarkCitations],
+      rehypePlugins: [rehypeKatex, rehypeHeadingIds, rehypePost, [rehypeBase, { base }]],
     }),
+    shikiConfig: {
+      themes: { light: 'github-light', dark: 'github-dark' },
+    },
   },
   integrations: [mdx(), legacy()],
 });

@@ -1,0 +1,113 @@
+/* Blog post layout: narrow reading column (style of the vikramsingh.me essays)
+   plus Distill-style elements (sidenotes, wide figures, hover cards). */
+.post {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding-bottom: 2rem;
+}
+
+.post-top { display: flex; justify-content: space-between; gap: 1rem; font-family: var(--font-ui); font-size: 0.95rem; }
+.post-top a { text-decoration: none; font-weight: 600; }
+
+.post-title { font-size: clamp(2rem, 5vw, 2.6rem); margin: 1.5rem 0 0.25rem; }
+.post-subtitle { font: 400 1.25rem/1.4 var(--font-ui); color: var(--muted); margin: 0 0 1.5rem; }
+
+/* NGC header image */
+.ngc { margin: 1.5rem 0 2rem; }
+.ngc img { display: block; width: 100%; border-radius: 4px; background: var(--surface); }
+.ngc figcaption { font: 0.85rem/1.5 var(--font-ui); color: var(--muted); margin-top: 0.5rem; }
+
+/* Table of contents */
+.toc { font-family: var(--font-ui); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 1rem 0; margin: 2rem 0; }
+.toc-title { font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0 0 0.5rem; }
+.toc ol { list-style: none; padding: 0; margin: 0; }
+.toc li { display: flex; gap: 0.75rem; margin: 0.25rem 0; }
+.toc-num { color: var(--muted); font-variant-numeric: tabular-nums; min-width: 1.5rem; }
+.toc a { text-decoration: none; }
+.toc a:hover { text-decoration: underline; }
+
+/* Sections */
+.post-body h2 { font-size: 1.6rem; margin: 0.25rem 0 1rem; scroll-margin-top: 1rem; }
+.post-body h3 { font-size: 1.25rem; margin: 2rem 0 0.75rem; scroll-margin-top: 1rem; }
+.section-marker {
+  margin: 3.5rem 0 0;
+  font: 600 0.8rem/1 var(--font-ui);
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.heading-anchor { margin-left: 0.4rem; color: var(--muted); text-decoration: none; opacity: 0; font-weight: 400; }
+h2:hover .heading-anchor, h3:hover .heading-anchor, .heading-anchor:focus { opacity: 1; }
+@media (hover: none) { .heading-anchor { opacity: 0.6; } }
+
+.end-mark { font-family: var(--font-ui); margin-left: 0.25rem; }
+.end-mark-line { text-align: right; }
+
+/* Pull quote */
+.pull-quote {
+  margin: 2.5rem 0;
+  padding: 0.25rem 0 0.25rem 1.25rem;
+  border-left: 3px solid var(--link);
+  font: italic 400 1.45rem/1.45 var(--font-body);
+}
+.pull-quote p { margin: 0; }
+
+/* Figures: in the column, wide (breaks out of the column) or full width */
+.figure { margin: 2rem 0; }
+.figure img, .figure svg { display: block; width: 100%; height: auto; border-radius: 4px; }
+.figure figcaption { font: 0.85rem/1.5 var(--font-ui); color: var(--muted); margin-top: 0.5rem; }
+.figure-wide, .figure-full { position: relative; left: 50%; transform: translateX(-50%); }
+.figure-wide { width: min(calc(100vw - 2rem), var(--wide)); }
+.figure-full { width: 100vw; }
+.figure-full figcaption { padding: 0 1rem; max-width: var(--measure); margin-left: auto; margin-right: auto; }
+.figure-full img { border-radius: 0; }
+
+/* Sidenotes: inline (indented) on narrow screens, in the right margin on wide ones */
+.post-body { counter-reset: sidenote; }
+.sidenote-ref { counter-increment: sidenote; }
+.sidenote-ref::after { content: counter(sidenote); font: 600 0.7em/0 var(--font-ui); vertical-align: super; color: var(--link); }
+.sidenote {
+  display: block;
+  margin: 0.5rem 0 0.75rem 1rem;
+  padding-left: 0.75rem;
+  border-left: 2px solid var(--border);
+  font: 0.85rem/1.5 var(--font-ui);
+  color: var(--muted);
+}
+.sidenote::before { content: counter(sidenote) '. '; font-weight: 700; }
+@media (min-width: 72rem) {
+  .sidenote {
+    float: right;
+    clear: right;
+    width: var(--margin-note);
+    margin: 0.2rem calc(-1 * var(--margin-note) - 2rem) 1rem 0;
+    padding-left: 0;
+    border-left: 0;
+  }
+}
+
+/* Footnotes and references (back matter) */
+.footnotes, .references { font: 0.9rem/1.55 var(--font-ui); color: var(--text); }
+.footnotes { margin-top: 3rem; border-top: 1px solid var(--border); padding-top: 1rem; }
+.footnotes h2, .post-body h2.references-heading { font-size: 1rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+.footnotes h2.sr-only { position: static; width: auto; height: auto; clip: auto; overflow: visible; margin: 0 0 0.5rem; }
+.post-body h2.references-heading { margin-top: 3rem; border-top: 1px solid var(--border); padding-top: 1rem; }
+.citations { font-family: var(--font-ui); font-size: 0.9em; }
+.citation { text-decoration: none; }
+[data-footnote-ref] { text-decoration: none; font-family: var(--font-ui); }
+
+/* Hover card for footnotes and citations (pointer devices only) */
+.hover-card {
+  position: absolute;
+  z-index: 10;
+  max-width: min(26rem, calc(100vw - 2rem));
+  padding: 0.6rem 0.8rem;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  box-shadow: 0 6px 24px rgb(0 0 0 / 0.15);
+  font: 0.85rem/1.5 var(--font-ui);
+}
+.hover-card p { margin: 0; }
+.hover-card[hidden] { display: none; }

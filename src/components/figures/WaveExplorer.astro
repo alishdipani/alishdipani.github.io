@@ -1,0 +1,49 @@
+---
+// Interactive figure: sliders change the frequency and damping of a plotted wave.
+// Plain SVG + a small script; Astro bundles the script and loads it only on pages that use this component.
+const W = 600, H = 220;
+---
+<div class="wave-explorer" data-wave-explorer data-w={W} data-h={H}>
+  <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="A damped wave; use the sliders to change it">
+    <line x1="0" y1={H / 2} x2={W} y2={H / 2} class="wave-axis" />
+    <path class="wave-line" d="" />
+  </svg>
+  <div class="wave-controls">
+    <label>Frequency <input type="range" name="freq" min="0.5" max="6" step="0.1" value="2" /> <output name="freq-out">2.0</output></label>
+    <label>Damping <input type="range" name="damp" min="0" max="3" step="0.05" value="0.8" /> <output name="damp-out">0.80</output></label>
+  </div>
+</div>
+
+<style>
+  .wave-explorer { background: var(--surface); border-radius: 4px; padding: 0.75rem; }
+  .wave-explorer svg { display: block; width: 100%; height: auto; }
+  .wave-axis { stroke: var(--border); stroke-width: 1; }
+  .wave-line { fill: none; stroke: var(--link); stroke-width: 2.5; }
+  .wave-controls { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; font: 0.85rem/1.5 var(--font-ui); margin-top: 0.5rem; }
+  .wave-controls label { display: flex; align-items: center; gap: 0.5rem; }
+  .wave-controls output { font-variant-numeric: tabular-nums; min-width: 2.5em; }
+</style>
+
+<script>
+  for (const root of document.querySelectorAll<HTMLElement>('[data-wave-explorer]')) {
+    const w = Number(root.dataset.w), h = Number(root.dataset.h);
+    const path = root.querySelector('.wave-line')!;
+    const freq = root.querySelector<HTMLInputElement>('input[name=freq]')!;
+    const damp = root.querySelector<HTMLInputElement>('input[name=damp]')!;
+    const draw = () => {
+      const f = Number(freq.value), d = Number(damp.value);
+      const pts: string[] = [];
+      for (let i = 0; i <= 300; i++) {
+        const t = i / 300;
+        const y = Math.exp(-d * t * 3) * Math.cos(2 * Math.PI * f * t * 2);
+        pts.push(`${(t * w).toFixed(1)},${(h / 2 - y * (h / 2 - 12)).toFixed(1)}`);
+      }
+      path.setAttribute('d', 'M' + pts.join(' L'));
+      root.querySelector<HTMLOutputElement>('output[name=freq-out]')!.value = f.toFixed(1);
+      root.querySelector<HTMLOutputElement>('output[name=damp-out]')!.value = d.toFixed(2);
+    };
+    freq.addEventListener('input', draw);
+    damp.addEventListener('input', draw);
+    draw();
+  }
+</script>

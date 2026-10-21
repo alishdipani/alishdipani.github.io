@@ -24,4 +24,12 @@ Key rules (full list on that page): **Alish approves every commit** — before c
 - `legacy/` — old site files (PDFs, images, CSS/JS…) copied into the build at their exact old paths
 - `_posts/Resources/` — old post images; kept at this path because old posts link to them via raw.githubusercontent.com/…/master/_posts/Resources/
 - `.github/workflows/preview.yml` — deploys the preview build to alishdipani/website-preview on every push to v2; `deploy.yml` — real deploy, manual only until launch
+- `src/styles/global.css` — theme (color variables, light + dark via prefers-color-scheme, fonts); `post.css` — post layout
 - `integrations/legacy.mjs` — build step that copies `legacy/` and `_posts/Resources/` and writes the redirect pages
+
+## Writing posts
+The style guide is `src/content/blog/_template-demo.mdx` (unlisted, at `/blog/template-demo/`); it uses every element:
+- frontmatter: `title`, `date`, optional `subtitle`, `description`, `bibliography: ./x.bib`, `ngc: {name, image, description, credit, creditUrl, objectUrl}`, `unlisted: true`
+- `##` headings → numbered TOC and section markers; Markdown footnotes `[^1]`; citations `[@key]` from the post's .bib (`src/lib/remark-citations.mjs`)
+- MDX components in `src/components/`: `PullQuote`, `Sidenote`, `Figure` (`width="text|wide|full"`), interactive figures in `figures/`
+- section markers, heading anchors and the ∎ end mark are added by `src/lib/rehype-post.mjs`

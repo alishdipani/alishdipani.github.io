@@ -7,10 +7,10 @@ category: "open-source development"
 Summary: Multi plots in Rubyplot.  
 
 
-# Introduction
+## Introduction
 This blog explains the working of the show and the plot functions and highlights the work done in Week 7 and 8 for GSoC 2019.  
 
-# show
+## show
 The **show** function is an alternative to the write function which is called on the `Rubyplot::Figure` object i.e. the Figure or the Canvas, it draws the figure which is stored temporarily and is shown in a pop-up window. This is used for a quick view of the Figure and helps in debugging.  
   
 Usage of this function is same as **write** function, suppose `figure = Rubyplot::Figure.new` then **write** function is called as `figure.write(filename.png')`, similarly the **show** function is called as `figure.show`. It takes no input.  
@@ -40,17 +40,17 @@ def show
 end
 ```
 The only difference between both the functions is that the initialization is done differently i.e. **init_output_device** backend function, for **show** function there is no file name and hence `nil` is given and the device is `:window`, for the **write** function the device is `:file`. The main difference is that backend functions called are different.  
-## Device
+### Device
 The `device` argument and backend variable(`output_device`) represent the device on which the Figure is to be drawn. The types are:
 1. `:window` which represents a pop-up window on which the Figure will be shown for the **show** function.  
 2. `:file` which represents a file on which the Figure will be saved for the **write** function.  
   
-## Backend functions
+### Backend functions
 The important backend functions which needed to be updated for **show** function are **init_output_device**, **show** and **stop_output_device**. These functions are explained below:  
   
-### init_output_device
+#### init_output_device
 This function is used to initialize the Figure and it's properties, for each backend, the functions are:  
-#### GR
+##### GR
 The function is:
 ```ruby
 def init_output_device file_name, device: :file
@@ -63,7 +63,7 @@ end
 ```
 The file name and the output device are stored and then the workspace i.e. the Figure or the Canvas is cleared and finally, the printing (i.e. writing) is started if the device is `:file` i.e. when the **write** function is called.  
   
-#### Magick
+##### Magick
 The function is:
 ```ruby
 def init_output_device file_name = nil, device: :file
@@ -87,9 +87,9 @@ end
 For consistency between the backends, the **setup_background_graient** function was merged into this function.  
 So, first, the Figure dimensions are scaled according to the unit of the dimensions. Then the `Magick::Draw` objects are initialized for drawing. Then, if the `base_image` is already not initialized, it is created by calling the **render_gradient**, otherwise, it is just cleared. Finally, the output device is stored. The file name is stored only if the device is `:file` i.e. when the **write** function is called.  
   
-### write and show
+#### write and show
 Both these functions have the same task to draw everything on the Figure and hence they are similar:  
-#### GR
+##### GR
 ```ruby
 def write
   draw
@@ -105,7 +105,7 @@ end
 ```
 For GR backend, these functions only draw the X and the Y axes y calling the **draw** function which calls the **draw_axes** function. The remaining drawing will be done later.  
 
-#### Magick
+##### Magick
 ```ruby
 def write
   @draw.draw(@base_image)
@@ -121,9 +121,9 @@ end
 ```
 For Magick backend, first the plot is drawn, then the text and finally the X and the Y axes.  
   
-### stop_output_device
+#### stop_output_device
 This function is used to finish the drawing and clear the memory.  
-#### GR
+##### GR
 ```ruby
 def stop_output_device
   case @output_device
@@ -142,7 +142,7 @@ end
 ```
 For GR backend, depending on the output device different functions are called to finish the drawing. If **write** function was called i.e. output device is `:file` then `Rubyplot::GR.endprint` is called to end the printing i.e. saving of the Figure. Otherwise, if the **show** function was called i.e. output device is `:window` the `Rubyplot::GR.updatews`(which calls the GR inbuilt function `updatews()`) is called which updates the workspace and opens a pop-up window to show the completed Figure.  
 Finally, the **flush** function is called which clears the memory.  
-#### Magick
+##### Magick
 ```ruby
 def stop_output_device
   case @output_device
@@ -163,14 +163,14 @@ end
 Similar to the GR backend, depending on the output device, different inbuilt ImageMagick functions are called. If **write** function was called i.e. the output device is `:file` then **write** inbuilt function is called which saves i.e. writes the Figure in a file. Otherwise, if the **show** function was called i.e. the output device is `:window` then **display** function is called which displays the completed Figure on a pop-up window.  
 Finally, the **flush** function is called and the memory is cleared.  
 
-# plot
+## plot
 In the current state, Line and Scatter plots exist as two different kinds of plots. However, the crux of plotting both of these is the same, the only difference being that in one kind of plot we have straight lines connected to co-ordinates while in the other the co-ordinates are simply 'decorated'. Thus can be many combinations of these plots, which can be combined under a single 'plot' interface.  
   
 So, to combine these plots, the **plot** function is created which is considered a `BasicPlot` in Rubyplot. It is called just like the other plots i.e. scatter plot, line plot, etc. The plot function can draw both scatter plot and line plot even simultaneously.  
   
 The inputs taken are the label of the plot(`label`), the optional type, size, fill colour and border colour of the marker(`marker_type`, `marker_size`, `marker_fill_color`, `marker_border_color` respectively), the optional type, colour, width, opacity of the line(`line_type`, `line_color`, `line_width`, `line_opacity` respectively), and the `fmt` argument which specifies the colour, line type and marker type in short.  
   
-## fmt argument
+### fmt argument
 Inspired by matplotlib, the fmt argument is a string of characters representing the colours in the plot, the type of the marker and the line.  
 The characters for colour are:  
   
@@ -300,7 +300,7 @@ First, the type of the fmt argument is checked, then the hashes are iterated ove
   
 After setting all the properties of the plot, the **draw** function is called.  
   
-## draw
+### draw
 The draw function is:
 ```ruby
 def draw
@@ -333,8 +333,8 @@ Finally, if the line type is given then a `Line2D` object is created and drawn a
   
 Some examples of the plot function are given below.  
   
-## Examples
-### 1
+### Examples
+#### 1
 ```ruby
 @figure = Rubyplot::Figure.new(height: 40, width: 40, figsize_unit: :cm)
 axes = @figure.add_subplot! 0,0
@@ -351,7 +351,7 @@ Backend: Magick
 
 <img src="/blog/resources/The_show_and_the_plot_functions/plot1.png" width="600">  
 
-### 2
+#### 2
 ```ruby
 @figure = Rubyplot::Figure.new(height: 40, width: 40, figsize_unit: :cm)
 axes = @figure.add_subplot! 0,0
@@ -369,7 +369,7 @@ Here, the fmt argument sets the colour and overwrites the line type.
 
 <img src="/blog/resources/The_show_and_the_plot_functions/plot2.png" width="600">  
   
-### 3
+#### 3
 ```ruby
 @figure = Rubyplot::Figure.new(height: 80, width: 80)
 axes = @figure.add_subplot! 0,0
