@@ -19,7 +19,7 @@ Key rules (full list on that page): **Alish approves every commit** — before c
 ## Layout
 - `src/pages/` — Home, Publications, Blog (+ posts), CV, 404, feed.xml, sitemap.xml
 - `src/content/blog/` — posts (Markdown/MDX); URL is `/blog/<filename>/`
-- `src/data/publications.bib` — publication list; optional `group={preprint|publication|talk}` sets its section on Publications (otherwise inferred in `src/lib/publications.ts`)
+- `src/data/publications.bib` — publication list and page data: optional `group={preprint|paper|talk}`, `summary`, `equal={1,2}`, `status`, link fields (`url`/`doi`, `pdf`, `arxiv`, `code`, `poster`, `slides`); see the comment at its top and `src/lib/publications.ts`
 - `src/data/news.yml` — Home news items (date, text, optional link); Home shows the latest 5
 - `migration/old-urls.txt` — every URL of the old site (166); `migration/redirects.yml` — old → new for those that moved
 - `legacy/` — old site files (PDFs, images, CSS/JS…) copied into the build at their exact old paths

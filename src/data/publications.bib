@@ -1,7 +1,11 @@
-% group = preprint | publication | talk sets the Publications page section explicitly;
-% without it the section is inferred (see src/lib/publications.ts).
+% Publications page data (src/pages/publications.astro). Besides normal BibTeX fields, optional:
+%   group={preprint|paper|talk}  section (otherwise inferred: venues starting "Poster"/"Talk" are talks,
+%                                misc/unpublished entries or preprint servers are preprints, the rest papers)
+%   summary={...}  one line under Preprints and Papers entries
+%   equal={1,2}    author positions with equal contribution (marked *)
+%   status={Under review}   shown after the venue
+%   url / doi (Paper chip + title link), pdf, arxiv, code, poster, slides (link chips)
 
-# PNAS 2024
 @article{dipani2024linking,
   abbr={PNAS},
   title={Linking faces to social cognition: The temporal pole as a potential social switch},
@@ -136,7 +140,7 @@
 
 # InterSpeech 2021
 @article{hu2021avatr,
-  group={talk},
+  group={paper},
   abbr={InterSpeech},
   title={AvaTr: One-shot speaker extraction with transformers},
   author={Hu, Shell Xu and Arefin, Md Rifat and Nguyen, Viet-Nhat and Dipani, Alish and Pitkow, Xaq and Tolias, Andreas Savas},

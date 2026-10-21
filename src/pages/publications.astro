@@ -3,27 +3,35 @@ import Base from '../layouts/Base.astro';
 import { GROUPS, getPublications } from '../lib/publications';
 import { SITE } from '../lib/site';
 
+// Format: Alish's decision (Command Center, Oct 21 12:59).
 const pubs = getPublications();
-// Empty groups (e.g. no preprints yet) are not shown.
+// Empty groups (e.g. no preprints yet) are not shown; numbering restarts in each group.
 const groups = GROUPS.map((g) => ({ ...g, items: pubs.filter((p) => p.group === g.id) })).filter((g) => g.items.length);
+const hasEqual = pubs.some((p) => p.authors.some((a) => a.equal));
 ---
 <Base title="Publications">
   <h1>Publications</h1>
-  <p class="muted scholar">Also on <a href="https://scholar.google.com/citations?user=i028n20AAAAJ">Google Scholar</a>.</p>
+  <p class="muted pubs-intro">
+    The full list is on <a href="https://scholar.google.com/citations?user=i028n20AAAAJ">Google Scholar</a>.
+    {hasEqual && <><br />* Equal contribution.</>}
+  </p>
 
   {groups.map((g) => (
     <section class="pub-group" id={g.id}>
       <h2>{g.title}</h2>
       <ol class="pubs">
-        {g.items.map((p) => (
+        {g.items.map((p, i) => (
           <li class="pub" id={p.key}>
-            <p class="pub-title">{p.url ? <a href={p.url}>{p.title}</a> : p.title}</p>
-            <p class="pub-authors">
-              {p.authors.map((a, i) => <>{i > 0 && ', '}{a === SITE.name ? <strong>{a}</strong> : a}</>)}
+            <p class="pub-title">
+              <span class="pub-num">[{i + 1}]</span>
+              <strong>{p.url ? <a href={p.url}>{p.title}</a> : p.title}</strong>
             </p>
-            <p class="pub-venue">
-              {p.kind && <span class="pub-kind">{p.kind}</span>}
-              <em>{p.venue}</em>{p.year && <>, {p.year}</>}
+            <p class="pub-meta">
+              {p.authors.map((a, j) => (
+                <>{j > 0 && ', '}{a.name === SITE.name ? <strong>{a.name}</strong> : a.name}{a.equal && '*'}</>
+              ))}.{' '}
+              {p.kind && g.id === 'talk' && <span class="pub-kind">{p.kind}</span>}
+              <em>{p.venue}</em>{p.status && <> · {p.status}</>}{p.year && <>, {p.year}</>}
             </p>
             <div class="pub-links">
               {p.links.map((l) => <a class="chip" href={l.href}>{l.label}</a>)}
@@ -35,6 +43,7 @@ const groups = GROUPS.map((g) => ({ ...g, items: pubs.filter((p) => p.group === 
                 </div>
               </details>
             </div>
+            {p.summary && g.id !== 'talk' && <p class="pub-summary">{p.summary}</p>}
           </li>
         ))}
       </ol>
@@ -43,16 +52,19 @@ const groups = GROUPS.map((g) => ({ ...g, items: pubs.filter((p) => p.group === 
 </Base>
 
 <style>
-  .scholar { font-family: var(--font-ui); margin-top: -0.5rem; }
+  .pubs-intro { font-family: var(--font-ui); margin-top: -0.5rem; }
   .pub-group { margin: 2.5rem 0; }
   .pub-group h2 { font-size: 1.15rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
   .pubs { list-style: none; padding: 0; margin: 0; }
   .pub { margin: 0 0 1.4rem; }
   .pub p { margin: 0; }
-  .pub-title { font-weight: 600; line-height: 1.4; }
-  .pub-authors { font-size: 0.98rem; }
-  .pub-venue { font-size: 0.98rem; color: var(--muted); }
-  .pub-kind { font: 600 0.75rem/1 var(--font-ui); text-transform: uppercase; letter-spacing: 0.05em; margin-right: 0.5rem; }
+  .pub-title { line-height: 1.4; }
+  .pub-title strong { font-weight: 600; }
+  .pub-num { font: 600 0.9rem/1 var(--font-ui); color: var(--muted); margin-right: 0.4rem; font-variant-numeric: tabular-nums; }
+  .pub-meta { font-size: 0.98rem; }
+  .pub-meta em { color: var(--muted); }
+  .pub-kind { font: 600 0.72rem/1 var(--font-ui); text-transform: uppercase; letter-spacing: 0.05em; margin-right: 0.4rem; color: var(--muted); }
+  .pub-summary { font: 0.88rem/1.5 var(--font-ui); color: var(--muted); margin-top: 0.35rem !important; }
   .pub-links { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.4rem; align-items: flex-start; }
   .chip {
     display: inline-block; cursor: pointer;
@@ -60,7 +72,7 @@ const groups = GROUPS.map((g) => ({ ...g, items: pubs.filter((p) => p.group === 
     font: 600 0.75rem/1.6 var(--font-ui); color: var(--link); background: transparent; text-decoration: none;
   }
   .chip:hover { border-color: var(--link); }
-  .bibtex summary { list-style: none; }
+  .bibtex summary { list-style: none; display: inline-block; }
   .bibtex summary::-webkit-details-marker { display: none; }
   .bibtex[open] { flex-basis: 100%; }
   .bibtex-box { position: relative; margin-top: 0.4rem; }
