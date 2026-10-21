@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+import Todo from '../components/Todo.astro';
+import { getPublications } from '../lib/publications';
+import { SITE } from '../lib/site';
+
+const pubs = getPublications();
+const isSelf = (name: string) => name === SITE.name;
+---
+<Base title="Publications">
+  <h1>Publications</h1>
+  <Todo>format, links and grouping (preprints / publications / conference presentations) to be decided in Task 4.</Todo>
+  <ol class="publications">
+    {pubs.map((p) => (
+      <li id={p.key}>
+        <strong>{p.title}</strong><br />
+        {p.authors.map((a, i) => (
+          <>{i > 0 && ', '}{isSelf(a) ? <u>{a}</u> : a}</>
+        ))}<br />
+        <em>{p.venue}</em>{p.year && `, ${p.year}`}
+      </li>
+    ))}
+  </ol>
+</Base>

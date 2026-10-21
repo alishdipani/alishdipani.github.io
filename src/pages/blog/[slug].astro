@@ -1,0 +1,33 @@
+---
+import 'katex/dist/katex.min.css';
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { getPosts, formatDate } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content, headings } = await render(post);
+const toc = headings.filter((h) => h.depth <= 2);
+---
+<Base title={post.data.title} description={post.data.description}>
+  <article>
+    <h1>{post.data.title}</h1>
+    <p class="muted">
+      <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+      {post.data.tags.length > 0 && <> · {post.data.tags.join(', ')}</>}
+    </p>
+    {toc.length > 1 && (
+      <nav class="toc" aria-label="Contents">
+        <strong>Contents</strong>
+        <ul>
+          {toc.map((h) => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}
+        </ul>
+      </nav>
+    )}
+    <Content />
+  </article>
+</Base>

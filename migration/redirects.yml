@@ -1,0 +1,51 @@
+# Old path -> new path for every URL in old-urls.txt that changes.
+# The build writes a small redirect page at each old path (meta refresh + canonical + JS).
+# Old files (PDFs, images, CSS/JS, …) are not listed here: they keep their exact paths via legacy/.
+# Lines marked "# ?" are uncertain mappings that Alish may want to change.
+
+# Posts: one URL per post, all under /blog/
+/projects/2018/08/Neural-Style-Transfer-Audio/: /blog/neural-style-transfer-audio/
+/gsoc2019/2019/06/08/GSoC-2019-project-introduction/: /blog/gsoc-2019-project-introduction/
+/gsoc2019/2019/06/09/Rubyplot-installation-guide/: /blog/rubyplot-installation-guide/
+/gsoc2019/2019/06/10/The-Scatter-plot-example/: /blog/the-scatter-plot-example/
+/gsoc2019/2019/06/28/Simple-Plots-in-Rubyplot/: /blog/simple-plots-in-rubyplot/
+/gsoc2019/2019/07/13/Multi-plots-in-Rubyplot/: /blog/multi-plots-in-rubyplot/
+/gsoc2019/2019/07/26/The-show-and-the-plot-functions/: /blog/the-show-and-the-plot-functions/
+/gsoc2019/2019/08/22/IRuby-integration-and-ticks/: /blog/iruby-integration-and-ticks/
+/gsoc2019/2019/08/22/Wrapping-up-GSoC-2019/: /blog/wrapping-up-gsoc-2019/
+
+# Blog archives (no tag, category, year or page archives on the new site)
+/blog/2018/: /blog/
+/blog/2019/: /blog/
+/blog/page/2/: /blog/
+/blog/tag/audio-ml/: /blog/
+/blog/tag/deep-learning/: /blog/
+/blog/tag/gsoc2019/: /blog/
+/blog/tag/rubyplot/: /blog/
+/blog/category/science/: /blog/
+/blog/category/open-source-development/: /blog/
+
+# Publications (old site split them into two pages)
+/journals/: /publications/
+/conferences/: /publications/
+
+# Old CV-type pages fold into the CV page
+/experience/: /cv/
+/teaching/: /cv/
+/service/: /cv/
+/awards/: /cv/
+/invited-talks/: /cv/
+/open-source/: /cv/
+
+# News: Home has a recent-news section; there is no news archive (yet)
+/news/: /  # ?
+/news/240715_nma24_content/: /  # ?
+/news/240715_nma24_leadTA/: /  # ?
+/news/240718_PNAS24/: /  # ? could go to /publications/
+/news/240804_heldmeet_talk_24/: /  # ?
+/news/240819_gatech_phd/: /  # ?
+/news/240927_eccv24_outstandingreviewer/: /  # ?
+
+# al-folio demo pages that were never in the nav
+/projects/: /blog/  # ?
+/repositories/: /  # ?

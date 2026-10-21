@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://alishdipani.github.io/sitemap.xml

@@ -1,0 +1,68 @@
+---
+import Base from '../layouts/Base.astro';
+import Todo from '../components/Todo.astro';
+import { getPosts, formatDate, SITE } from '../lib/site';
+
+// Wording locked in the site brief.
+const researchAreas = ['Interpretability', 'Neuro- & cognitive science for AI', 'AI for neuro- & cognitive science'];
+const recentPosts = (await getPosts()).slice(0, 3);
+---
+<Base>
+  <section id="about">
+    <img src="/assets/img/AlishDipani_picture.jpg" alt={SITE.name} width="200" />
+    <h1>{SITE.name}</h1>
+    <Todo>short blurb: current position and foundations.</Todo>
+    <p><a class="button" href="/cv/">CV</a></p>
+  </section>
+
+  <section id="research">
+    <h2>Research</h2>
+    <ul>
+      {researchAreas.map((area) => (
+        <li>
+          <strong>{area}</strong>
+          <Todo>one-line description.</Todo>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section id="overview">
+    <h2>Overview</h2>
+    <Todo>overview image.</Todo>
+  </section>
+
+  <section id="news">
+    <h2>News</h2>
+    <Todo>recent news items (including papers).</Todo>
+  </section>
+
+  <section id="posts">
+    <h2>Recent posts</h2>
+    <ul class="post-list">
+      {recentPosts.map((post) => (
+        <li>
+          <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+          <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+        </li>
+      ))}
+    </ul>
+    <p><a href="/blog/">All posts →</a></p>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <ul>
+      <li>Email: <a href="mailto:alish.dipani@gmail.com">alish.dipani@gmail.com</a></li>
+      <li><a href="https://github.com/alishdipani">GitHub</a></li>
+      <li><a href="https://scholar.google.com/citations?user=i028n20AAAAJ">Google Scholar</a></li>
+      <li><a href="https://x.com/alishdipani">X</a></li>
+    </ul>
+    <Todo>confirm contact links (copied from the old site's config).</Todo>
+  </section>
+
+  <section id="footnotes">
+    <h2>Footnotes</h2>
+    <Todo>footnotes.</Todo>
+  </section>
+</Base>

@@ -1,0 +1,5 @@
+404 /_pages/courses.md
+404 /_pages/dropdown/
+404 /assets/fonts/academicons.eot
+404 /assets/fonts/academicons.svg
+404 /gsoc2019/2019/06/09/GSoC-2019-project-introduction/
