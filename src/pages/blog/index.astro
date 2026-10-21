@@ -1,6 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { getPosts, formatDate } from '../../lib/site';
+import { getPosts, formatDate, url } from '../../lib/site';
 
 const posts = await getPosts();
 ---
@@ -9,7 +9,7 @@ const posts = await getPosts();
   <ul class="post-list">
     {posts.map((post) => (
       <li>
-        <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+        <a href={url(`/blog/${post.id}/`)}>{post.data.title}</a>
         <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
       </li>
     ))}

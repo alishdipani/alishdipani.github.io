@@ -1,30 +1,35 @@
 ---
 import Base from '../layouts/Base.astro';
 import Todo from '../components/Todo.astro';
-import { getPosts, formatDate, SITE } from '../lib/site';
+import { getPosts, formatDate, SITE, url } from '../lib/site';
 
-// Wording locked in the site brief.
-const researchAreas = ['Interpretability', 'Neuro- & cognitive science for AI', 'AI for neuro- & cognitive science'];
+// Heading line locked by Alish (Oct 21).
+const headingLine = 'I study the cognitive capabilities and inner workings of AI models.';
+// Research directions from the site brief (Alish, Oct 21).
+const directions = ['Neuro- & cognitive science for AI', 'AI for neuro- & cognitive science'];
+const contact = [
+  { label: 'Email', href: 'mailto:alish.dipani@gmail.com', text: 'alish.dipani@gmail.com' },
+  { label: 'Google Scholar', href: 'https://scholar.google.com/citations?user=i028n20AAAAJ' },
+  { label: 'GitHub', href: 'https://github.com/alishdipani' },
+  { label: 'X', href: 'https://x.com/alishdipani' },
+];
 const recentPosts = (await getPosts()).slice(0, 3);
 ---
 <Base>
   <section id="about">
-    <img src="/assets/img/AlishDipani_picture.jpg" alt={SITE.name} width="200" />
+    <img src={url('/assets/img/AlishDipani_picture.jpg')} alt={SITE.name} width="200" />
     <h1>{SITE.name}</h1>
-    <Todo>short blurb: current position and foundations.</Todo>
-    <p><a class="button" href="/cv/">CV</a></p>
-  </section>
-
-  <section id="research">
-    <h2>Research</h2>
+    <p class="lead">{headingLine}</p>
     <ul>
-      {researchAreas.map((area) => (
+      {directions.map((d) => (
         <li>
-          <strong>{area}</strong>
-          <Todo>one-line description.</Todo>
+          <strong>{d}</strong>
+          <Todo>short explainer.</Todo>
         </li>
       ))}
     </ul>
+    <Todo>2–3 lines on current position, foundations and past places.</Todo>
+    <p><a class="button" href={url('/cv/')}>CV</a> <a href="#contact">Contact</a></p>
   </section>
 
   <section id="overview">
@@ -42,23 +47,21 @@ const recentPosts = (await getPosts()).slice(0, 3);
     <ul class="post-list">
       {recentPosts.map((post) => (
         <li>
-          <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+          <a href={url(`/blog/${post.id}/`)}>{post.data.title}</a>
           <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
         </li>
       ))}
     </ul>
-    <p><a href="/blog/">All posts →</a></p>
+    <p><a href={url('/blog/')}>All posts →</a></p>
   </section>
 
   <section id="contact">
     <h2>Contact</h2>
     <ul>
-      <li>Email: <a href="mailto:alish.dipani@gmail.com">alish.dipani@gmail.com</a></li>
-      <li><a href="https://github.com/alishdipani">GitHub</a></li>
-      <li><a href="https://scholar.google.com/citations?user=i028n20AAAAJ">Google Scholar</a></li>
-      <li><a href="https://x.com/alishdipani">X</a></li>
+      {contact.map((c) => (
+        <li>{c.text ? <>{c.label}: <a href={c.href}>{c.text}</a></> : <a href={c.href}>{c.label}</a>}</li>
+      ))}
     </ul>
-    <Todo>confirm contact links (copied from the old site's config).</Todo>
   </section>
 
   <section id="footnotes">

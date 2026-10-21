@@ -23,12 +23,13 @@ function copyTree(src, dest, logger) {
 }
 
 export default function legacy() {
-  let site;
+  let site, base;
   return {
     name: 'legacy-urls',
     hooks: {
       'astro:config:done': ({ config }) => {
         site = config.site;
+        base = config.base.replace(/\/$/, '');
       },
       'astro:build:done': ({ dir, logger }) => {
         const out = fileURLToPath(dir);
@@ -43,7 +44,7 @@ export default function legacy() {
           const file = from.endsWith('/') ? path.join(out, from, 'index.html') : path.join(out, from);
           if (fs.existsSync(file)) throw new Error(`redirect would overwrite a page: ${from}`);
           fs.mkdirSync(path.dirname(file), { recursive: true });
-          fs.writeFileSync(file, redirectPage(to, site));
+          fs.writeFileSync(file, redirectPage(base + to, site));
         }
         logger.info(`wrote ${Object.keys(redirects).length} redirect pages`);
       },

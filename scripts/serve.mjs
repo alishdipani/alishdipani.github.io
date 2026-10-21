@@ -1,7 +1,8 @@
 // Static server for dist/ that behaves like GitHub Pages:
 // /dir/ serves /dir/index.html, /dir (no slash) 301s to /dir/, and anything
-// missing gets 404.html with status 404.
-// Usage: node scripts/serve.mjs [port]   (default 4321)
+// missing gets 404.html with status 404. With a prefix ('/website-preview'),
+// the site is served under that path, like a GitHub Pages project site.
+// Usage: node scripts/serve.mjs [port] [dir] [prefix]   (default 4321 dist)
 import fs from 'node:fs';
 import http from 'node:http';
 import path from 'node:path';
@@ -19,12 +20,17 @@ const TYPES = {
 const isFile = (p) => fs.existsSync(p) && fs.statSync(p).isFile();
 const isDir = (p) => fs.existsSync(p) && fs.statSync(p).isDirectory();
 
-export function createServer(root = 'dist') {
+export function createServer(root = 'dist', prefix = '') {
   root = path.resolve(root);
   return http.createServer((req, res) => {
     const url = new URL(req.url, 'http://localhost');
     let rel;
     try { rel = decodeURIComponent(url.pathname); } catch { rel = url.pathname; }
+    if (prefix) {
+      if (rel === prefix) { res.writeHead(301, { Location: prefix + '/' }).end(); return; }
+      if (!rel.startsWith(prefix + '/')) { res.writeHead(404, { 'Content-Type': 'text/plain' }).end('outside preview'); return; }
+      rel = rel.slice(prefix.length);
+    }
     let file = path.join(root, rel);
     if (!file.startsWith(root)) { res.writeHead(400).end(); return; }
 
@@ -51,6 +57,7 @@ export function listen(server, port = 0) {
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  const port = await listen(createServer('dist'), Number(process.argv[2] ?? 4321));
-  console.log(`Serving dist/ at http://127.0.0.1:${port}/`);
+  const [, , portArg = '4321', dir = 'dist', prefix = ''] = process.argv;
+  const port = await listen(createServer(dir, prefix), Number(portArg));
+  console.log(`Serving ${dir}/ at http://127.0.0.1:${port}${prefix}/`);
 }

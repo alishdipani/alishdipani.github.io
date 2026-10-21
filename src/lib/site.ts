@@ -5,6 +5,14 @@ export const SITE = {
   description: 'Personal website of Alish Dipani.', // TODO(Alish): site description
 };
 
+// '' for the real site, '/website-preview' for the preview build (see astro.config.mjs).
+export const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+export const PREVIEW = BASE !== '';
+
+// Prefix a root-relative path ('/blog/') with the base path.
+export const url = (path: string) => BASE + path;
+
+// Paths are root-relative; wrap them in url() when linking.
 export const NAV = [
   { href: '/', label: 'Home' },
   { href: '/publications/', label: 'Publications' },

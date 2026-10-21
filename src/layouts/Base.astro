@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { SITE, NAV } from '../lib/site';
+import { SITE, NAV, PREVIEW, url } from '../lib/site';
 
 interface Props {
   title?: string;
@@ -10,7 +10,7 @@ const { title, description = SITE.description } = Astro.props;
 const pageTitle = title ? `${title} · ${SITE.name}` : SITE.name;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const path = Astro.url.pathname;
-const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+const isCurrent = (href: string) => (href === '/' ? path === url('/') : path.startsWith(url(href)));
 ---
 <!doctype html>
 <html lang="en">
@@ -19,17 +19,18 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
+    {PREVIEW && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="data:," />
-    <link rel="alternate" type="application/rss+xml" title={`${SITE.name} · Blog`} href="/feed.xml" />
+    <link rel="alternate" type="application/rss+xml" title={`${SITE.name} · Blog`} href={url('/feed.xml')} />
     <slot name="head" />
   </head>
   <body>
     <header class="site-header">
-      <a class="site-name" href="/">{SITE.name}</a>
+      <a class="site-name" href={url('/')}>{SITE.name}</a>
       <nav aria-label="Main">
         {NAV.map((item) => (
-          <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a>
+          <a href={url(item.href)} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a>
         ))}
       </nav>
     </header>

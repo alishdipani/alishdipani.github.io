@@ -5,8 +5,10 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "build:preview": "SITE_PREVIEW=1 astro build",
     "preview": "node scripts/serve.mjs",
     "check:urls": "node scripts/check-old-urls.mjs",
+    "check:links": "node scripts/check-links.mjs && node scripts/check-links.mjs dist-preview /website-preview",
     "screenshots": "node scripts/screenshots.mjs"
   },
   "dependencies": {

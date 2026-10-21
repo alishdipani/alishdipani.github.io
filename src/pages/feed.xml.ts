@@ -1,7 +1,7 @@
 // Blog RSS feed, at the same path as the old site's feed.
 import rss from '@astrojs/rss';
 import type { APIContext } from 'astro';
-import { getPosts, SITE } from '../lib/site';
+import { getPosts, SITE, url } from '../lib/site';
 
 export async function GET(context: APIContext) {
   const posts = await getPosts();
@@ -13,7 +13,7 @@ export async function GET(context: APIContext) {
       title: post.data.title,
       pubDate: post.data.date,
       description: post.data.description,
-      link: `/blog/${post.id}/`,
+      link: url(`/blog/${post.id}/`),
     })),
   });
 }

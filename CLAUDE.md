@@ -4,13 +4,16 @@ New personal site, built from scratch with Astro (static output). Work happens o
 
 **Instructions live in the Notion Command Center:** https://app.notion.com/p/40018428a0a48088bdc7c3bd39155e0f — read its Site brief, Rules for Claude Code, and the newest Task in the Log before working. Post Reports there.
 
-Key rules (full list on that page): only commit/push to `v2`, one commit per finished task, never force-push; never invent content about Alish (use a visible `TODO(Alish): …` placeholder); stop and ask before anything that changes the live site, deletes old content, costs money/needs an account, or is public wording about Alish.
+Key rules (full list on that page): **Alish approves every commit** — before committing, give him a short summary, `git diff --stat` and the local preview URL in the Claude Code chat, and wait for his OK. Only commit/push to `v2`, never force-push or rewrite history; commit messages describe the change (no task numbers). Never invent content about Alish (use a visible `TODO(Alish): …` placeholder); stop and ask before anything that changes the live site, deletes old content, costs money/needs an account, or is public wording about Alish.
 
 ## Commands
 - `npm run dev` — dev server (legacy files and redirect pages only exist in builds)
 - `npm run build` — build to `dist/`
 - `npm run preview` — serve `dist/` like GitHub Pages at http://127.0.0.1:4321/
 - `npm run check:urls` — build + verify every old URL still works; must pass before reporting
+- `npm run build:preview` — preview build under `/website-preview/` (noindex) into `dist-preview/`
+- `npm run check:links` — crawl both builds for broken internal links (needs both builds)
+- `node scripts/serve.mjs 4322 dist-preview /website-preview` — serve the preview build locally
 - `npm run screenshots -- docs/screenshots/<task>` — desktop/phone screenshots + console-error and 404-fallback checks (needs a build and Google Chrome)
 
 ## Layout
@@ -20,4 +23,5 @@ Key rules (full list on that page): only commit/push to `v2`, one commit per fin
 - `migration/old-urls.txt` — every URL of the old site (166); `migration/redirects.yml` — old → new for those that moved
 - `legacy/` — old site files (PDFs, images, CSS/JS…) copied into the build at their exact old paths
 - `_posts/Resources/` — old post images; kept at this path because old posts link to them via raw.githubusercontent.com/…/master/_posts/Resources/
+- `.github/workflows/preview.yml` — deploys the preview build to alishdipani/website-preview on every push to v2; `deploy.yml` — real deploy, manual only until launch
 - `integrations/legacy.mjs` — build step that copies `legacy/` and `_posts/Resources/` and writes the redirect pages
