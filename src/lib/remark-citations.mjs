@@ -14,7 +14,7 @@ const join = (v) => (Array.isArray(v) ? v.join(' and ') : (v ?? ''));
 const initials = (first = '') => first.split(/[\s-]+/).filter(Boolean).map((p) => p[0] + '.').join(' ');
 
 function authorList(authors = []) {
-  const names = authors.map((a) => a.name ?? [a.lastName, initials(a.firstName)].filter(Boolean).join(', '));
+  const names = authors.map((a) => a.name ?? [[a.prefix, a.lastName].filter(Boolean).join(' '), initials(a.firstName)].filter(Boolean).join(', '));
   if (names.length > 3) return `${names[0]} et al.`;
   if (names.length > 1) return `${names.slice(0, -1).join(', ')} & ${names.at(-1)}`;
   return names[0] ?? '';

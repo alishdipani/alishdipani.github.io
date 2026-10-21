@@ -1,24 +1,84 @@
 ---
 import Base from '../layouts/Base.astro';
-import Todo from '../components/Todo.astro';
-import { getPublications } from '../lib/publications';
+import { GROUPS, getPublications } from '../lib/publications';
 import { SITE } from '../lib/site';
 
 const pubs = getPublications();
-const isSelf = (name: string) => name === SITE.name;
+// Empty groups (e.g. no preprints yet) are not shown.
+const groups = GROUPS.map((g) => ({ ...g, items: pubs.filter((p) => p.group === g.id) })).filter((g) => g.items.length);
 ---
 <Base title="Publications">
   <h1>Publications</h1>
-  <Todo>format, links and grouping (preprints / publications / conference presentations) to be decided in Task 4.</Todo>
-  <ol class="publications">
-    {pubs.map((p) => (
-      <li id={p.key}>
-        <strong>{p.title}</strong><br />
-        {p.authors.map((a, i) => (
-          <>{i > 0 && ', '}{isSelf(a) ? <u>{a}</u> : a}</>
-        ))}<br />
-        <em>{p.venue}</em>{p.year && `, ${p.year}`}
-      </li>
-    ))}
-  </ol>
+  <p class="muted scholar">Also on <a href="https://scholar.google.com/citations?user=i028n20AAAAJ">Google Scholar</a>.</p>
+
+  {groups.map((g) => (
+    <section class="pub-group" id={g.id}>
+      <h2>{g.title}</h2>
+      <ol class="pubs">
+        {g.items.map((p) => (
+          <li class="pub" id={p.key}>
+            <p class="pub-title">{p.url ? <a href={p.url}>{p.title}</a> : p.title}</p>
+            <p class="pub-authors">
+              {p.authors.map((a, i) => <>{i > 0 && ', '}{a === SITE.name ? <strong>{a}</strong> : a}</>)}
+            </p>
+            <p class="pub-venue">
+              {p.kind && <span class="pub-kind">{p.kind}</span>}
+              <em>{p.venue}</em>{p.year && <>, {p.year}</>}
+            </p>
+            <div class="pub-links">
+              {p.links.map((l) => <a class="chip" href={l.href}>{l.label}</a>)}
+              <details class="bibtex">
+                <summary class="chip">BibTeX</summary>
+                <div class="bibtex-box">
+                  <pre><code>{p.bibtex}</code></pre>
+                  <button type="button" class="chip" data-copy>Copy</button>
+                </div>
+              </details>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+  ))}
 </Base>
+
+<style>
+  .scholar { font-family: var(--font-ui); margin-top: -0.5rem; }
+  .pub-group { margin: 2.5rem 0; }
+  .pub-group h2 { font-size: 1.15rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+  .pubs { list-style: none; padding: 0; margin: 0; }
+  .pub { margin: 0 0 1.4rem; }
+  .pub p { margin: 0; }
+  .pub-title { font-weight: 600; line-height: 1.4; }
+  .pub-authors { font-size: 0.98rem; }
+  .pub-venue { font-size: 0.98rem; color: var(--muted); }
+  .pub-kind { font: 600 0.75rem/1 var(--font-ui); text-transform: uppercase; letter-spacing: 0.05em; margin-right: 0.5rem; }
+  .pub-links { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.4rem; align-items: flex-start; }
+  .chip {
+    display: inline-block; cursor: pointer;
+    padding: 0.1rem 0.55rem; border: 1px solid var(--border); border-radius: 999px;
+    font: 600 0.75rem/1.6 var(--font-ui); color: var(--link); background: transparent; text-decoration: none;
+  }
+  .chip:hover { border-color: var(--link); }
+  .bibtex summary { list-style: none; }
+  .bibtex summary::-webkit-details-marker { display: none; }
+  .bibtex[open] { flex-basis: 100%; }
+  .bibtex-box { position: relative; margin-top: 0.4rem; }
+  .bibtex-box pre { background: var(--surface); margin: 0; padding: 0.75rem 1rem; font-size: 0.78rem; white-space: pre-wrap; word-break: break-word; }
+  .bibtex-box [data-copy] { position: absolute; top: 0.4rem; right: 0.4rem; background: var(--bg); }
+</style>
+
+<script>
+  for (const btn of document.querySelectorAll<HTMLButtonElement>('[data-copy]')) {
+    btn.addEventListener('click', async () => {
+      const text = btn.parentElement?.querySelector('code')?.textContent ?? '';
+      try {
+        await navigator.clipboard.writeText(text);
+        btn.textContent = 'Copied';
+      } catch {
+        btn.textContent = 'Select and copy';
+      }
+      setTimeout(() => (btn.textContent = 'Copy'), 1500);
+    });
+  }
+</script>

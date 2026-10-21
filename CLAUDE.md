@@ -19,7 +19,8 @@ Key rules (full list on that page): **Alish approves every commit** — before c
 ## Layout
 - `src/pages/` — Home, Publications, Blog (+ posts), CV, 404, feed.xml, sitemap.xml
 - `src/content/blog/` — posts (Markdown/MDX); URL is `/blog/<filename>/`
-- `src/data/publications.bib` — publication list
+- `src/data/publications.bib` — publication list; optional `group={preprint|publication|talk}` sets its section on Publications (otherwise inferred in `src/lib/publications.ts`)
+- `src/data/news.yml` — Home news items (date, text, optional link); Home shows the latest 5
 - `migration/old-urls.txt` — every URL of the old site (166); `migration/redirects.yml` — old → new for those that moved
 - `legacy/` — old site files (PDFs, images, CSS/JS…) copied into the build at their exact old paths
 - `_posts/Resources/` — old post images; kept at this path because old posts link to them via raw.githubusercontent.com/…/master/_posts/Resources/
@@ -33,3 +34,4 @@ The style guide is `src/content/blog/_template-demo.mdx` (unlisted, at `/blog/te
 - `##` headings → numbered TOC and section markers; Markdown footnotes `[^1]`; citations `[@key]` from the post's .bib (`src/lib/remark-citations.mjs`)
 - MDX components in `src/components/`: `PullQuote`, `Sidenote`, `Figure` (`width="text|wide|full"`), interactive figures in `figures/`
 - section markers, heading anchors and the ∎ end mark are added by `src/lib/rehype-post.mjs`
+
