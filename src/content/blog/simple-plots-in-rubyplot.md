@@ -5,7 +5,7 @@ tags: ["gsoc2019", "rubyplot"]
 category: "open-source development"
 ngc:
   name: "NGC 1512"
-  image: "/images/ngc/ngc1512-header.jpg"
+  image: "/images/ngc/ngc1512-post.jpg"
   thumb: "/images/ngc/ngc1512-thumb.jpg"
   medium: "/images/ngc/ngc1512-medium.jpg"
   type: "Spiral galaxy"

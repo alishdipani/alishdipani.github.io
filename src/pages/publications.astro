@@ -1,88 +1,121 @@
 ---
+import '../styles/post.css';
 import Base from '../layouts/Base.astro';
-import { GROUPS, getPublications } from '../lib/publications';
+import Contents from '../components/Contents.astro';
+import { GROUPS, getPublications, type Author } from '../lib/publications';
 import { SITE } from '../lib/site';
 
-// Format: Alish's decisions (Command Center, Oct 21 12:59 and 13:20).
+// Format: Alish's decisions (Command Center, Oct 21 12:59, 13:20, 15:22) and Task 6.
+// Each entry is one APA-style citation: [n] Authors (Year). Title. Venue. labels chips
 const pubs = getPublications();
-// Empty groups (e.g. no preprints yet) are not shown. Numbering restarts in each group and counts up
-// from the oldest entry (Alish, Oct 21 13:20), so adding a paper never renumbers older ones.
-const groups = GROUPS.map((g) => ({ ...g, items: pubs.filter((p) => p.group === g.id) })).filter((g) => g.items.length);
+// Empty groups are not shown. Numbering restarts in each group and counts up from the oldest
+// entry, so adding a paper never renumbers older ones.
+const groups = GROUPS.map((g) => ({ ...g, slug: `${g.id}s`, items: pubs.filter((p) => p.group === g.id) })).filter((g) => g.items.length);
 const hasEqual = pubs.some((p) => p.authors.some((a) => a.equal));
----
-<Base title="Publications">
-  <h1>Publications</h1>
-  <p class="muted pubs-intro">
-    The full list is on <a href="https://scholar.google.com/citations?user=i028n20AAAAJ">Google Scholar</a>.
-    {hasEqual && <><br />* Equal contribution.</>}
-  </p>
+const contents = groups.map((g) => ({ slug: g.slug, text: g.title }));
 
-  {groups.map((g) => (
-    <section class="pub-group" id={g.id}>
-      <h2>{g.title}</h2>
-      <ol class="pubs">
-        {g.items.map((p, i) => (
-          <li class="pub" id={p.key}>
-            <p class="pub-title">
-              <span class="pub-num">[{g.items.length - i}]</span>
-              <strong>{p.url ? <a href={p.url}>{p.title}</a> : p.title}</strong>
-            </p>
-            <p class="pub-meta">
-              {p.authors.map((a, j) => (
-                <>{j > 0 && ', '}{a.name === SITE.name ? <strong>{a.name}</strong> : a.name}{a.equal && '*'}</>
-              ))}.{' '}
-              {p.kind && g.id === 'talk' && <span class="pub-kind">{p.kind}</span>}
-              <em>{p.venue}</em>{p.status && <> · {p.status}</>}{p.year && <>, {p.year}</>}
-            </p>
-            {(p.links.length > 0 || g.id !== 'talk') && (
-            <div class="pub-links">
-              {p.links.map((l) => <a class="chip" href={l.href}>{l.label}</a>)}
-              {g.id !== 'talk' && (
-                <details class="bibtex">
-                  <summary class="chip">BibTeX</summary>
-                  <div class="bibtex-box">
-                    <pre><code>{p.bibtex}</code></pre>
-                    <button type="button" class="chip" data-copy>Copy</button>
+// Long author lists: the first 6, then "…", always keeping Alish visible.
+type Shown = Author | '…';
+function shortAuthors(authors: Author[]): Shown[] {
+  const others = authors.some((a) => a.name === 'others');
+  const list = authors.filter((a) => a.name !== 'others');
+  if (list.length <= 7 && !others) return list;
+  const shown: Shown[] = list.slice(0, 6);
+  const self = list.findIndex((a) => a.name === SITE.name);
+  if (self >= 6) {
+    shown.push('…', list[self]);
+    if (self < list.length - 1 || others) shown.push('…');
+  } else if (list.length > 6 || others) shown.push('…');
+  return shown;
+}
+// Separator before author j: ", " — or ", & " before the last author of a complete list (APA).
+const sep = (j: number, all: Shown[]) => (j === 0 ? '' : j === all.length - 1 && !all.includes('…') ? ', & ' : ', ');
+const endsWithStop = (t: string) => /[.?!]$/.test(t);
+// Label after the venue: the entry's status (Preprint, Report, …), else "Preprint" for preprint-server
+// entries; Poster/Talk for presentations.
+const label = (p: (typeof pubs)[number], group: string) =>
+  group === 'presentation' ? p.kind : p.status ?? (p.preprint ? 'Preprint' : undefined);
+---
+<Base title="Publications" wide>
+  <div class="post-layout has-toc">
+    <Contents items={contents} variant="side" />
+
+    <div class="post">
+      <h1 class="sr-only">Publications</h1>
+      <p class="muted pubs-intro">
+        The full list is on <a href="https://scholar.google.com/citations?user=i028n20AAAAJ">Google Scholar</a>.
+        {hasEqual && <><br />* Equal contribution.</>}
+      </p>
+      <Contents items={contents} variant="inline" />
+
+      {groups.map((g) => (
+        <section class="pub-group">
+          <h2 class="section-label" id={g.slug}>{g.title}</h2>
+          <ol class="pubs">
+            {g.items.map((p, i) => {
+              const authors = shortAuthors(p.authors);
+              return (
+                <li class="pub" id={p.key}>
+                  <div class="pub-cite">
+                    <span class="pub-num">[{g.items.length - i}]</span>{' '}
+                    <span class="pub-authors">
+                      {authors.map((a, j) => (
+                        <>{sep(j, authors)}{a === '…' ? '…' : a.name === SITE.name ? <strong>{a.apa}</strong> : a.apa}{a !== '…' && a.equal && '*'}</>
+                      ))}
+                    </span>{' '}
+                    ({p.year}).{' '}
+                    <span class="pub-title">{p.url ? <a href={p.url}>{p.title}</a> : p.title}{!endsWithStop(p.title) && '.'}</span>{' '}
+                    <em>{p.venue}</em>.
+                    {label(p, g.id) && <span class="pub-label">{label(p, g.id)}</span>}
+                    {p.links.map((l) => <a class="chip" href={l.href}>{l.label}</a>)}
+                    {g.id === 'publication' && (
+                      <details class="bibtex">
+                        <summary class="chip">BibTeX</summary>
+                        <div class="bibtex-box">
+                          <pre><code>{p.bibtex}</code></pre>
+                          <button type="button" class="chip" data-copy>Copy</button>
+                        </div>
+                      </details>
+                    )}
                   </div>
-                </details>
-              )}
-            </div>
-            )}
-            {p.summary && g.id !== 'talk' && <p class="pub-summary">{p.summary}</p>}
-          </li>
-        ))}
-      </ol>
-    </section>
-  ))}
+                  {p.summary && g.id === 'publication' && <p class="pub-summary">{p.summary}</p>}
+                </li>
+              );
+            })}
+          </ol>
+        </section>
+      ))}
+    </div>
+  </div>
 </Base>
 
 <style>
-  .pubs-intro { font-family: var(--font-ui); margin-top: -0.5rem; }
-  .pub-group { margin: 2.5rem 0; }
-  .pub-group h2 { font-size: 1.15rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+  .pubs-intro { font-family: var(--font-ui); margin: 0 0 var(--s3); }
+  .pub-group { margin: var(--s4) 0 0; }
+  .pub-group:first-of-type { margin-top: 0; }
+  .pub-group h2 { scroll-margin-top: var(--s2); }
   .pubs { list-style: none; padding: 0; margin: 0; }
-  .pub { margin: 0 0 1.4rem; }
-  .pub p { margin: 0; }
-  .pub-title { line-height: 1.4; }
-  .pub-title strong { font-weight: 600; }
-  .pub-num { font: 600 0.9rem/1 var(--font-ui); color: var(--muted); margin-right: 0.4rem; font-variant-numeric: tabular-nums; }
-  .pub-meta { font-size: 0.98rem; }
-  .pub-meta em { color: var(--muted); }
-  .pub-kind { font: 600 0.72rem/1 var(--font-ui); text-transform: uppercase; letter-spacing: 0.05em; margin-right: 0.4rem; color: var(--muted); }
-  .pub-summary { font: 0.88rem/1.5 var(--font-ui); color: var(--muted); margin-top: 0.35rem !important; }
-  .pub-links { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.4rem; align-items: flex-start; }
+  .pub { margin: 0 0 var(--s3); }
+  .pub:last-child { margin-bottom: 0; }
+  .pub-cite { font-size: 0.98rem; line-height: 1.6; }
+  .pub-num { font: 600 0.85rem/1 var(--font-ui); color: var(--muted); font-variant-numeric: tabular-nums; }
+  .pub-authors strong { font-weight: 600; }
+  .pub-title a:hover { text-decoration-line: underline; }
+  .pub-cite em { color: var(--muted); }
+  .pub-label { font: 600 0.7rem/1 var(--font-ui); text-transform: uppercase; letter-spacing: 0.05em; margin-left: 0.5rem; color: var(--muted); }
+  .pub-summary { font: 0.9rem/1.5 var(--font-body); color: var(--muted); margin: 0.35rem 0 0; }
   .chip {
-    display: inline-block; cursor: pointer;
-    padding: 0.1rem 0.55rem; border: 1px solid var(--border); border-radius: 999px;
-    font: 600 0.75rem/1.6 var(--font-ui); color: var(--link); background: transparent; text-decoration: none;
+    display: inline-block; cursor: pointer; margin-left: 0.4rem; vertical-align: 0.05em;
+    padding: 0.05rem 0.55rem; border: 1px solid var(--border); border-radius: 999px;
+    font: 600 0.72rem/1.6 var(--font-ui); color: var(--link); background: transparent; text-decoration-line: none;
   }
-  .chip:hover { border-color: var(--link); }
+  .chip:hover { border-color: var(--link); text-decoration-line: none; }
+  .bibtex { display: inline; }
   .bibtex summary { list-style: none; display: inline-block; }
   .bibtex summary::-webkit-details-marker { display: none; }
-  .bibtex[open] { flex-basis: 100%; }
   .bibtex-box { position: relative; margin-top: 0.4rem; }
   .bibtex-box pre { background: var(--surface); margin: 0; padding: 0.75rem 1rem; font-size: 0.78rem; white-space: pre-wrap; word-break: break-word; }
-  .bibtex-box [data-copy] { position: absolute; top: 0.4rem; right: 0.4rem; background: var(--bg); }
+  .bibtex-box [data-copy] { position: absolute; top: 0.4rem; right: 0.4rem; margin: 0; background: var(--bg); }
 </style>
 
 <script>

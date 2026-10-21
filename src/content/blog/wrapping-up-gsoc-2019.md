@@ -1,11 +1,11 @@
 ---
 title: "Wrapping up GSoC 2019"
-date: 2019-08-22
+date: 2019-08-22T12:00:00Z # same day as the IRuby post, but later (Alish)
 tags: ["gsoc2019", "rubyplot"]
 category: "open-source development"
 ngc:
   name: "NGC 1300"
-  image: "/images/ngc/ngc1300-header.jpg"
+  image: "/images/ngc/ngc1300-post.jpg"
   thumb: "/images/ngc/ngc1300-thumb.jpg"
   medium: "/images/ngc/ngc1300-medium.jpg"
   type: "Spiral galaxy"

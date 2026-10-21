@@ -5,7 +5,7 @@ tags: ["gsoc2019", "rubyplot"]
 category: "open-source development"
 ngc:
   name: "NGC 1097"
-  image: "/images/ngc/ngc1097-header.jpg"
+  image: "/images/ngc/ngc1097-post.jpg"
   thumb: "/images/ngc/ngc1097-thumb.jpg"
   medium: "/images/ngc/ngc1097-medium.jpg"
   type: "Barred spiral galaxy"

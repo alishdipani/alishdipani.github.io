@@ -3,7 +3,8 @@
 // Medium thumbnails (~160 px) with name and type below, each linking to its post.
 import { getPosts, url } from '../lib/site';
 
-const used = (await getPosts()).filter((p) => p.data.ngc?.medium && p.id !== 'ngc'); // not the NGC post itself
+// Pipeline NGC objects only: not the NGC post itself, and no manual images (e.g. the Milky Way).
+const used = (await getPosts()).filter((p) => p.data.ngc?.medium && p.data.ngc.source !== 'manual' && p.id !== 'ngc');
 ---
 {used.length > 0 ? (
   <ul class="ngc-grid">

@@ -12,6 +12,7 @@ const slugs = (await getPosts()).map((p) => p.id);
   <h1>Page not found</h1>
   <p>There is nothing at this address. Try one of these:</p>
   <ul>
+    <li><a href={url('/')}>Home</a></li>
     {NAV.map((item) => <li><a href={url(item.href)}>{item.label}</a></li>)}
   </ul>
   <script is:inline define:vars={{ table, slugs, base: BASE }}>

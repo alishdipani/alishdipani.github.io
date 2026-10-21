@@ -5,7 +5,7 @@ tags: ["gsoc2019", "rubyplot"]
 category: "open-source development"
 ngc:
   name: "NGC 288"
-  image: "/images/ngc/ngc0288-header.jpg"
+  image: "/images/ngc/ngc0288-post.jpg"
   thumb: "/images/ngc/ngc0288-thumb.jpg"
   medium: "/images/ngc/ngc0288-medium.jpg"
   type: "Globular cluster"

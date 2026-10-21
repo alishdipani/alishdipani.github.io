@@ -1,7 +1,6 @@
 // Rehype plugin for blog posts (runs after heading ids are assigned):
 // - a section marker ("01 / 05") before every ## section heading,
-// - an anchor link on every ## and ### heading,
-// - the ∎ end mark at the end of the last paragraph of the post body.
+// - an anchor link on every ## and ### heading.
 // Footnotes and References are not counted as sections.
 const el = (tagName, properties, children = []) => ({ type: 'element', tagName, properties, children });
 const text = (value) => ({ type: 'text', value });
@@ -37,11 +36,5 @@ export default function rehypePost() {
       if (!id) continue;
       node.children.push(el('a', { className: ['heading-anchor'], href: `#${id}`, ariaLabel: 'Link to this section' }, [text('#')]));
     }
-
-    const body = tree.children.filter((n) => n.type === 'element' && !isBackMatter(n));
-    const last = body.at(-1);
-    const mark = el('span', { className: ['end-mark'], ariaLabel: 'End of post' }, [text('∎')]);
-    if (last?.tagName === 'p') last.children.push(text(' '), mark);
-    else if (last) tree.children.splice(tree.children.indexOf(last) + 1, 0, el('p', { className: ['end-mark-line'] }, [mark]));
   };
 }

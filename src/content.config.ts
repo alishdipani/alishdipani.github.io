@@ -6,7 +6,6 @@ const blog = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/blog' }),
   schema: z.object({
     title: z.string(),
-    subtitle: z.string().optional(),
     date: z.coerce.date(),
     description: z.string().optional(),
     tags: z.array(z.string()).default([]),
@@ -19,8 +18,11 @@ const blog = defineCollection({
     // The post's NGC object, filled by `npm run ngc -- make NAME --post SLUG` (tools/ngc/).
     ngc: z
       .object({
+        // "legacy-surveys": made by tools/ngc (listed on the NGC page grid); "manual": a one-off image
+        // with its own credit (e.g. the Milky Way on the NGC post), left out of the grid and ngc-list.json.
+        source: z.enum(['legacy-surveys', 'manual']).default('legacy-surveys'),
         name: z.string(),
-        image: z.string(),           // header image
+        image: z.string(),           // square post image
         thumb: z.string().optional(),  // 112 px square, shown at ~56 px in post lists
         medium: z.string().optional(), // 320 px square, shown at ~160 px on the NGC page
         type: z.string().optional(),   // e.g. "Barred spiral galaxy"
@@ -28,6 +30,9 @@ const blog = defineCollection({
         credit: z.string(),
         creditUrl: z.string().url(),
         objectUrl: z.string().url(),
+        captionUrl: z.string().url().optional(), // where the caption links (default: objectUrl, i.e. Wikipedia or SIMBAD)
+        caption: z.string().optional(),          // linked text under the image (default: the name)
+        captionPrefix: z.string().optional(),    // an unlinked first caption line above it
       })
       .optional(),
   }),

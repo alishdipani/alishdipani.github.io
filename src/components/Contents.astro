@@ -1,0 +1,56 @@
+---
+// Numbered table of contents, used by posts and the Publications page.
+// variant "side": the sticky left column on wide screens (highlights the section being read);
+// variant "inline": the list at the top on narrow screens. Styles in src/styles/post.css.
+interface Props {
+  items: { slug: string; text: string }[];
+  variant: 'side' | 'inline';
+}
+const { items, variant } = Astro.props;
+const num = (i: number) => String(i + 1).padStart(2, '0');
+---
+{variant === 'side' ? (
+  <aside class="toc-side">
+    <nav class="toc-sticky" aria-label="Contents">
+      <p class="section-label">Contents</p>
+      <ol>
+        {items.map((h, i) => (
+          <li><a href={`#${h.slug}`} data-toc-link={h.slug}><span class="toc-num">{num(i)}</span>{h.text}</a></li>
+        ))}
+      </ol>
+    </nav>
+  </aside>
+) : (
+  <nav class="toc toc-inline" aria-label="Contents">
+    <p class="section-label">Contents</p>
+    <ol>
+      {items.map((h, i) => (
+        <li><span class="toc-num">{num(i)}</span><a href={`#${h.slug}`}>{h.text}</a></li>
+      ))}
+    </ol>
+  </nav>
+)}
+
+{variant === 'side' && (
+  <script>
+    // Highlight the section being read in the sticky contents column.
+    const links = [...document.querySelectorAll<HTMLAnchorElement>('[data-toc-link]')];
+    const sections = links.map((a) => document.getElementById(a.dataset.tocLink!)).filter((h): h is HTMLElement => !!h);
+    if (sections.length) {
+      let frame = 0;
+      const update = () => {
+        frame = 0;
+        const line = window.innerHeight * 0.3;
+        let active = sections[0];
+        for (const h of sections) if (h.getBoundingClientRect().top <= line) active = h;
+        for (const a of links) {
+          if (a.dataset.tocLink === active.id) a.setAttribute('aria-current', 'location');
+          else a.removeAttribute('aria-current');
+        }
+      };
+      addEventListener('scroll', () => { if (!frame) frame = requestAnimationFrame(update); }, { passive: true });
+      addEventListener('resize', update);
+      update();
+    }
+  </script>
+)}

@@ -3,27 +3,38 @@ import { parse } from '@retorquere/bibtex-parser';
 
 // Publications page data, all from src/data/publications.bib (one entry per item).
 // Site fields on top of normal BibTeX (all optional):
-//   group    preprint | paper | talk   section; otherwise inferred (see classify)
-//   summary  one line shown under Preprints and Papers entries
+//   group    publication | presentation   section; otherwise inferred (see classify)
+//   status   e.g. {Preprint}, {Report}: the label shown after the venue (also marks a preprint)
+//   summary  one line shown under Publications entries
 //   equal    author positions with equal contribution, e.g. {1,2} → marked with *
-//   status   e.g. {Under review}, shown after the venue
 //   pdf, code, poster, slides   links for the chips (url / doi / arxiv / eprint are standard)
-export type Group = 'preprint' | 'paper' | 'talk';
+export type Group = 'publication' | 'presentation';
 
 export const GROUPS: { id: Group; title: string }[] = [
-  { id: 'preprint', title: 'Preprints' },
-  { id: 'paper', title: 'Papers' },
-  { id: 'talk', title: 'Talks and posters' },
+  { id: 'publication', title: 'Publications' },
+  { id: 'presentation', title: 'Presentations' },
 ];
 
-export type Author = { name: string; equal: boolean };
+export type Author = {
+  name: string;  // "Alish Dipani"
+  apa: string;   // "Dipani, A."
+  equal: boolean;
+};
+
+// APA-style name: "Last, F. M." (prefixes kept, e.g. "t Hart, B. M."; single names as they are).
+const initials = (first = '') => first.split(/[\s.]+/).filter(Boolean).map((p) => p.split('-').map((q) => q[0] + '.').join('-')).join(' ');
+const apaName = (a: any) => {
+  const last = [a.prefix, a.lastName].filter(Boolean).join(' ') || a.name || '';
+  return a.firstName ? `${last}, ${initials(a.firstName)}` : last;
+};
 
 export type Publication = {
   key: string;
   group: Group;
   title: string;
   authors: Author[];
-  kind?: 'Poster' | 'Talk';   // for talks and posters, from a "Poster @ …" / "Talk @ …" venue
+  kind?: 'Poster' | 'Talk';   // for presentations, from a "Poster @ …" / "Talk @ …" venue
+  preprint: boolean;          // publications with a status, or on a preprint server / misc entry
   venue: string;
   status?: string;
   year: string;
@@ -37,18 +48,19 @@ const SITE_FIELDS = ['abbr', 'selected', 'group', 'summary', 'equal', 'status', 
 
 const join = (v: unknown) => (Array.isArray(v) ? v.join(' and ') : ((v as string) ?? ''));
 
-// Explicit group wins; "Poster @"/"Talk @" venues are talks; misc/unpublished or preprint servers are
-// preprints; everything else (journal articles, conference proceedings such as ICLR/NeurIPS) is a paper.
-function classify(type: string, fields: Record<string, any>, venue: string): Group {
+// Explicit group wins; "Poster @"/"Talk @" venues are presentations; everything else (journal
+// articles, conference proceedings such as ICLR/NeurIPS, preprints) is a publication.
+function classify(fields: Record<string, any>, venue: string): Group {
   const explicit = join(fields.group).trim();
   if (explicit) {
     if (!GROUPS.some((g) => g.id === explicit)) throw new Error(`publications.bib: unknown group "${explicit}"`);
     return explicit as Group;
   }
-  if (/^(Poster|Talk) @/.test(venue)) return 'talk';
-  if (['unpublished', 'misc'].includes(type) || /arxiv|biorxiv|psyarxiv|medrxiv|preprint/i.test(venue)) return 'preprint';
-  return 'paper';
+  return /^(Poster|Talk) @/.test(venue) ? 'presentation' : 'publication';
 }
+
+const isPreprint = (type: string, fields: Record<string, any>, venue: string) =>
+  !!join(fields.status) || ['unpublished', 'misc'].includes(type) || /arxiv|biorxiv|psyarxiv|medrxiv|preprint/i.test(venue);
 
 function cleanBibtex(raw: string) {
   const re = new RegExp(`^\\s*(${SITE_FIELDS.join('|')})\\s*=.*\\n`, 'gim');
@@ -56,7 +68,7 @@ function cleanBibtex(raw: string) {
 }
 
 export function getPublications(file = 'src/data/publications.bib'): Publication[] {
-  const lib = parse(fs.readFileSync(file, 'utf8'));
+  const lib = parse(fs.readFileSync(file, 'utf8'), { sentenceCase: false }); // keep titles as entered
   if (lib.errors.length) throw new Error(`${file}: ${JSON.stringify(lib.errors)}`);
   return lib.entries
     .map((e) => {
@@ -77,13 +89,15 @@ export function getPublications(file = 'src/data/publications.bib'): Publication
       ].filter(([, href]) => href).map(([label, href]) => ({ label, href }));
       return {
         key: e.key,
-        group: classify(e.type, f, rawVenue),
+        group: classify(f, rawVenue),
         title: join(f.title),
         authors: (f.author ?? []).map((a: any, i: number) => ({
           name: a.name ?? [a.firstName, a.prefix, a.lastName].filter(Boolean).join(' '),
+          apa: apaName(a),
           equal: equal.has(i + 1),
         })),
         kind: rawVenue.match(/^(Poster|Talk) @/)?.[1] as Publication['kind'],
+        preprint: isPreprint(e.type, f, rawVenue),
         venue: rawVenue.replace(/^(Poster|Talk) @\s*/, ''),
         status: join(f.status) || undefined,
         year: join(f.year),

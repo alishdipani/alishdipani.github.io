@@ -8,20 +8,26 @@ import '@fontsource/source-serif-4/latin-400-italic.css';
 import '@fontsource/source-serif-4/latin-600.css';
 import '@fontsource/source-code-pro/latin-400.css';
 import '../styles/global.css';
-import { SITE, NAV, PREVIEW, url } from '../lib/site';
+import { SITE, NAV, PREVIEW, url, type Credit } from '../lib/site';
 
 interface Props {
   title?: string;
   description?: string;
   noindex?: boolean;
-  // Pages that show NGC thumbnails (Blog, Home) credit the images in the footer.
-  imageCredit?: boolean;
+  // Footer credit lines for the images the page shows (Blog list, posts with an NGC image).
+  credits?: Credit[];
+  // Posts lay out their own wider grid (sticky contents, margin notes).
+  wide?: boolean;
+  // Link previews (Open Graph): an image path and the page type.
+  image?: string;
+  type?: 'website' | 'article';
 }
-const { title, description = SITE.description, noindex = false, imageCredit = false } = Astro.props;
+const { title, description = SITE.description, noindex = false, credits = [], wide = false, image, type = 'website' } = Astro.props;
 const pageTitle = title ? `${title} · ${SITE.name}` : SITE.name;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const path = Astro.url.pathname;
-const isCurrent = (href: string) => (href === '/' ? path === url('/') : path.startsWith(url(href)));
+const isHome = path === url('/');
+const isCurrent = (href: string) => path.startsWith(url(href));
 ---
 <!doctype html>
 <html lang="en">
@@ -32,6 +38,13 @@ const isCurrent = (href: string) => (href === '/' ? path === url('/') : path.sta
     <meta name="description" content={description} />
     {(PREVIEW || noindex) && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonical} />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={title ?? SITE.name} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={SITE.name} />
+    {image && <meta property="og:image" content={new URL(url(image), Astro.site)} />}
+    <meta name="twitter:card" content="summary" />
     <link rel="icon" href="data:," />
     <link rel="alternate" type="application/rss+xml" title={`${SITE.name} · Blog`} href={url('/feed.xml')} />
     <slot name="head" />
@@ -45,7 +58,7 @@ const isCurrent = (href: string) => (href === '/' ? path === url('/') : path.sta
   </head>
   <body>
     <header class="site-header">
-      <a class="site-name" href={url('/')}>{SITE.name}</a>
+      {isHome ? <span class="site-name">{SITE.name}</span> : <a class="home-link" href={url('/')}>← Home</a>}
       <div class="header-end">
         <nav aria-label="Main">
           {NAV.map((item) => (
@@ -59,14 +72,14 @@ const isCurrent = (href: string) => (href === '/' ? path === url('/') : path.sta
         </button>
       </div>
     </header>
-    <main>
+    <main class:list={[wide && 'main-post']}>
       <slot />
     </main>
     <footer class="site-footer">
-      {imageCredit && (
-        // Wording required by the Legacy Surveys image license (CC BY 4.0); keep it exactly as is.
-        <p>Images: <a href="https://www.legacysurvey.org/">Legacy Surveys / D. Lang (Perimeter Institute)</a></p>
-      )}
+      {credits.map((c) => (
+        // Credit wording is required by the image licenses; keep it exactly as is.
+        <p>{c.label}: <a href={c.href}>{c.text}</a></p>
+      ))}
       <p>© {new Date().getFullYear()} {SITE.name} · Built with <a href="https://astro.build">Astro</a>, with help from Claude</p>
     </footer>
     <script>

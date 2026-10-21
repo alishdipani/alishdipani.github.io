@@ -1,22 +1,24 @@
 ---
 title: "NGC: an ode to those who dare to keep looking up"
 date: 2026-10-21
-description: "Every post on this blog is paired with an object from the New General Catalogue."
 ngc:
-  name: "NGC 1808"
-  image: "/images/ngc/ngc1808-header.jpg"
-  thumb: "/images/ngc/ngc1808-thumb.jpg"
-  medium: "/images/ngc/ngc1808-medium.jpg"
-  type: "Spiral galaxy"
-  description: "Spiral galaxy in Columba"
-  credit: "Legacy Surveys / D. Lang (Perimeter Institute)"
-  creditUrl: "https://www.legacysurvey.org/viewer?ra=76.92642&dec=-37.51306&layer=ls-dr10&zoom=14"
-  objectUrl: "https://en.wikipedia.org/wiki/NGC_1808"
+  # Manual exception (Alish, Oct 21 16:26): the Milky Way, from ESA's Gaia EDR3 all-sky colour map,
+  # square crop around the Galactic centre, not recoloured. Not in ngc-list.json or the grid.
+  source: "manual"
+  name: "Milky Way"
+  image: "/images/ngc/milky-way-post.jpg"
+  thumb: "/images/ngc/milky-way-thumb.jpg"
+  medium: "/images/ngc/milky-way-medium.jpg"
+  description: "the band of the Milky Way around the Galactic centre, from Gaia's all-sky colour map"
+  credit: "ESA/Gaia/DPAC; CC BY-SA 3.0 IGO. Acknowledgement: A. Moitinho"
+  creditUrl: "https://sci.esa.int/web/gaia/-/the-colour-of-the-sky-from-gaia-s-early-data-release-3"
+  objectUrl: "https://en.wikipedia.org/wiki/Milky_Way"
+  captionUrl: "https://en.wikipedia.org/wiki/Milky_Way" # Alish, Oct 21 16:34
+  # Caption on two fixed lines (Alish, Oct 21 16:41); only the second line is the link.
+  captionPrefix: "never an NGC, their forever home:"
+  caption: "the Milky Way"
 ---
-import Todo from '../../components/Todo.astro';
 import NgcGrid from '../../components/NgcGrid.astro';
-
-<Todo>intro text.</Todo>
 
 ## The NGCs so far
 
@@ -24,6 +26,8 @@ import NgcGrid from '../../components/NgcGrid.astro';
 
 ## Credits
 
-Images: [Legacy Surveys / D. Lang (Perimeter Institute)](https://www.legacysurvey.org/), from the Legacy Surveys Data Release 10 (DECam), licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Colors processed for this site. [Full acknowledgment](https://www.legacysurvey.org/acknowledgment/).
+NGC images: [Legacy Surveys / D. Lang (Perimeter Institute)](https://www.legacysurvey.org/), from the Legacy Surveys Data Release 10 (DECam), licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Colors processed for this site. [Full acknowledgment](https://www.legacysurvey.org/acknowledgment/).
+
+Milky Way image on this page: [ESA/Gaia/DPAC; CC BY-SA 3.0 IGO. Acknowledgement: A. Moitinho](https://sci.esa.int/web/gaia/-/the-colour-of-the-sky-from-gaia-s-early-data-release-3). The square crop used here is an adaptation of that map and is shared under the same license, [CC BY-SA 3.0 IGO](https://creativecommons.org/licenses/by-sa/3.0/igo/).
 
 Object names, types and sizes: [OpenNGC](https://github.com/mattiaverga/OpenNGC) by Mattia Verga, licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).

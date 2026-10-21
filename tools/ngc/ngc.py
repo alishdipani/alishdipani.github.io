@@ -8,7 +8,7 @@ Run through tools/ngc/ngc (sets up the venv). Subcommands:
   build                 write src/data/ngc-list.json and the local contact sheet
   make NAME --post SLUG images for one post + its ngc frontmatter; marks NAME as used
                         (shortcut: ngc NAME --post SLUG)
-  samples NAME...       header-size images of a few objects on a local page (for review)
+  samples NAME...       post-size images of a few objects on a local page (for review)
 
 Raw downloads and caches live in tools/ngc/cache/ and tools/ngc/out/ (gitignored). CI never runs this.
 """
@@ -47,10 +47,12 @@ CREDIT = 'Legacy Surveys / D. Lang (Perimeter Institute)'
 
 NATIVE_PIXSCALE = 0.262          # arcsec/px, DECam in DR10
 CHECK_SIZE = 160                 # px, check-pass cutouts (also the contact-sheet preview)
-HEADER_W, HEADER_H = 1440, 810   # post header (16:9)
+POST_SIZE = 512                  # square post image, shown at ~220–260 px (Task 6)
 THUMB_MEDIUM, THUMB_SMALL = 320, 112
 MAX_CLIPPED = 0.005              # reject if more than 0.5% of pixels clip
 MAX_CORE_ARTIFACT = 0.10         # reject when this share of the brightest pixels is green/cyan (Alish, Oct 21)
+HOT_RATIO, HOT_BRIGHT = 3.0, 0.3 # a "hot" core pixel: bright and green > 3× red (saturated core; Oct 21 15:39)
+MAX_HOT_RENDER = 2               # refuse a post image with more hot core pixels than this
 
 SKIP_TYPES = {'Dup', 'NonEx', '*', '**', '*Ass', 'Other'}  # duplicates, non-existent, stars, asterisms
 TYPE_LABELS = {
@@ -84,8 +86,8 @@ CONSTELLATIONS = {
 
 def display_name(name):
     """'NGC0628' -> 'NGC 628', 'NGC0055A' -> 'NGC 55A'."""
-    m = re.match(r'NGC0*(\d+)(\w*)$', name)
-    return f'NGC {m.group(1)}{m.group(2)}' if m else name
+    m = re.match(r'NGC0*(\d+)(\w*)(.*)$', name)  # e.g. 'NGC0454 NED02' -> 'NGC 454 NED02'
+    return f'NGC {m.group(1)}{m.group(2)}{m.group(3)}' if m else name
 
 
 def type_label(row):
@@ -218,6 +220,19 @@ def core_artifact(rgb):
     return float((green & top).sum() / max(top.sum(), 1))
 
 
+def hot_core(rgb, radius=0.12):
+    """Bright pixels near the center whose green is more than HOT_RATIO× their red. Saturated cores come
+    out green/cyan with this recipe (r-band saturates first); real galaxy cores are never that green.
+    Small cores can hide at check size, so `make` checks the final post image too."""
+    h, w = rgb.shape[:2]
+    yy, xx = np.mgrid[:h, :w]
+    core = ((yy - h / 2) ** 2 + (xx - w / 2) ** 2) <= (radius * min(h, w)) ** 2
+    intensity = rgb.mean(axis=-1)
+    with np.errstate(divide='ignore', invalid='ignore'):
+        bad = core & (intensity > HOT_BRIGHT) & (rgb[..., 1] > HOT_RATIO * np.maximum(rgb[..., 0], 1e-6))
+    return int(bad.sum())
+
+
 def assess(cube):
     """Reasons to reject a check cutout (empty list = keep), plus the processed preview."""
     reasons = []
@@ -331,12 +346,13 @@ def cmd_build(args):
     wiki_path = CACHE / 'wikipedia.json'
     wiki = json.loads(wiki_path.read_text()) if wiki_path.exists() else {}
     used = {o['id']: o.get('usedBy') for o in load_list()}
+    render_rejects = set(json.loads(RENDER_REJECTS.read_text())) if RENDER_REJECTS.exists() else set()
     objs, saturated = [], 0
     for c in load_candidates():
-        if not results.get(c['id'], {}).get('ok'):
+        if not results.get(c['id'], {}).get('ok') or c['id'] in render_rejects:
             continue
         rgb, _ = process(fits.getdata(CACHE / 'fits' / f'{c["id"]}.fits'))
-        if core_artifact(rgb) > MAX_CORE_ARTIFACT:  # saturated core: rejected
+        if core_artifact(rgb) > MAX_CORE_ARTIFACT or hot_core(rgb) > 0:  # saturated core: rejected
             saturated += 1
             continue
         objs.append({**{k: c[k] for k in ('id', 'name', 'type', 'constellation', 'size', 'ra', 'dec', 'fov', 'commonName')},
@@ -380,7 +396,7 @@ sort();
 
 # ---------------------------------------------------------------- per-post images
 
-def render(obj, width, height):
+def render(obj, width, height, rgb_out=None):
     """Download a cutout for obj at (width, height) px, framed so the field of view fits the shorter
     side, never finer than the native pixel scale; resample to the exact size if needed."""
     fov_short = obj['fov'] * 60  # arcsec across the shorter side
@@ -392,8 +408,20 @@ def render(obj, width, height):
     if not path.exists():
         fetch(cutout_url(obj['ra'], obj['dec'], pixscale, w, h), path)
     rgb, _ = process(fits.getdata(path))
+    if rgb_out is not None:
+        rgb_out.append(rgb)
     img = to_image(rgb)
     return img if img.size == (width, height) else img.resize((width, height), Image.LANCZOS)
+
+
+RENDER_REJECTS = CACHE / 'render-rejects.json'
+
+
+def note_render_reject(oid):
+    """Remember objects whose full-size image has a saturated core, so `build` leaves them out."""
+    ids = set(json.loads(RENDER_REJECTS.read_text())) if RENDER_REJECTS.exists() else set()
+    ids.add(oid)
+    RENDER_REJECTS.write_text(json.dumps(sorted(ids)))
 
 
 def find_object(name):
@@ -439,7 +467,16 @@ def cmd_make(args):
             o['usedBy'] = None
     IMAGES.mkdir(parents=True, exist_ok=True)
     base = obj['id'].lower()
-    render(obj, HEADER_W, HEADER_H).save(IMAGES / f'{base}-header.jpg', quality=86, progressive=True)
+    rgbs = []
+    post_img = render(obj, POST_SIZE, POST_SIZE, rgbs)
+    hot = hot_core(rgbs[0])
+    if hot > MAX_HOT_RENDER and not args.force:
+        note_render_reject(obj['id'])
+        sys.exit(f'{obj["name"]}: the post image has a saturated (green/cyan) core ({hot} px); pick another object '
+                 f'or pass --force')
+    for old in IMAGES.glob(f'{base}-header.jpg'):  # the 16:9 header slot is gone (Task 6)
+        old.unlink()
+    post_img.save(IMAGES / f'{base}-post.jpg', quality=88, progressive=True)
     square = render(obj, THUMB_MEDIUM, THUMB_MEDIUM)
     square.save(IMAGES / f'{base}-medium.jpg', quality=86)
     square.resize((THUMB_SMALL, THUMB_SMALL), Image.LANCZOS).save(IMAGES / f'{base}-thumb.jpg', quality=86)
@@ -447,7 +484,7 @@ def cmd_make(args):
     set_frontmatter(post, [
         'ngc:',
         f'  name: {q(obj["name"])}',
-        f'  image: {q(f"/images/ngc/{base}-header.jpg")}',
+        f'  image: {q(f"/images/ngc/{base}-post.jpg")}',
         f'  thumb: {q(f"/images/ngc/{base}-thumb.jpg")}',
         f'  medium: {q(f"/images/ngc/{base}-medium.jpg")}',
         f'  type: {q(obj["type"])}',
@@ -467,20 +504,20 @@ def cmd_samples(args):
     figs = []
     for name in args.names:
         o, _ = find_object(name)
-        f = f'samples/{o["id"].lower()}-header.jpg'
-        render(o, HEADER_W, HEADER_H).save(OUT / f, quality=86, progressive=True)
+        f = f'samples/{o["id"].lower()}-post.jpg'
+        render(o, POST_SIZE, POST_SIZE).save(OUT / f, quality=88, progressive=True)
         figs.append(f'<figure><img src="{f}" alt=""><figcaption>{o["name"]}, {o["type"]} in {o["constellation"]} · '
                     f'{o["size"][0]:g}′</figcaption></figure>')
     html = f'''<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>NGC header samples</title>
+<title>NGC post image samples</title>
 <style>
 :root{{--bg:#f1f4f8;--text:#1b2430;--muted:#4d5969}}
 @media (prefers-color-scheme:dark){{:root{{--bg:#0e1624;--text:#e3e8ef;--muted:#a1adbd}}}}
 body{{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 system-ui,sans-serif}}
 main{{max-width:68ch;margin:0 auto;padding:1.5rem 1rem}}
-img{{display:block;width:100%;height:auto;border-radius:4px}} figure{{margin:0 0 2rem}}
+img{{display:block;width:256px;height:256px;border-radius:4px}} figure{{margin:0 0 2rem;display:inline-block;vertical-align:top;width:256px;margin-right:1rem}}
 figcaption{{font-size:.85rem;color:var(--muted);margin-top:.5rem}}
-</style><main><h1>NGC header samples</h1>{"".join(figs)}</main>'''
+</style><main><h1>NGC post image samples</h1>{"".join(figs)}</main>'''
     (OUT / 'samples.html').write_text(html)
     print(f'wrote {(OUT / "samples.html").relative_to(ROOT)}')
 
@@ -496,6 +533,7 @@ def main():
     m = sub.add_parser('make')
     m.add_argument('name')
     m.add_argument('--post', required=True)
+    m.add_argument('--force', action='store_true', help='use the object even if its core looks saturated')
     s = sub.add_parser('samples')
     s.add_argument('names', nargs='+')
     argv = sys.argv[1:]

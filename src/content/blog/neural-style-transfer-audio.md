@@ -5,7 +5,7 @@ tags: ["audio-ml", "deep-learning"]
 category: "science"
 ngc:
   name: "NGC 578"
-  image: "/images/ngc/ngc0578-header.jpg"
+  image: "/images/ngc/ngc0578-post.jpg"
   thumb: "/images/ngc/ngc0578-thumb.jpg"
   medium: "/images/ngc/ngc0578-medium.jpg"
   type: "Spiral galaxy"

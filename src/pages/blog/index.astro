@@ -1,22 +1,21 @@
 ---
 import Base from '../../layouts/Base.astro';
 import PostList from '../../components/PostList.astro';
-import { getPosts, url } from '../../lib/site';
+import { getPosts, url, imageCredits } from '../../lib/site';
 
-// Draft wording from Alish (Command Center, Oct 21 13:06), pending his confirmation. Edit here.
-const HUMAN_WRITTEN_NOTE = 'Every post here is written by me. I use AI tools for editing, figures or code, but not for the writing.';
 
 const posts = await getPosts();
+const credits = imageCredits(posts.map((p) => (p.data.ngc?.thumb ? p.data.ngc : undefined)));
 ---
-<Base title="Blog" imageCredit>
-  <h1>Blog</h1>
+<Base title="Blog" credits={credits}>
+  <h1 class="sr-only">Blog</h1>
+  <!-- Wording: Alish's decision (Command Center, Oct 21 15:34). -->
   <p class="blog-note">
-    {HUMAN_WRITTEN_NOTE}<br />
-    Each post is paired with an object from the New General Catalogue (<a href={url('/blog/ngc/')}>why?</a>)
+    All posts written by me (a human). Each idea is paired with a New General Catalogue object&nbsp;(<a href={url('/blog/ngc/')}>why?</a>)
   </p>
   <PostList posts={posts} />
 </Base>
 
 <style>
-  .blog-note { margin: -0.5rem 0 1.5rem; font: 0.9rem/1.5 var(--font-ui); color: var(--muted); }
+  .blog-note { margin: 0 0 var(--s3); font: 0.88rem/1.55 var(--font-body); color: var(--muted); }
 </style>

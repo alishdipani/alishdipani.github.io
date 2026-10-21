@@ -39,7 +39,7 @@ function loadBib(file) {
   if (!fm.bibliography) return null;
   const base = file.path ? path.dirname(file.path) : path.resolve('src/content/blog');
   const bibPath = path.resolve(base, fm.bibliography);
-  const lib = parse(fs.readFileSync(bibPath, 'utf8'));
+  const lib = parse(fs.readFileSync(bibPath, 'utf8'), { sentenceCase: false }); // keep titles as entered
   if (lib.errors.length) throw new Error(`${bibPath}: ${JSON.stringify(lib.errors)}`);
   return { bibPath, entries: new Map(lib.entries.map((e) => [e.key, e])) };
 }

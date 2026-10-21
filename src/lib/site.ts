@@ -12,9 +12,9 @@ export const PREVIEW = BASE !== '';
 // Prefix a root-relative path ('/blog/') with the base path.
 export const url = (path: string) => BASE + path;
 
-// Paths are root-relative; wrap them in url() when linking.
+// Paths are root-relative; wrap them in url() when linking. Home is reached from the
+// header's left side ("← Home"), so it isn't in the nav (Task 6).
 export const NAV = [
-  { href: '/', label: 'Home' },
   { href: '/publications/', label: 'Publications' },
   { href: '/blog/', label: 'Blog' },
   { href: '/cv/', label: 'CV' },
@@ -28,4 +28,24 @@ export async function getPosts({ unlisted = false } = {}) {
 
 export function formatDate(date: Date) {
   return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
+}
+
+// Footer credit lines for NGC images. The Legacy Surveys wording is required by its CC BY 4.0 license;
+// manual images bring their own (exact) credit text.
+export type Credit = { label: string; text: string; href: string };
+export const LEGACY_CREDIT: Credit = {
+  label: 'NGC images',
+  text: 'Legacy Surveys / D. Lang (Perimeter Institute)',
+  href: 'https://www.legacysurvey.org/',
+};
+type NgcData = { source?: string; name: string; credit: string; creditUrl: string; thumb?: string };
+export function imageCredits(ngcs: (NgcData | undefined)[]): Credit[] {
+  const credits: Credit[] = [];
+  if (ngcs.some((n) => n?.source !== 'manual' && n?.credit.startsWith('Legacy Surveys'))) credits.push(LEGACY_CREDIT);
+  for (const n of ngcs) {
+    if (n?.source === 'manual' && !credits.some((c) => c.text === n.credit)) {
+      credits.push({ label: `${n.name} image`, text: n.credit, href: n.creditUrl });
+    }
+  }
+  return credits;
 }

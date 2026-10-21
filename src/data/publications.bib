@@ -1,12 +1,71 @@
 % Publications page data (src/pages/publications.astro). Besides normal BibTeX fields, optional:
-%   group={preprint|paper|talk}  section (otherwise inferred: venues starting "Poster"/"Talk" are talks,
-%                                misc/unpublished entries or preprint servers are preprints, the rest papers)
-%   summary={...}  one line under Preprints and Papers entries
+%   group={publication|presentation}  section (otherwise inferred: venues starting "Poster"/"Talk"
+%                                     are presentations, everything else a publication)
+%   status={Preprint|Report|Under review|…}   label shown after the venue (and marks a preprint)
+%   summary={...}  one line under Publications entries
 %   equal={1,2}    author positions with equal contribution (marked *)
-%   status={Under review}   shown after the venue
 %   url / doi (Paper chip + title link), pdf, arxiv, code, poster, slides (link chips)
 
+% Equal contribution (equal={…}) per Alish, Oct 21 15:43.
+% Added Oct 21 2026 from Alish's Google Scholar export; authors, DOIs and dates from bioRxiv/Crossref and Zenodo.
+% Within a year, entries are listed newest first in this file (the page keeps the file order).
+
+% bioRxiv, posted 2026-10-14
+@article{deb2026braintree,
+  title={Braintree: An agentic framework for in-silico vision neuroscience},
+  author={Deb, Mainak and Wang, Ruolin and Dipani, Alish and Murty, N Apurva Ratan},
+  journal={bioRxiv},
+  year={2026},
+  doi={10.64898/2026.10.07.756448},
+  group={publication},
+  status={Preprint}
+}
+
+% Zenodo, published 2026-10-01
+@article{ohue2026shared,
+  title={What a Shared Week of Open Python Learning Revealed About Access, Motivation, and the Path into Computational Neuroscience},
+  author={Ohue, Peter and Gbayisomore, Tolulope and Dipani, Alish and Guha, Aparajeeta and Kurmashev, Ruslan and Oladokun, Afeez and Oladele, Tolulope and Ranasinghe, Chathura and Sinha, Manisha and Yang, Apollo and Umoquit, Muriah},
+  journal={Zenodo},
+  year={2026},
+  doi={10.5281/zenodo.23082542},
+  group={publication},
+  status={Report}
+}
+
+% bioRxiv, posted 2026-09-21
+@article{wang2026zero,
+  equal={1,2},
+  title={Zero-shot evaluations expose structured generalization limits in predictive models of the brain},
+  author={Wang, Ruolin and Deb, Mayukh and Abate, Alex and Dipani, Alish and Dudipala, Kushal R and Chillarege, Sanjana and Ravikanti, Kruthik and Li, Yuxuan and Al-Tahan, Haider and Koushik, Ranjani and Mieczkowski, Elizabeth and Fung, Herrick and Kanwisher, Nancy and Murty, N Apurva Ratan},
+  journal={bioRxiv},
+  year={2026},
+  doi={10.64898/2026.09.15.751562},
+  group={publication},
+  status={Preprint}
+}
+
+% bioRxiv, posted 2026-06-02
+@article{dipani2026category,
+  title={Category selectivity observed in the human brain is distinct from category selectivity observed in artificial neural networks},
+  author={Dipani, Alish and Murty, N Apurva Ratan},
+  journal={bioRxiv},
+  year={2026},
+  doi={10.64898/2026.05.29.728609},
+  group={publication},
+  status={Preprint}
+}
+
+% CCN 2026 poster (Alish, Oct 21 15:24)
+@inproceedings{martinez2026encoding,
+  title={Encoding models reveal selective differences in face representations in developmental prosopagnosia},
+  author={Martinez-Addiego, Florencia and Stehr, Daniel and Dipani, Alish and Duchaine, Bradley and Murty, N Apurva Ratan},
+  booktitle={Poster @ Conference on Cognitive Computational Neuroscience (CCN)},
+  year={2026},
+  group={presentation}
+}
+
 @article{dipani2024linking,
+  equal={1,2},
   abbr={PNAS},
   title={Linking faces to social cognition: The temporal pole as a potential social switch},
   author={Dipani, Alish and McNeal, Nikolas and Ratan Murty, N Apurva},
@@ -58,7 +117,7 @@
 
 # VSS 2025
 @article{dipani2025category,
-  group={talk},
+  group={presentation},
   abbr={VSS},
   title={Category selectivity observed in the human FFA, PPA, and EBA is distinct from category selectivity observed in artificial neural network units},
   author={Dipani, Alish and Murty, N Apurva Ratan},
@@ -140,7 +199,9 @@
 
 # InterSpeech 2021
 @article{hu2021avatr,
-  group={paper},
+  equal={1,2,3},
+  group={publication},
+  arxiv={2105.00609},
   abbr={InterSpeech},
   title={AvaTr: One-shot speaker extraction with transformers},
   author={Hu, Shell Xu and Arefin, Md Rifat and Nguyen, Viet-Nhat and Dipani, Alish and Pitkow, Xaq and Tolias, Andreas Savas},
@@ -150,7 +211,7 @@
 
 # MediaEval 2020
 @article{dipani2020recognizing,
-  group={talk},
+  group={presentation},
   abbr={MediaEval},
   title={Recognizing Music Mood and Theme Using Convolutional Neural Networks and Attention.},
   author={Dipani, Alish and Iyer, Gaurav and Baths, Veeky},
@@ -160,6 +221,7 @@
 
 # Bernstein Conference 2020
 @article{avisha2020shared,
+  equal={1,2,3},
   abbr={Bernstein},
   title={Classifying fMRI data for context-dependent and context-independent language tasks},
   author={Akshi and Kalra, Kanishk and Choudhary, Yash and Dipani, Alish and Bhattacharjee, Anindita and Urai, Anne},
