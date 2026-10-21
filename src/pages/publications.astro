@@ -3,9 +3,10 @@ import Base from '../layouts/Base.astro';
 import { GROUPS, getPublications } from '../lib/publications';
 import { SITE } from '../lib/site';
 
-// Format: Alish's decision (Command Center, Oct 21 12:59).
+// Format: Alish's decisions (Command Center, Oct 21 12:59 and 13:20).
 const pubs = getPublications();
-// Empty groups (e.g. no preprints yet) are not shown; numbering restarts in each group.
+// Empty groups (e.g. no preprints yet) are not shown. Numbering restarts in each group and counts up
+// from the oldest entry (Alish, Oct 21 13:20), so adding a paper never renumbers older ones.
 const groups = GROUPS.map((g) => ({ ...g, items: pubs.filter((p) => p.group === g.id) })).filter((g) => g.items.length);
 const hasEqual = pubs.some((p) => p.authors.some((a) => a.equal));
 ---
@@ -23,7 +24,7 @@ const hasEqual = pubs.some((p) => p.authors.some((a) => a.equal));
         {g.items.map((p, i) => (
           <li class="pub" id={p.key}>
             <p class="pub-title">
-              <span class="pub-num">[{i + 1}]</span>
+              <span class="pub-num">[{g.items.length - i}]</span>
               <strong>{p.url ? <a href={p.url}>{p.title}</a> : p.title}</strong>
             </p>
             <p class="pub-meta">
@@ -33,16 +34,20 @@ const hasEqual = pubs.some((p) => p.authors.some((a) => a.equal));
               {p.kind && g.id === 'talk' && <span class="pub-kind">{p.kind}</span>}
               <em>{p.venue}</em>{p.status && <> · {p.status}</>}{p.year && <>, {p.year}</>}
             </p>
+            {(p.links.length > 0 || g.id !== 'talk') && (
             <div class="pub-links">
               {p.links.map((l) => <a class="chip" href={l.href}>{l.label}</a>)}
-              <details class="bibtex">
-                <summary class="chip">BibTeX</summary>
-                <div class="bibtex-box">
-                  <pre><code>{p.bibtex}</code></pre>
-                  <button type="button" class="chip" data-copy>Copy</button>
-                </div>
-              </details>
+              {g.id !== 'talk' && (
+                <details class="bibtex">
+                  <summary class="chip">BibTeX</summary>
+                  <div class="bibtex-box">
+                    <pre><code>{p.bibtex}</code></pre>
+                    <button type="button" class="chip" data-copy>Copy</button>
+                  </div>
+                </details>
+              )}
             </div>
+            )}
             {p.summary && g.id !== 'talk' && <p class="pub-summary">{p.summary}</p>}
           </li>
         ))}
