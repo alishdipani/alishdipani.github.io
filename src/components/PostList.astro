@@ -1,0 +1,26 @@
+---
+// List of posts with their NGC thumbnails, title and date (Home and the blog index).
+import PostThumb from './PostThumb.astro';
+import { formatDate, url } from '../lib/site';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  posts: CollectionEntry<'blog'>[];
+}
+const { posts } = Astro.props;
+const credited = posts.some((p) => p.data.ngc?.thumb);
+---
+<ul class="post-list post-list-thumbs">
+  {posts.map((post) => (
+    <li>
+      <PostThumb ngc={post.data.ngc} />
+      <div>
+        <a href={url(`/blog/${post.id}/`)}>{post.data.title}</a>
+        <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+      </div>
+    </li>
+  ))}
+</ul>
+{credited && (
+  <p class="image-credit">Images: <a href="https://www.legacysurvey.org/">Legacy Surveys / D. Lang (Perimeter Institute)</a></p>
+)}

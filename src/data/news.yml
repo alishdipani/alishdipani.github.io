@@ -1,0 +1,6 @@
+# Recent news for Home, newest shown first (Home shows the latest 5).
+# One entry per item:
+#   - date: 2026-10-21        # YYYY-MM-DD
+#     text: What happened.    # plain text, one or two sentences
+#     link: https://…         # optional
+[]

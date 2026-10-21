@@ -1,71 +1,122 @@
 ---
 import Base from '../layouts/Base.astro';
 import Todo from '../components/Todo.astro';
+import PostList from '../components/PostList.astro';
 import { getPosts, formatDate, SITE, url } from '../lib/site';
+import { getNews } from '../lib/news';
 
-// Heading line locked by Alish (Oct 21).
+// Blurb: draft v1 from Alish (Command Center, Oct 21 12:08), word for word.
 const headingLine = 'I study the cognitive capabilities and inner workings of AI models.';
-// Research directions from the site brief (Alish, Oct 21).
-const directions = ['Neuro- & cognitive science for AI', 'AI for neuro- & cognitive science'];
+const directions = [
+  {
+    label: 'Neuro- & cognitive science for AI.',
+    text: 'Studying AI models the way cognitive scientists study minds: controlled experiments that test what models perceive, what they know, and what they know about themselves.',
+  },
+  {
+    label: 'AI for neuro- & cognitive science.',
+    text: 'Building AI systems, such as agents that design and run in-silico experiments, that speed up how we study brains and minds.',
+  },
+];
+const cvPdf = 'https://drive.google.com/file/d/15s30n_O6cHSKVYm-3lO_9BS3PyalfNe9/view?usp=sharing';
+const email = 'alish.dipani@gmail.com';
 const contact = [
-  { label: 'Email', href: 'mailto:alish.dipani@gmail.com', text: 'alish.dipani@gmail.com' },
   { label: 'Google Scholar', href: 'https://scholar.google.com/citations?user=i028n20AAAAJ' },
   { label: 'GitHub', href: 'https://github.com/alishdipani' },
   { label: 'X', href: 'https://x.com/alishdipani' },
 ];
+
+const news = getNews().slice(0, 5);
 const recentPosts = (await getPosts()).slice(0, 3);
 ---
 <Base>
-  <section id="about">
-    <img src={url('/assets/img/AlishDipani_picture.jpg')} alt={SITE.name} width="200" />
-    <h1>{SITE.name}</h1>
-    <p class="lead">{headingLine}</p>
-    <ul>
-      {directions.map((d) => (
-        <li>
-          <strong>{d}</strong>
-          <Todo>short explainer.</Todo>
-        </li>
-      ))}
-    </ul>
-    <Todo>2–3 lines on current position, foundations and past places.</Todo>
-    <p><a class="button" href={url('/cv/')}>CV</a> <a href="#contact">Contact</a></p>
+  <section class="intro">
+    <img class="intro-photo" src={url('/assets/img/AlishDipani_picture.jpg')} alt={SITE.name} width="160" height="160" />
+    <div>
+      <h1 class="intro-name">{SITE.name}</h1>
+      <p class="intro-heading">{headingLine}</p>
+    </div>
   </section>
 
+  <section class="directions" aria-label="Research directions">
+    {directions.map((d) => (
+      <div class="direction">
+        <h2 class="direction-label">{d.label}</h2>
+        <p>{d.text}</p>
+      </div>
+    ))}
+  </section>
+
+  <p class="position">
+    I'm a PhD student and CoCo Fellow at Georgia Tech, advised by Apurva Ratan Murty and Dobromir Rahnev. Before that, I worked on human vision and reading at Northeastern University <span class="todo todo-inline">TODO(Alish): confirm role/lab; add earlier places and undergrad</span>. I also create course content for and teach at Neuromatch Academy (computational neuroscience, deep learning, NeuroAI).
+  </p>
+
+  <nav class="contact" aria-label="CV and contact">
+    <a class="button" href={cvPdf}>CV</a>
+    <a href={`mailto:${email}`}>Email</a> <span class="contact-email">{email}</span>
+    {contact.map((c) => <a href={c.href}>{c.label}</a>)}
+  </nav>
+
   <section id="overview">
-    <h2>Overview</h2>
-    <Todo>overview image.</Todo>
+    <div class="overview-slot">
+      <Todo>overview image.</Todo>
+    </div>
   </section>
 
   <section id="news">
     <h2>News</h2>
-    <Todo>recent news items (including papers).</Todo>
+    {news.length === 0 ? (
+      <Todo>add news items (src/data/news.yml).</Todo>
+    ) : (
+      <ul class="news-list">
+        {news.map((n) => (
+          <li>
+            <time datetime={n.date.toISOString()}>{formatDate(n.date)}</time>
+            <span>{n.link ? <a href={n.link}>{n.text}</a> : n.text}</span>
+          </li>
+        ))}
+      </ul>
+    )}
   </section>
 
   <section id="posts">
     <h2>Recent posts</h2>
-    <ul class="post-list">
-      {recentPosts.map((post) => (
-        <li>
-          <a href={url(`/blog/${post.id}/`)}>{post.data.title}</a>
-          <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
-        </li>
-      ))}
-    </ul>
+    <PostList posts={recentPosts} />
     <p><a href={url('/blog/')}>All posts →</a></p>
   </section>
-
-  <section id="contact">
-    <h2>Contact</h2>
-    <ul>
-      {contact.map((c) => (
-        <li>{c.text ? <>{c.label}: <a href={c.href}>{c.text}</a></> : <a href={c.href}>{c.label}</a>}</li>
-      ))}
-    </ul>
-  </section>
-
-  <section id="footnotes">
-    <h2>Footnotes</h2>
-    <Todo>footnotes.</Todo>
-  </section>
 </Base>
+
+<style>
+  .intro { display: flex; align-items: center; gap: 1.5rem; margin-top: 1rem; }
+  .intro-photo { width: 160px; height: 160px; object-fit: cover; border-radius: 6px; flex: none; }
+  .intro-name { margin: 0 0 0.4rem; font-size: 2.2rem; }
+  .intro-heading { margin: 0; font: 600 1.3rem/1.4 var(--font-ui); }
+
+  .directions { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin: 2rem 0 1.5rem; }
+  .direction { background: var(--surface); border-radius: 6px; padding: 1rem 1.1rem; }
+  .direction-label { font-size: 1.05rem; margin: 0 0 0.4rem; }
+  .direction p { margin: 0; font-size: 1rem; line-height: 1.55; }
+
+  .position { margin: 0 0 1.25rem; }
+  .todo-inline { display: inline; padding: 0.05rem 0.35rem; }
+
+  .contact { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem 1rem; font-family: var(--font-ui); }
+  .contact-email { color: var(--muted); margin-left: -0.6rem; }
+  .contact-email::before { content: '('; }
+  .contact-email::after { content: ')'; }
+
+  .overview-slot {
+    display: flex; align-items: center; justify-content: center;
+    min-height: 12rem; padding: 1rem;
+    border: 2px dashed var(--border); border-radius: 6px;
+  }
+
+  .news-list { list-style: none; padding: 0; }
+  .news-list li { display: grid; grid-template-columns: 7.5rem 1fr; gap: 0.75rem; margin: 0.5rem 0; }
+
+
+  @media (max-width: 40rem) {
+    .intro { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .directions { grid-template-columns: 1fr; }
+    .news-list li { grid-template-columns: 1fr; gap: 0; }
+  }
+</style>
