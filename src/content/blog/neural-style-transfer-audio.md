@@ -6,11 +6,11 @@ category: "science"
 ---
 Summary: Generation of new music using Neural Style Transfer Algorithm.  
 
-## <ins>Introduction</ins>
+## Introduction
 
 "Style Transfer" on images has recently become very popular and an active research topic, this shows how Convolutional Neural Networks(CNNs) have the power to adapt to a great variety of tasks. Here, we extend and modify this algorithm for audio signals and use the power of CNNs and generate new audio from a style audio that can be the tune or the beat and a content audio that can be someone just speaking the lyrics of a song. 
 
-## <ins>Neural Style Transfer on Images</ins>
+## Neural Style Transfer on Images
 
 "Neural Style Transfer" was originally for images, the idea is to use a CNN model for extracting the style of an image called style image and content of another image called content image and generating a new image having the style of the style image and content of the content image. This is done by encoding the two images using a CNN Model and then taking a white noise image and minimizing the loss between this image and content and style images so that it has the content same as the content image and style as style image. <br><br>
 Let $$ \vec{p} $$ be the content image,  $$ \vec{a} $$ be the style image and $$ \vec{x} $$ be the white noise image (i.e. the generated image) which will be the final image.  
@@ -46,7 +46,7 @@ To calculate the style and content loss, standard error back-propagation is done
 To calculate $$ L_{total} $$, $$ L_{content} $$ is weighted by $$ \alpha $$ and $$ L_{style} $$ is weighted by $$ \beta $$.  
 The ratio of $$ \frac{\alpha}{\beta} $$ is generally kept $$ 10^{-3} $$ or $$ 10^{-4} $$, this prevents the style from dominating and therefore preventing the loss of content.
 
-## <ins>Neural Style Transfer on Audio Signals</ins>
+## Neural Style Transfer on Audio Signals
 
 The base idea for Neural Style algorithm for audio signals is same as for images, the extracted style of the style audio is to be applied to the generated audio. Here, the content audio is directly used for generation instead of noise audio as this prevents calculation of content loss and eliminates the noise from the generated audio.
 
@@ -83,25 +83,25 @@ Also, instead of using white noise to generate the final audio, the content audi
 To calculate the style loss, standard error back-propagation is done.
 
 <!---
-## <ins>Implementation</ins>
+## Implementation
 --->
 
 <!---
-## <ins>Conclusion</ins>
+## Conclusion
 
 Convolutional Neural Networks can be used for 
 
 --->
 
-## <ins>Future Work</ins>
+## Future Work
 
 With the coming of new generative models like Generative Adversarial Networks the neural style transfer algorithm can be modified and can be used for better results.
 
-## <ins>Technology Overview</ins>
+## Technology Overview
 
 Python 2.7 is used for implementation and the model is implemented using Deep Learning library PyTorch. Librosa is used for audio analysis. The model is executed on Intel® AI DevCloud which is 3x to 4x faster than the workstation being used, Intel® AI DevCloud runs the models and processes on high-performance and efficient Intel® Xeon® processors.
 
-## <ins>References</ins>
+## References
 
 #### Papers :
 
