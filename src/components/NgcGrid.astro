@@ -1,0 +1,35 @@
+---
+// Grid of the NGCs used by the other listed posts so far, newest post first (used in the NGC post).
+// Medium thumbnails (~160 px) with name and type below, each linking to its post.
+import { getPosts, url } from '../lib/site';
+
+const used = (await getPosts()).filter((p) => p.data.ngc?.medium && p.id !== 'ngc'); // not the NGC post itself
+---
+{used.length > 0 ? (
+  <ul class="ngc-grid">
+    {used.map((post) => {
+      const ngc = post.data.ngc!;
+      return (
+        <li>
+          <a href={url(`/blog/${post.id}/`)}>
+            <img src={url(ngc.medium!)} alt={`${ngc.name}, the image of the post “${post.data.title}”`} width="160" height="160" loading="lazy" />
+            <span class="ngc-name">{ngc.name}</span>
+          </a>
+          {ngc.type && <span class="ngc-type">{ngc.type}</span>}
+        </li>
+      );
+    })}
+  </ul>
+) : (
+  <p class="ngc-empty">No posts have an NGC yet.</p>
+)}
+
+<style>
+  .ngc-grid { list-style: none; padding: 0; margin: 2rem 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1.5rem 1rem; }
+  .ngc-grid li { font-family: var(--font-ui); margin: 0; }
+  .ngc-grid a { text-decoration: none; }
+  .ngc-grid img { display: block; width: 160px; max-width: 100%; height: auto; aspect-ratio: 1; border-radius: 4px; background: var(--surface); }
+  .ngc-name { display: block; margin-top: 0.4rem; font-weight: 600; }
+  .ngc-type { display: block; color: var(--muted); font-size: 0.85rem; line-height: 1.4; }
+  .ngc-empty { font-family: var(--font-ui); color: var(--muted); }
+</style>

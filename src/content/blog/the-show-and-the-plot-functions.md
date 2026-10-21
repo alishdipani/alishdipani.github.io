@@ -3,6 +3,16 @@ title: "The show and the plot functions"
 date: 2019-07-26
 tags: ["gsoc2019", "rubyplot"]
 category: "open-source development"
+ngc:
+  name: "NGC 1365"
+  image: "/images/ngc/ngc1365-header.jpg"
+  thumb: "/images/ngc/ngc1365-thumb.jpg"
+  medium: "/images/ngc/ngc1365-medium.jpg"
+  type: "Spiral galaxy"
+  description: "Spiral galaxy in Fornax"
+  credit: "Legacy Surveys / D. Lang (Perimeter Institute)"
+  creditUrl: "https://www.legacysurvey.org/viewer?ra=53.40154&dec=-36.14039&layer=ls-dr10&zoom=13"
+  objectUrl: "https://en.wikipedia.org/wiki/NGC_1365"
 ---
 Summary: Multi plots in Rubyplot.  
 

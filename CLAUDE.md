@@ -35,3 +35,9 @@ The style guide is `src/content/blog/_template-demo.mdx` (unlisted, at `/blog/te
 - MDX components in `src/components/`: `PullQuote`, `Sidenote`, `Figure` (`width="text|wide|full"`), interactive figures in `figures/`
 - section markers, heading anchors and the ∎ end mark are added by `src/lib/rehype-post.mjs`
 
+## NGC images (tools/ngc/, never run in CI)
+One source (Legacy Surveys DR10 south, `fits-cutout`) and one fixed color recipe (`process()` in `tools/ngc/ngc.py`).
+- One-time, already done: `npm run ngc -- candidates`, `check` (cached and resumable, ~1 req/s), `wiki`, `build` (also rejects objects whose core saturates to green/cyan) → `src/data/ngc-list.json` (committed) + `tools/ngc/out/contact-sheet.html` (local).
+- Per post: `npm run ngc -- NGC1300 --post <slug>` writes `public/images/ngc/<id>-{header,medium,thumb}.jpg`, fills the post's `ngc:` frontmatter and marks the object `usedBy` that post; it refuses an object another post uses.
+- Image credit must stay exactly "Legacy Surveys / D. Lang (Perimeter Institute)" with a link (CC BY 4.0 terms); the NGC post (`src/content/blog/ngc.mdx`, `/blog/ngc/`) carries the full credits (Legacy Surveys, OpenNGC CC BY-SA 4.0) and the grid (`NgcGrid`).
+- `tools/ngc/.venv/`, `cache/` (FITS, ~1.2 GB) and `out/` are gitignored; delete `cache/` to free space.

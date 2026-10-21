@@ -3,6 +3,16 @@ title: "Neural Style Transfer on Audio Signals"
 date: 2018-08-29
 tags: ["audio-ml", "deep-learning"]
 category: "science"
+ngc:
+  name: "NGC 578"
+  image: "/images/ngc/ngc0578-header.jpg"
+  thumb: "/images/ngc/ngc0578-thumb.jpg"
+  medium: "/images/ngc/ngc0578-medium.jpg"
+  type: "Spiral galaxy"
+  description: "Spiral galaxy in Cetus"
+  credit: "Legacy Surveys / D. Lang (Perimeter Institute)"
+  creditUrl: "https://www.legacysurvey.org/viewer?ra=22.62121&dec=-22.66736&layer=ls-dr10&zoom=14"
+  objectUrl: "https://en.wikipedia.org/wiki/NGC_578"
 ---
 Summary: Generation of new music using Neural Style Transfer Algorithm.  
 

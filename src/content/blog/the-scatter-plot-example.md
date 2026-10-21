@@ -3,6 +3,16 @@ title: "The Scatter plot example"
 date: 2019-06-10
 tags: ["gsoc2019", "rubyplot"]
 category: "open-source development"
+ngc:
+  name: "NGC 288"
+  image: "/images/ngc/ngc0288-header.jpg"
+  thumb: "/images/ngc/ngc0288-thumb.jpg"
+  medium: "/images/ngc/ngc0288-medium.jpg"
+  type: "Globular cluster"
+  description: "Globular cluster in Sculptor"
+  credit: "Legacy Surveys / D. Lang (Perimeter Institute)"
+  creditUrl: "https://www.legacysurvey.org/viewer?ra=13.19771&dec=-26.58989&layer=ls-dr10&zoom=13"
+  objectUrl: "https://en.wikipedia.org/wiki/NGC_288"
 ---
 Summary: Explaining the scatter plot example.  
 

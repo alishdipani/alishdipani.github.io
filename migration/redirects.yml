@@ -49,3 +49,6 @@
 # al-folio demo pages that were never in the nav
 /projects/: /blog/  # ?
 /repositories/: /  # ?
+
+# New-site moves (not old-site URLs)
+/ngc/: /blog/ngc/

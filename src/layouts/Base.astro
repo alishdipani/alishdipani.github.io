@@ -14,8 +14,10 @@ interface Props {
   title?: string;
   description?: string;
   noindex?: boolean;
+  // Pages that show NGC thumbnails (Blog, Home) credit the images in the footer.
+  imageCredit?: boolean;
 }
-const { title, description = SITE.description, noindex = false } = Astro.props;
+const { title, description = SITE.description, noindex = false, imageCredit = false } = Astro.props;
 const pageTitle = title ? `${title} · ${SITE.name}` : SITE.name;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const path = Astro.url.pathname;
@@ -61,6 +63,10 @@ const isCurrent = (href: string) => (href === '/' ? path === url('/') : path.sta
       <slot />
     </main>
     <footer class="site-footer">
+      {imageCredit && (
+        // Wording required by the Legacy Surveys image license (CC BY 4.0); keep it exactly as is.
+        <p>Images: <a href="https://www.legacysurvey.org/">Legacy Surveys / D. Lang (Perimeter Institute)</a></p>
+      )}
       <p>© {new Date().getFullYear()} {SITE.name} · Built with <a href="https://astro.build">Astro</a>, with help from Claude</p>
     </footer>
     <script>

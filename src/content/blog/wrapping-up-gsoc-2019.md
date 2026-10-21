@@ -3,6 +3,16 @@ title: "Wrapping up GSoC 2019"
 date: 2019-08-22
 tags: ["gsoc2019", "rubyplot"]
 category: "open-source development"
+ngc:
+  name: "NGC 1300"
+  image: "/images/ngc/ngc1300-header.jpg"
+  thumb: "/images/ngc/ngc1300-thumb.jpg"
+  medium: "/images/ngc/ngc1300-medium.jpg"
+  type: "Spiral galaxy"
+  description: "Spiral galaxy in Eridanus"
+  credit: "Legacy Surveys / D. Lang (Perimeter Institute)"
+  creditUrl: "https://www.legacysurvey.org/viewer?ra=49.92117&dec=-19.41136&layer=ls-dr10&zoom=14"
+  objectUrl: "https://en.wikipedia.org/wiki/NGC_1300"
 ---
 Summary: The final blog for GSoC 2019.  
 

@@ -1,5 +1,5 @@
 ---
-// Small square NGC thumbnail for post lists (Decision Oct 21: about 56 px; the file is 112 px for sharp screens).
+// Small square NGC thumbnail for post lists (Decision Oct 21 14:25: about 42 px; the 112 px file keeps it sharp).
 // Posts without an NGC thumbnail get a quiet neutral square so titles stay aligned.
 import { url } from '../lib/site';
 
@@ -9,7 +9,7 @@ interface Props {
 const { ngc } = Astro.props;
 ---
 {ngc?.thumb ? (
-  <img class="post-thumb" src={url(ngc.thumb)} alt="" width="56" height="56" loading="lazy" />
+  <img class="post-thumb" src={url(ngc.thumb)} alt="" width="42" height="42" loading="lazy" />
 ) : (
   <span class="post-thumb post-thumb-empty" aria-hidden="true"></span>
 )}

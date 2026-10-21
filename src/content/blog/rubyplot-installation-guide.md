@@ -3,6 +3,16 @@ title: "Rubyplot installation guide"
 date: 2019-06-09
 tags: ["gsoc2019", "rubyplot"]
 category: "open-source development"
+ngc:
+  name: "NGC 908"
+  image: "/images/ngc/ngc0908-header.jpg"
+  thumb: "/images/ngc/ngc0908-thumb.jpg"
+  medium: "/images/ngc/ngc0908-medium.jpg"
+  type: "Spiral galaxy"
+  description: "Spiral galaxy in Cetus"
+  credit: "Legacy Surveys / D. Lang (Perimeter Institute)"
+  creditUrl: "https://www.legacysurvey.org/viewer?ra=35.76904&dec=-21.23386&layer=ls-dr10&zoom=14"
+  objectUrl: "https://en.wikipedia.org/wiki/NGC_908"
 ---
 Summary: Installation guide for Rubyplot.  
 

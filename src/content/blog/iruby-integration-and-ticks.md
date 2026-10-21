@@ -3,6 +3,16 @@ title: "IRuby integration and ticks"
 date: 2019-08-22
 tags: ["gsoc2019", "rubyplot"]
 category: "open-source development"
+ngc:
+  name: "NGC 1448"
+  image: "/images/ngc/ngc1448-header.jpg"
+  thumb: "/images/ngc/ngc1448-thumb.jpg"
+  medium: "/images/ngc/ngc1448-medium.jpg"
+  type: "Spiral galaxy"
+  description: "Spiral galaxy in Horologium"
+  credit: "Legacy Surveys / D. Lang (Perimeter Institute)"
+  creditUrl: "https://www.legacysurvey.org/viewer?ra=56.133&dec=-44.64483&layer=ls-dr10&zoom=14"
+  objectUrl: "https://en.wikipedia.org/wiki/NGC_1448"
 ---
 Summary: iruby integration and ticks.  
 

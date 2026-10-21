@@ -3,6 +3,16 @@ title: "Simple Plots in Rubyplot"
 date: 2019-06-28
 tags: ["gsoc2019", "rubyplot"]
 category: "open-source development"
+ngc:
+  name: "NGC 1512"
+  image: "/images/ngc/ngc1512-header.jpg"
+  thumb: "/images/ngc/ngc1512-thumb.jpg"
+  medium: "/images/ngc/ngc1512-medium.jpg"
+  type: "Spiral galaxy"
+  description: "Spiral galaxy in Horologium"
+  credit: "Legacy Surveys / D. Lang (Perimeter Institute)"
+  creditUrl: "https://www.legacysurvey.org/viewer?ra=60.97617&dec=-43.34886&layer=ls-dr10&zoom=14"
+  objectUrl: "https://en.wikipedia.org/wiki/NGC_1512"
 ---
 Summary: Simple plots in Rubyplot.  
 

@@ -3,6 +3,16 @@ title: "GSoC 2019 project introduction"
 date: 2019-06-08
 tags: ["gsoc2019", "rubyplot"]
 category: "open-source development"
+ngc:
+  name: "NGC 628"
+  image: "/images/ngc/ngc0628-header.jpg"
+  thumb: "/images/ngc/ngc0628-thumb.jpg"
+  medium: "/images/ngc/ngc0628-medium.jpg"
+  type: "Spiral galaxy"
+  description: "Spiral galaxy in Pisces"
+  credit: "Legacy Surveys / D. Lang (Perimeter Institute)"
+  creditUrl: "https://www.legacysurvey.org/viewer?ra=24.17396&dec=15.78367&layer=ls-dr10&zoom=13"
+  objectUrl: "https://en.wikipedia.org/wiki/Messier_74"
 ---
 Summary: Introducing my project for GSoC 2019.  
 

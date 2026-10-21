@@ -1,0 +1,12 @@
+#!/bin/sh
+# Runs tools/ngc/ngc.py in its own venv (created on first use with uv, or python3 -m venv).
+set -e
+DIR="$(cd "$(dirname "$0")" && pwd)"
+if [ ! -x "$DIR/.venv/bin/python" ]; then
+  if command -v uv >/dev/null 2>&1; then
+    uv venv -q --python 3.12 "$DIR/.venv" && uv pip install -q --python "$DIR/.venv/bin/python" -r "$DIR/requirements.txt"
+  else
+    python3 -m venv "$DIR/.venv" && "$DIR/.venv/bin/pip" install -q -r "$DIR/requirements.txt"
+  fi
+fi
+exec "$DIR/.venv/bin/python" -I "$DIR/ngc.py" "$@"

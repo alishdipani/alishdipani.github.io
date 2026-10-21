@@ -3,3 +3,7 @@ dist/
 dist-preview/
 .astro/
 .DS_Store
+tools/ngc/.venv/
+tools/ngc/cache/
+tools/ngc/out/
+tools/ngc/__pycache__/

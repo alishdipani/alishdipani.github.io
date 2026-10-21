@@ -1,5 +1,6 @@
 ---
-// List of posts with their NGC thumbnails, title and date (Home and the blog index).
+// List of posts: a small NGC thumbnail (about 42 px) on the left, then title and date.
+// Used on Home and the blog index.
 import PostThumb from './PostThumb.astro';
 import { formatDate, url } from '../lib/site';
 import type { CollectionEntry } from 'astro:content';
@@ -8,7 +9,6 @@ interface Props {
   posts: CollectionEntry<'blog'>[];
 }
 const { posts } = Astro.props;
-const credited = posts.some((p) => p.data.ngc?.thumb);
 ---
 <ul class="post-list post-list-thumbs">
   {posts.map((post) => (
@@ -21,6 +21,3 @@ const credited = posts.some((p) => p.data.ngc?.thumb);
     </li>
   ))}
 </ul>
-{credited && (
-  <p class="image-credit">Images: <a href="https://www.legacysurvey.org/">Legacy Surveys / D. Lang (Perimeter Institute)</a></p>
-)}
