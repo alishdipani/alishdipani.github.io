@@ -73,7 +73,10 @@ const label = (p: (typeof pubs)[number], group: string) =>
                         ) : label(p, g.id)}
                       </span>
                     )}
-                    {p.links.map((l) => <a class="chip" href={l.href}>{l.label}</a>)}
+                    {p.links.map((l) => (
+                      // Presentations link to abstracts, so their main chip says "Abstract" (Alish, Oct 21).
+                      <a class="chip" href={l.href}>{g.id === 'presentation' && l.label === 'Paper' ? 'Abstract' : l.label}</a>
+                    ))}
                     {g.id === 'publication' && (
                       <details class="bibtex">
                         <summary class="chip">BibTeX</summary>
