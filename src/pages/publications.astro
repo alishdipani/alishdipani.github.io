@@ -1,12 +1,15 @@
 ---
+import '@fontsource/source-serif-4/latin-500.css';
 import '../styles/post.css';
 import Base from '../layouts/Base.astro';
 import Contents from '../components/Contents.astro';
-import { GROUPS, getPublications, type Author } from '../lib/publications';
+import { GROUPS, getPublications, type Author, type Publication } from '../lib/publications';
 import { SITE } from '../lib/site';
 
-// Format: Alish's decisions (Command Center, Oct 21 12:59, 13:20, 15:22) and Task 6.
-// Each entry is one APA-style citation: [n] Authors (Year). Title. Venue. labels chips
+// Entry style: Alish's decision (Command Center, Oct 21 23:15), same in both sections.
+//   [n]  Title (links to the paper or abstract)
+//        Authors (APA short form)
+//        Venue, year · status · links
 const pubs = getPublications();
 // Empty groups are not shown. Numbering restarts in each group and counts up from the oldest
 // entry, so adding a paper never renumbers older ones.
@@ -14,27 +17,56 @@ const groups = GROUPS.map((g) => ({ ...g, slug: `${g.id}s`, items: pubs.filter((
 const hasEqual = pubs.some((p) => p.authors.some((a) => a.equal));
 const contents = groups.map((g) => ({ slug: g.slug, text: g.title }));
 
-// Long author lists: the first 6, then "…", always keeping Alish visible.
+// Authors: the full list when it fits on one line (about AUTHOR_LINE characters on a desktop
+// screen). Otherwise the first two authors, …, Alish, …, the last author; and if that is still too
+// long, only the first author before Alish (Alish, in chat, Oct 21). "and others" in the bib ends in "…".
+const AUTHOR_LINE = 105;
 type Shown = Author | '…';
-function shortAuthors(authors: Author[]): Shown[] {
-  const others = authors.some((a) => a.name === 'others');
-  const list = authors.filter((a) => a.name !== 'others');
-  if (list.length <= 7 && !others) return list;
-  const shown: Shown[] = list.slice(0, 6);
-  const self = list.findIndex((a) => a.name === SITE.name);
-  if (self >= 6) {
-    shown.push('…', list[self]);
-    if (self < list.length - 1 || others) shown.push('…');
-  } else if (list.length > 6 || others) shown.push('…');
+const lineLength = (shown: Shown[]) =>
+  shown.reduce((n, a, j) => n + (a === '…' ? 1 : a.apa.length + (a.equal ? 1 : 0)) + (j ? 2 : 0), 0) + 2;
+function pick(list: Author[], keep: number[], others: boolean): Shown[] {
+  const shown: Shown[] = [];
+  let last = -1;
+  for (const i of [...new Set(keep)].filter((i) => i >= 0 && i < list.length).sort((a, b) => a - b)) {
+    if (i > last + 1) shown.push('…');
+    shown.push(list[i]);
+    last = i;
+  }
+  if (others || last < list.length - 1) shown.push('…');
   return shown;
 }
-// Separator before author j: ", " — or ", & " before the last author of a complete list (APA).
-const sep = (j: number, all: Shown[]) => (j === 0 ? '' : j === all.length - 1 && !all.includes('…') ? ', & ' : ', ');
-const endsWithStop = (t: string) => /[.?!]$/.test(t);
-// Label after the venue: the entry's status (Preprint, Report, …), else "Preprint" for preprint-server
-// entries; Poster/Talk for presentations.
-const label = (p: (typeof pubs)[number], group: string) =>
-  group === 'presentation' ? p.kind : p.status ?? (p.preprint ? 'Preprint' : undefined);
+function shownAuthors(authors: Author[]): Shown[] {
+  const others = authors.some((a) => a.name === 'others');
+  const list = authors.filter((a) => a.name !== 'others');
+  if (!others && lineLength(list) <= AUTHOR_LINE) return list;
+  const self = list.findIndex((a) => a.name === SITE.name);
+  const tail = others ? [] : [list.length - 1];
+  for (const first of [[0, 1], [0]]) {
+    const shown = pick(list, [...first, self, ...tail], others);
+    if (lineLength(shown) <= AUTHOR_LINE) return shown;
+  }
+  return pick(list, [0, self, ...tail], others);
+}
+// Separator before item j: ", " between authors, " " after "…", ", & " before the last author of
+// a complete list (APA).
+function sep(j: number, all: Shown[]) {
+  if (j === 0) return '';
+  if (all[j - 1] === '…') return ' ';
+  if (all[j] !== '…' && j === all.length - 1 && !all.includes('…')) return ', & ';
+  return ', ';
+}
+
+// Venue names are shown in full (Alish, chat, Oct 21); PNAS gets its abbreviation and the commentary note.
+const VENUE: [RegExp, string][] = [
+  [/^Proceedings of the National Academy of Sciences \(Commentary\)$/, 'Proceedings of the National Academy of Sciences (PNAS), commentary'],
+];
+const venueName = (venue: string) => VENUE.find(([re]) => re.test(venue))?.[1] ?? venue;
+
+// Status after the venue: the entry's status, else "Preprint" for preprint-server entries.
+const statusOf = (p: Publication, group: string) =>
+  group === 'publication' ? p.status ?? (p.preprint ? 'Preprint' : undefined) : p.status;
+// Link labels: presentations link to abstracts.
+const linkLabel = (label: string, group: string) => (group === 'presentation' && label === 'Paper' ? 'Abstract' : label);
 ---
 <Base title="Publications" wide>
   <div class="post-layout pubs-page has-toc">
@@ -53,41 +85,45 @@ const label = (p: (typeof pubs)[number], group: string) =>
           <h2 class="section-label" id={g.slug}>{g.title}</h2>
           <ol class="pubs">
             {g.items.map((p, i) => {
-              const authors = shortAuthors(p.authors);
+              const authors = shownAuthors(p.authors);
+              const status = statusOf(p, g.id);
+              const comma = status ? status.indexOf(', ') : -1;
+              const title = p.title.replace(/\.$/, '');
               return (
                 <li class="pub" id={p.key}>
-                  <div class="pub-cite">
-                    <span class="pub-num">[{g.items.length - i}]</span>{' '}
-                    <span class="pub-authors">
+                  <span class="pub-num">[{g.items.length - i}]</span>
+                  <div class="pub-body">
+                    <p class="pub-title">{p.url ? <a href={p.url}>{title}</a> : title}</p>
+                    <p class="pub-authors">
                       {authors.map((a, j) => (
-                        <>{sep(j, authors)}{a === '…' ? '…' : a.name === SITE.name ? <strong>{a.apa}</strong> : a.apa}{a !== '…' && a.equal && '*'}</>
+                        <>{sep(j, authors)}{a === '…' ? '…' : a.name === SITE.name ? <span class="self">{a.apa}</span> : a.apa}{a !== '…' && a.equal && '*'}</>
                       ))}
-                    </span>{' '}
-                    ({p.year}).{' '}
-                    <span class="pub-title">{p.url ? <a href={p.url}>{p.title}</a> : p.title}{!endsWithStop(p.title) && '.'}</span>{' '}
-                    <em>{p.venue}</em>.
-                    {label(p, g.id) && (
-                      <span class="pub-label">
-                        {p.statusUrl && p.status?.includes(', ') ? (
-                          <>{p.status.slice(0, p.status.indexOf(', ') + 2)}<a href={p.statusUrl}>{p.status.slice(p.status.indexOf(', ') + 2)}</a></>
-                        ) : label(p, g.id)}
+                    </p>
+                    <div class="pub-venue">
+                      <span>
+                        {p.kind && g.id === 'presentation' && <>{p.kind}, </>}
+                        <em>{venueName(p.venue)}</em>{g.id === 'presentation' ? ' ' : ', '}{p.year}
                       </span>
-                    )}
-                    {p.links.map((l) => (
-                      // Presentations link to abstracts, so their main chip says "Abstract" (Alish, Oct 21).
-                      <a class="chip" href={l.href}>{g.id === 'presentation' && l.label === 'Paper' ? 'Abstract' : l.label}</a>
-                    ))}
-                    {g.id === 'publication' && (
-                      <details class="bibtex">
-                        <summary class="chip">BibTeX</summary>
-                        <div class="bibtex-box">
-                          <pre><code>{p.bibtex}</code></pre>
-                          <button type="button" class="chip" data-copy>Copy</button>
-                        </div>
-                      </details>
-                    )}
+                      {status && (
+                        <span class="dot">
+                          {p.statusUrl && comma > 0 ? (
+                            <>{status.slice(0, comma + 2)}<a href={p.statusUrl}>{status.slice(comma + 2)}</a></>
+                          ) : status}
+                        </span>
+                      )}
+                      {p.links.map((l) => <span class="dot"><a class="pub-link" href={l.href}>{linkLabel(l.label, g.id)}</a></span>)}
+                      {g.id === 'publication' && (
+                        <details class="bibtex dot">
+                          <summary class="pub-link">BibTeX</summary>
+                          <div class="bibtex-box">
+                            <pre><code>{p.bibtex}</code></pre>
+                            <button type="button" class="pub-link copy" data-copy>Copy</button>
+                          </div>
+                        </details>
+                      )}
+                    </div>
+                    {p.summary && g.id === 'publication' && <p class="pub-summary">{p.summary}</p>}
                   </div>
-                  {p.summary && g.id === 'publication' && <p class="pub-summary">{p.summary}</p>}
                 </li>
               );
             })}
@@ -99,31 +135,42 @@ const label = (p: (typeof pubs)[number], group: string) =>
 </Base>
 
 <style>
-  .pub-group { margin: var(--s4) 0 0; }
-  .pub-group:first-of-type { margin-top: 0; }
+  .pub-group { margin: 0; }
+  /* A thin rule between Publications and Presentations instead of blank space (Alish, chat). */
+  .pub-group + .pub-group { margin-top: var(--s3); padding-top: var(--s3); border-top: 1px solid var(--border); }
   .pub-group h2 { scroll-margin-top: var(--s2); }
   .pubs { list-style: none; padding: 0; margin: 0; }
-  .pub { margin: 0 0 var(--s3); }
+
+  /* One entry: number in a narrow gutter, then three lines ~2px apart; ~20px between entries. */
+  .pub { display: grid; grid-template-columns: 2.1rem minmax(0, 1fr); margin: 0 0 1.25rem; }
   .pub:last-child { margin-bottom: 0; }
-  .pub-cite { font-size: 0.98rem; line-height: 1.6; }
-  .pub-num { font: 600 0.85rem/1 var(--font-ui); color: var(--muted); font-variant-numeric: tabular-nums; }
-  .pub-authors strong { font-weight: 600; }
-  .pub-title a:hover { text-decoration-line: underline; }
-  .pub-cite em { color: var(--muted); }
-  .pub-label { font: 600 0.7rem/1 var(--font-ui); text-transform: uppercase; letter-spacing: 0.05em; margin-left: 0.5rem; color: var(--muted); }
-  .pub-summary { font: 0.9rem/1.5 var(--font-body); color: var(--muted); margin: 0.35rem 0 0; }
-  .chip {
-    display: inline-block; cursor: pointer; margin-left: 0.4rem; vertical-align: 0.05em;
-    padding: 0.05rem 0.55rem; border: 1px solid var(--border); border-radius: 999px;
-    font: 600 0.72rem/1.6 var(--font-ui); color: var(--link); background: transparent; text-decoration-line: none;
-  }
-  .chip:hover { border-color: var(--link); text-decoration-line: none; }
+  .pub p { margin: 0; }
+  .pub-num { font: 400 0.8rem/1.55rem var(--font-ui); color: var(--muted); opacity: 0.75; font-variant-numeric: tabular-nums; }
+  .pub-body > * + * { margin-top: 2px; }
+
+  .pub-title { font: 500 1.0625rem/1.45 var(--font-body); color: var(--text); }
+  .pub-title a { color: inherit; text-decoration-line: none; }
+  .pub-title a:hover, .pub-title a:focus-visible { text-decoration-line: underline; }
+
+  .pub-authors, .pub-venue { font: 400 0.875rem/1.5 var(--font-ui); color: var(--muted); }
+  .pub-authors .self { color: var(--text); font-weight: 600; }
+
+  .pub-venue em { font-family: var(--font-body); font-style: italic; }
+  .pub-venue a { text-decoration-line: none; }
+  .pub-venue a:hover, .pub-venue a:focus-visible { text-decoration-line: underline; }
+  /* Light gray middle dot between items */
+  .dot::before { content: '·'; margin: 0 0.45em; color: var(--border); font-weight: 700; }
+  .pub-link { color: var(--link); font: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+
   .bibtex { display: inline; }
-  .bibtex summary { list-style: none; display: inline-block; }
+  .bibtex summary { display: inline; list-style: none; }
   .bibtex summary::-webkit-details-marker { display: none; }
+  .bibtex summary:hover, .bibtex summary:focus-visible { text-decoration: underline; }
   .bibtex-box { position: relative; margin-top: 0.4rem; }
   .bibtex-box pre { background: var(--surface); margin: 0; padding: 0.75rem 1rem; font-size: 0.78rem; white-space: pre-wrap; word-break: break-word; }
-  .bibtex-box [data-copy] { position: absolute; top: 0.4rem; right: 0.4rem; margin: 0; background: var(--bg); }
+  .bibtex-box .copy { position: absolute; top: 0.4rem; right: 0.6rem; font-size: 0.8rem; }
+
+  .pub-summary { font: 0.9rem/1.5 var(--font-body); color: var(--muted); }
 </style>
 
 <script>
