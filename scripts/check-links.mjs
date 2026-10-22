@@ -36,7 +36,10 @@ while (queue.length) {
     const u = new URL(m[1], origin + path).href;
     if (!images.has(u)) images.set(u, path);
   }
-  const refs = [...html.matchAll(/(?:href|src)="([^"#]+)/g), ...html.matchAll(/url=([^"]+)"/g)].map((m) => m[1]);
+  const refs = [
+    ...html.matchAll(/(?:href|src)="([^"#]+)/g),
+    ...html.matchAll(/<meta http-equiv="refresh" content="\d+; url=([^"]+)"/g), // redirect pages
+  ].map((m) => m[1]);
   for (const ref of refs) {
     const u = new URL(ref, origin + path);
     if (u.origin !== origin) continue;

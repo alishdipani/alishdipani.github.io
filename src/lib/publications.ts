@@ -40,7 +40,7 @@ export type Publication = {
   statusUrl?: string;         // links the part of the status after its first comma
   year: string;
   summary?: string;
-  url?: string;               // title link and "Paper" chip: url field, else the DOI
+  url?: string;               // title link: url field, else the DOI, else the PDF or arXiv link
   links: { label: string; href: string }[];
   bibtex: string;             // the entry as BibTeX, without the site-only fields
 };
@@ -104,7 +104,7 @@ export function getPublications(file = 'src/data/publications.bib'): Publication
         statusUrl: join(f.statusurl) || undefined,
         year: join(f.year),
         summary: join(f.summary) || undefined,
-        url: url || undefined,
+        url: url || join(f.pdf) || arxiv || undefined,
         links,
         bibtex: cleanBibtex(e.input ?? ''),
       };

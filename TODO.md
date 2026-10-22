@@ -10,8 +10,8 @@ instead of showing placeholders, so nothing here is visible on the site until it
 - **News items:** date, text, optional link; Home shows the latest 5 and hides the section while empty.
   → `src/data/news.yml`
 - **NGC post intro:** the text before "The NGCs so far". → `src/content/blog/ngc.mdx`
-- **Publication summaries and links:** `summary`, `url`/`doi`, `pdf`, `arxiv`, `code`, `poster`/`slides` per entry.
-  The 4 new 2026 publications have DOIs and AvaTr has its arXiv link; the other 15 entries have none yet.
+- **Publication summaries:** one line per publication (`summary`), optional. All entries that have a
+  link online now have one (Task 7); the others stay without links by Alish's choice.
   → `src/data/publications.bib` (fields documented at its top)
 - **Current CV PDF:** add the file and point the CV links at it (still the Aug 2024 Google Drive PDF).
   → `public/` + `cvPdf` in `src/pages/index.astro` and `src/pages/cv.astro`
