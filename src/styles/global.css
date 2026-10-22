@@ -115,13 +115,15 @@ main,
 .home-link { font-weight: 600; }
 .header-end { display: flex; align-items: center; gap: 1.1rem; margin-left: auto; }
 
+/* Icon only (no circle); a focus ring only for keyboard focus; the icon darkens slightly on hover. */
 .theme-toggle {
   display: inline-flex; align-items: center; justify-content: center;
   width: 2.25rem; height: 2.25rem; padding: 0;
-  border: 1px solid var(--border); border-radius: 999px;
-  background: transparent; color: var(--text); cursor: pointer;
+  border: 0; border-radius: 6px;
+  background: transparent; color: var(--muted); cursor: pointer;
 }
-.theme-toggle:hover { border-color: var(--link); }
+.theme-toggle:hover { color: var(--text); }
+.theme-toggle:focus { outline: none; }
 .theme-toggle:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; }
 .theme-toggle svg { width: 1.1rem; height: 1.1rem; }
 .theme-toggle .icon-sun { display: none; }
