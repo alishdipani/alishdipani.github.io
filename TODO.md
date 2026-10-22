@@ -9,7 +9,6 @@ instead of showing placeholders, so nothing here is visible on the site until it
 - **Overview image:** add the image and set `overviewImage` (src, alt). → `src/pages/index.astro`, image in `public/`
 - **News items:** date, text, optional link; Home shows the latest 5 and hides the section while empty.
   → `src/data/news.yml`
-- **NGC post intro:** the text before "The NGCs so far". → `src/content/blog/ngc.mdx`
 - **Publication summaries:** one line per publication (`summary`), optional. All entries that have a
   link online now have one (Task 7); the others stay without links by Alish's choice.
   → `src/data/publications.bib` (fields documented at its top)
