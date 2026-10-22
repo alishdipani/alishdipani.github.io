@@ -37,14 +37,14 @@ const label = (p: (typeof pubs)[number], group: string) =>
   group === 'presentation' ? p.kind : p.status ?? (p.preprint ? 'Preprint' : undefined);
 ---
 <Base title="Publications" wide>
-  <div class="post-layout has-toc">
+  <div class="post-layout pubs-page has-toc">
     <Contents items={contents} variant="side" />
 
     <div class="post">
       <h1 class="sr-only">Publications</h1>
-      <p class="muted pubs-intro">
-        The full list is on <a href="https://scholar.google.com/citations?user=i028n20AAAAJ">Google Scholar</a>.
-        {hasEqual && <><br />* Equal contribution.</>}
+      <!-- One line, same style as the Blog note; wording per Alish, Oct 21 23:05. -->
+      <p class="page-note">
+        Latest list on <a href="https://scholar.google.com/citations?user=i028n20AAAAJ">Google Scholar</a>.{hasEqual && <> * denotes equal contribution</>}
       </p>
       <Contents items={contents} variant="inline" />
 
@@ -99,7 +99,6 @@ const label = (p: (typeof pubs)[number], group: string) =>
 </Base>
 
 <style>
-  .pubs-intro { font-family: var(--font-ui); margin: 0 0 var(--s3); }
   .pub-group { margin: var(--s4) 0 0; }
   .pub-group:first-of-type { margin-top: 0; }
   .pub-group h2 { scroll-margin-top: var(--s2); }

@@ -18,6 +18,9 @@ instead of showing placeholders, so nothing here is visible on the site until it
 - **CV page content** beyond the PDF link, if wanted. → `src/pages/cv.astro`
 - **Site description** (search results / link previews). → `SITE.description` in `src/lib/site.ts`
 
+- **VSS 2026 poster link:** not online yet; add `url` to `dipani2026categoryvss` in `src/data/publications.bib`
+  once VSS posts it (or once the abstract is in Journal of Vision).
+
 ## Setup
 - **Google Analytics:** Task 7 (needs Alish's account decision; the old site used G-2TPX3E1SKE).
 - **Online preview:** create `alishdipani/website-preview`, add a deploy key, store it as the

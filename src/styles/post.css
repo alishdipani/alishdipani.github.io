@@ -127,6 +127,8 @@ h2:hover .heading-anchor, h3:hover .heading-anchor, .heading-anchor:focus { opac
   .has-toc .toc-side { display: block; }
   /* On posts, start the contents column level with the title and image (below the "← Blog" row). */
   .post-page.has-toc .toc-side { padding-top: calc(1.5rem + var(--s3)); }
+  /* On Publications, start it level with the first section heading (below the one-line note). */
+  .pubs-page.has-toc .toc-side { padding-top: calc(0.88rem * 1.55 + var(--s3)); }
   .has-toc .toc-inline { display: none; }
   .has-toc .figure-wide { left: 0; transform: none; width: 100%; }
 }

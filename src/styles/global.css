@@ -154,6 +154,8 @@ main > :last-child, main > :last-child > :last-child { margin-bottom: 0; }
 
 section { margin: var(--s4) 0; }
 .muted { color: var(--muted); }
+/* Small muted note under a page's (hidden) heading: Blog and Publications */
+.page-note { margin: 0 0 var(--s3); font: 0.88rem/1.55 var(--font-body); color: var(--muted); }
 time, .meta { font-family: var(--font-ui); color: var(--muted); font-size: 0.9rem; }
 
 .todo {
