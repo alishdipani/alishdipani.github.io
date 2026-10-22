@@ -78,7 +78,9 @@ const isCurrent = (href: string) => path.startsWith(url(href));
     <footer class="site-footer">
       {credits.map((c) => (
         // Credit wording is required by the image licenses; keep it exactly as is.
-        <p>{c.label}: <a href={c.href}>{c.text}</a></p>
+        <p>{c.label}: {c.linkText && c.text.startsWith(c.linkText)
+          ? <><a href={c.href}>{c.linkText}</a>{c.text.slice(c.linkText.length)}</>
+          : <a href={c.href}>{c.text}</a>}</p>
       ))}
       <p>© {new Date().getFullYear()} {SITE.name} · Built with <a href="https://astro.build">Astro</a>, with help from Claude</p>
     </footer>

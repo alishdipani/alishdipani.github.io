@@ -32,19 +32,20 @@ export function formatDate(date: Date) {
 
 // Footer credit lines for NGC images. The Legacy Surveys wording is required by its CC BY 4.0 license;
 // manual images bring their own (exact) credit text.
-export type Credit = { label: string; text: string; href: string };
+// linkText: only this leading part of text is linked (default: the whole text).
+export type Credit = { label: string; text: string; href: string; linkText?: string };
 export const LEGACY_CREDIT: Credit = {
   label: 'NGC images',
   text: 'Legacy Surveys / D. Lang (Perimeter Institute)',
   href: 'https://www.legacysurvey.org/',
 };
-type NgcData = { source?: string; name: string; credit: string; creditUrl: string; thumb?: string };
+type NgcData = { source?: string; name: string; credit: string; creditUrl: string; creditLabel?: string; creditLinkText?: string; thumb?: string };
 export function imageCredits(ngcs: (NgcData | undefined)[]): Credit[] {
   const credits: Credit[] = [];
   if (ngcs.some((n) => n?.source !== 'manual' && n?.credit.startsWith('Legacy Surveys'))) credits.push(LEGACY_CREDIT);
   for (const n of ngcs) {
     if (n?.source === 'manual' && !credits.some((c) => c.text === n.credit)) {
-      credits.push({ label: `${n.name} image`, text: n.credit, href: n.creditUrl });
+      credits.push({ label: n.creditLabel ?? `${n.name} image`, text: n.credit, href: n.creditUrl, linkText: n.creditLinkText });
     }
   }
   return credits;

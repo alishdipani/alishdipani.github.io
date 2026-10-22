@@ -29,6 +29,8 @@ const blog = defineCollection({
         description: z.string(),
         credit: z.string(),
         creditUrl: z.string().url(),
+        creditLabel: z.string().optional(),     // footer label (default: "<name> image")
+        creditLinkText: z.string().optional(),  // only this leading part of the credit is linked (default: all)
         objectUrl: z.string().url(),
         captionUrl: z.string().url().optional(), // where the caption links (default: objectUrl, i.e. Wikipedia or SIMBAD)
         caption: z.string().optional(),          // linked text under the image (default: the name)
