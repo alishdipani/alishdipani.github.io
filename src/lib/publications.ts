@@ -37,6 +37,7 @@ export type Publication = {
   preprint: boolean;          // publications with a status, or on a preprint server / misc entry
   venue: string;
   status?: string;
+  statusUrl?: string;         // links the part of the status after its first comma
   year: string;
   summary?: string;
   url?: string;               // title link and "Paper" chip: url field, else the DOI
@@ -44,7 +45,7 @@ export type Publication = {
   bibtex: string;             // the entry as BibTeX, without the site-only fields
 };
 
-const SITE_FIELDS = ['abbr', 'selected', 'group', 'summary', 'equal', 'status', 'pdf', 'code', 'poster', 'slides'];
+const SITE_FIELDS = ['abbr', 'selected', 'group', 'summary', 'equal', 'status', 'statusurl', 'pdf', 'code', 'poster', 'slides'];
 
 const join = (v: unknown) => (Array.isArray(v) ? v.join(' and ') : ((v as string) ?? ''));
 
@@ -100,6 +101,7 @@ export function getPublications(file = 'src/data/publications.bib'): Publication
         preprint: isPreprint(e.type, f, rawVenue),
         venue: rawVenue.replace(/^(Poster|Talk) @\s*/, ''),
         status: join(f.status) || undefined,
+        statusUrl: join(f.statusurl) || undefined,
         year: join(f.year),
         summary: join(f.summary) || undefined,
         url: url || undefined,

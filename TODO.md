@@ -13,8 +13,6 @@ instead of showing placeholders, so nothing here is visible on the site until it
 - **Publication summaries and links:** `summary`, `url`/`doi`, `pdf`, `arxiv`, `code`, `poster`/`slides` per entry.
   The 4 new 2026 publications have DOIs and AvaTr has its arXiv link; the other 15 entries have none yet.
   → `src/data/publications.bib` (fields documented at its top)
-- **Co-author name to confirm:** bioRxiv lists "Deb, Mainak" on Braintree and "Deb, Mayukh" on the
-  zero-shot preprint (probably the same person). Both are kept as bioRxiv has them. → `src/data/publications.bib`
 - **Current CV PDF:** add the file and point the CV links at it (still the Aug 2024 Google Drive PDF).
   → `public/` + `cvPdf` in `src/pages/index.astro` and `src/pages/cv.astro`
 - **CV page content** beyond the PDF link, if wanted. → `src/pages/cv.astro`

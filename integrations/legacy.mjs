@@ -1,3 +1,5 @@
+// In `astro dev`: serve the same files (old post images at /blog/resources/, legacy/ at its old paths),
+// so the dev server shows what the build will.
 // After the build:
 // 1. copy legacy/ (files from the old site that keep their exact URLs) into the output,
 // 2. copy _posts/Resources/ (old post images) to /blog/resources/,
@@ -22,6 +24,32 @@ function copyTree(src, dest, logger) {
   logger.info(`copied ${n} files from ${path.basename(src)}/`);
 }
 
+const TYPES = { '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.gif': 'image/gif', '.svg': 'image/svg+xml',
+  '.webp': 'image/webp', '.pdf': 'application/pdf', '.mp3': 'audio/mpeg', '.mp4': 'video/mp4', '.css': 'text/css',
+  '.js': 'text/javascript', '.json': 'application/json', '.html': 'text/html; charset=utf-8', '.txt': 'text/plain; charset=utf-8' };
+
+function devFiles(root, base) {
+  const sources = [
+    ['/blog/resources/', path.join(root, '_posts', 'Resources')],
+    ['/', path.join(root, 'legacy')],
+  ];
+  return (req, res, next) => {
+    let p;
+    try { p = decodeURIComponent(new URL(req.url, 'http://x').pathname); } catch { return next(); }
+    if (base && p.startsWith(base + '/')) p = p.slice(base.length);
+    for (const [prefix, dir] of sources) {
+      if (!p.startsWith(prefix)) continue;
+      const file = path.join(dir, p.slice(prefix.length));
+      if (file.startsWith(dir) && fs.existsSync(file) && fs.statSync(file).isFile()) {
+        res.setHeader('Content-Type', TYPES[path.extname(file).toLowerCase()] ?? 'application/octet-stream');
+        fs.createReadStream(file).pipe(res);
+        return;
+      }
+    }
+    next();
+  };
+}
+
 export default function legacy() {
   let site, base;
   return {
@@ -30,6 +58,9 @@ export default function legacy() {
       'astro:config:done': ({ config }) => {
         site = config.site;
         base = config.base.replace(/\/$/, '');
+      },
+      'astro:server:setup': ({ server }) => {
+        server.middlewares.use(devFiles(process.cwd(), base));
       },
       'astro:build:done': ({ dir, logger }) => {
         const out = fileURLToPath(dir);

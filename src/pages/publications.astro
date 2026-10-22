@@ -66,7 +66,13 @@ const label = (p: (typeof pubs)[number], group: string) =>
                     ({p.year}).{' '}
                     <span class="pub-title">{p.url ? <a href={p.url}>{p.title}</a> : p.title}{!endsWithStop(p.title) && '.'}</span>{' '}
                     <em>{p.venue}</em>.
-                    {label(p, g.id) && <span class="pub-label">{label(p, g.id)}</span>}
+                    {label(p, g.id) && (
+                      <span class="pub-label">
+                        {p.statusUrl && p.status?.includes(', ') ? (
+                          <>{p.status.slice(0, p.status.indexOf(', ') + 2)}<a href={p.statusUrl}>{p.status.slice(p.status.indexOf(', ') + 2)}</a></>
+                        ) : label(p, g.id)}
+                      </span>
+                    )}
                     {p.links.map((l) => <a class="chip" href={l.href}>{l.label}</a>)}
                     {g.id === 'publication' && (
                       <details class="bibtex">
