@@ -76,7 +76,7 @@ const linkLabel = (label: string, group: string) => (group === 'presentation' &&
       <h1 class="sr-only">Publications</h1>
       <!-- One line, same style as the Blog note; wording per Alish, Oct 21 23:05. -->
       <p class="page-note">
-        Latest list on <a href="https://scholar.google.com/citations?user=i028n20AAAAJ">Google Scholar</a>.{hasEqual && <> * denotes equal contribution</>}
+        Latest list on <a href="https://scholar.google.com/citations?user=i028n20AAAAJ" target="_blank" rel="noopener">Google Scholar</a>.{hasEqual && <> * denotes equal contribution</>}
       </p>
       <Contents items={contents} variant="inline" />
 
@@ -93,7 +93,7 @@ const linkLabel = (label: string, group: string) => (group === 'presentation' &&
                 <li class="pub" id={p.key}>
                   <span class="pub-num">[{g.items.length - i}]</span>
                   <div class="pub-body">
-                    <p class="pub-title">{p.url ? <a href={p.url}>{title}</a> : title}</p>
+                    <p class="pub-title">{p.url ? <a href={p.url} target="_blank" rel="noopener">{title}</a> : title}</p>
                     <p class="pub-authors">
                       {authors.map((a, j) => (
                         <>{sep(j, authors)}{a === '…' ? '…' : a.name === SITE.name ? <span class="self">{a.apa}</span> : a.apa}{a !== '…' && a.equal && '*'}</>
@@ -107,11 +107,11 @@ const linkLabel = (label: string, group: string) => (group === 'presentation' &&
                       {status && (
                         <span class="dot">
                           {p.statusUrl && comma > 0 ? (
-                            <>{status.slice(0, comma + 2)}<a href={p.statusUrl}>{status.slice(comma + 2)}</a></>
+                            <>{status.slice(0, comma + 2)}<a href={p.statusUrl} target="_blank" rel="noopener">{status.slice(comma + 2)}</a></>
                           ) : status}
                         </span>
                       )}
-                      {p.links.map((l) => <span class="dot"><a class="pub-link" href={l.href}>{linkLabel(l.label, g.id)}</a></span>)}
+                      {p.links.map((l) => <span class="dot"><a class="pub-link" href={l.href} target="_blank" rel="noopener">{linkLabel(l.label, g.id)}</a></span>)}
                       {g.id === 'publication' && (
                         <details class="bibtex dot">
                           <summary class="pub-link">BibTeX</summary>

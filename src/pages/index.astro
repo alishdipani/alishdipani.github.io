@@ -1,7 +1,7 @@
 ---
 import '@fontsource/patrick-hand/latin-400.css';
 import Base from '../layouts/Base.astro';
-import { formatDate, url } from '../lib/site';
+import { formatDate, SITE, url } from '../lib/site';
 import { getNews } from '../lib/news';
 
 // Content finalized with Alish in Claude chat (Oct 22). Layout: two-frame hover cartoon beside the text,
@@ -9,16 +9,16 @@ import { getNews } from '../lib/news';
 const headingLine = 'I study the cognitive capabilities and internal representations of AI systems.';
 const directions = [
   {
-    label: 'Neuro- & cognitive science for AI',
+    label: 'Neuro & cognitive science for AI',
     text: 'Probing AI systems with controlled experiments from human cognition and psychophysics, and with tools from cognitive neuroscience.',
   },
   {
-    label: 'AI for neuro- & cognitive science',
-    text: 'Building AI models that predict human brain activity and behavior, and agents that use them to design experiments and test hypotheses about the brain.',
+    label: 'AI for neuro & cognitive science',
+    text: 'Building AI models that predict human brain activity and behavior, and agents that conduct in-silico experiments.',
   },
 ];
-const currently = "Currently, I'm turning toward AI safety, starting with whether vision-language models know when they are wrong.";
-const blurb = "I'm a NeuroAI PhD student at Georgia Tech, advised by Apurva Ratan Murty and Dobromir Rahnev, and supported by the CoCo Fellowship from the Center of Excellence in Computational Cognition. My background is in computer science, vision science, and computational cognitive neuroscience. Previously, I was a research assistant at MIT Brain and Cognitive Sciences, Northeastern University, and TCS Innovation Labs, and a machine learning engineer at Baylor College of Medicine. Beyond research, I develop open-source teaching material for Neuromatch Academy's courses in computational neuroscience, deep learning, and NeuroAI, and was a Google Summer of Code contributor in 2019.";
+const currently = 'Lately, I have started to grow more concerned about AI safety and have started learning about it.';
+const blurb = "I'm a NeuroAI PhD student at Georgia Tech, advised by Apurva Ratan Murty and Dobromir Rahnev, and supported by the CoCo Fellowship from the Center of Excellence in Computational Cognition. My background is in computer science, vision science, and computational cognitive neuroscience. Previously, I was a research assistant at MIT Brain and Cognitive Sciences, Northeastern University, and TCS Innovation Labs, and a machine learning engineer at Baylor College of Medicine. Beyond research, I do open-source development and content creation, mainly through Neuromatch Academy.";
 const cvPdf = 'https://drive.google.com/file/d/15s30n_O6cHSKVYm-3lO_9BS3PyalfNe9/view?usp=sharing';
 const email = 'alish.dipani@gmail.com';
 const contact = [
@@ -31,32 +31,50 @@ const news = getNews().slice(0, 5);
 ---
 <Base>
   <section class="intro">
-    <div
-      class="stage"
-      tabindex="0"
-      role="img"
-      aria-label="Cartoon of a person with a visible brain and a boxy robot with a transformer block on its side, facing each other with two looping arrows between them. Each speech bubble says: I am trying to interpret you. On hover or tap, both turn toward you and share one bubble that says: We are trying to interpret you."
-      style={`--img-d: url(${url('/images/home/hero-default.png')}); --img-h: url(${url('/images/home/hero-hover.png')})`}
-    >
-      <div class="layer d"></div><div class="layer h"></div>
-      <span class="t td a" aria-hidden="true">I am trying to interpret you</span>
-      <span class="t td b" aria-hidden="true">I am trying to interpret you</span>
-      <span class="t th c" aria-hidden="true">We are trying to interpret you</span>
-    </div>
-    <div class="intro-text">
-      <h1 class="intro-heading">{headingLine}</h1>
+    <figure class="cell photo">
+      <img src={url('/assets/img/AlishDipani_picture.jpg')} alt={SITE.name} width="600" height="600" />
+      <figcaption>Me (a human)</figcaption>
+    </figure>
+    <div class="cell top-text">
+      <h1 class="intro-name">{SITE.name}</h1>
+      <p class="intro-heading">{headingLine}</p>
       <nav class="contact" aria-label="CV and contact">
         <a href={cvPdf}>CV</a>
         <span><a href={`mailto:${email}`}>Email</a> <span class="contact-email">{email}</span></span>
         {contact.map((c) => <a href={c.href}>{c.label}</a>)}
       </nav>
+    </div>
+    <figure class="cell research">
+      <div
+        class="stage"
+        tabindex="0"
+        role="img"
+        aria-label="Cartoon of a person with a visible brain and a boxy robot with a transformer block on its side, facing each other with two looping arrows between them. Each speech bubble says: I am trying to interpret you. On hover or tap, both turn toward you and share one bubble that says: We are trying to interpret you."
+        style={`--img-d: url(${url('/images/home/hero-default.png')}); --img-h: url(${url('/images/home/hero-hover.png')})`}
+      >
+        <div class="layer d"></div><div class="layer h"></div>
+        <svg class="labels td" viewBox="0 0 1000 1000" aria-hidden="true">
+          <path d="M199.8 148.4 L205.0 143.7 L210.3 139.0 L215.7 134.5 L221.2 130.0 L226.7 125.7 L232.3 121.4 L238.0 117.2 L243.7 113.1 L249.5 109.1 L255.4 105.3 L261.3 101.5 L267.3 97.8 L273.3 94.2 L279.4 90.7 L285.6 87.3 L291.8 84.0 L298.1 80.8 L304.4 77.7 L310.8 74.7 L317.2 71.8 L323.6 69.1 L330.1 66.4 L336.6 63.8 L343.2 61.4 L349.8 59.0 L356.5 56.8 L363.2 54.6 L369.9 52.6 L376.6 50.7 L383.4 48.9 L390.2 47.2 L397.0 45.6 L403.9 44.1 L410.7 42.7 L417.6 41.4 L424.5 40.3 L431.5 39.2 L438.4 38.3 L445.3 37.5 L452.3 36.8 L459.3 36.2 L466.3 35.7 L473.3 35.3 L480.2 35.0 L487.2 34.8 L494.2 34.8 L501.2 34.8 L508.2 35.0 L515.2 35.3 L522.2 35.6 L529.2 36.1 L536.2 36.7 L543.1 37.4 L550.1 38.2 L557.0 39.2 L563.9 40.2 L570.8 41.3 L577.7 42.6 L584.6 43.9 L591.4 45.4 L598.3 46.9 L605.1 48.6 L611.8 50.4 L618.6 52.2 L625.3 54.2 L632.0 56.3 L638.7 58.5 L645.3 60.7 L651.9 63.1" class="gap" />
+          <path d="M327.0 948.6 L333.6 951.0 L340.2 953.3 L346.9 955.5 L353.6 957.6 L360.3 959.5 L367.1 961.4 L373.8 963.2 L380.6 964.9 L387.5 966.5 L394.3 967.9 L401.2 969.3 L408.1 970.6 L415.0 971.8 L421.9 972.8 L428.9 973.8 L435.8 974.7 L442.8 975.5 L449.7 976.1 L456.7 976.7 L463.7 977.2 L470.7 977.6 L477.7 977.8 L484.7 978.0 L491.7 978.1 L498.7 978.1 L505.7 978.0 L512.6 977.7 L519.6 977.4 L526.6 977.0 L533.6 976.5 L540.6 975.9 L547.5 975.2 L554.5 974.5 L561.4 973.6 L568.3 972.6 L575.2 971.6 L582.1 970.4 L589.0 969.2 L595.9 967.8 L602.7 966.4 L609.6 964.9 L616.4 963.3 L623.2 961.6 L629.9 959.9 L636.7 958.0 L643.4 956.1 L650.1 954.0 L656.8 951.9 L663.4 949.7 L670.1 947.4 L676.7 945.1 L683.2 942.6 L689.8 940.1 L696.3 937.5 L702.8 934.8 L709.2 932.0 L715.7 929.2 L722.1 926.2 L728.4 923.2 L734.8 920.2 L741.1 917.0 L747.3 913.8 L753.6 910.4 L759.8 907.0 L766.0 903.6 L772.1 900.0 L778.2 896.4 L784.3 892.7 L790.3 889.0" class="gap" />
+          <path id="arrow-top" d="M201.4 161.6 L206.6 156.7 L211.9 152.0 L217.3 147.3 L222.7 142.7 L228.2 138.2 L233.8 133.9 L239.4 129.6 L245.1 125.4 L250.9 121.3 L256.8 117.3 L262.7 113.4 L268.7 109.6 L274.7 105.9 L280.8 102.3 L287.0 98.8 L293.2 95.4 L299.5 92.2 L305.8 89.0 L312.2 85.9 L318.7 83.0 L325.1 80.2 L331.7 77.4 L338.2 74.8 L344.8 72.3 L351.5 69.9 L358.2 67.6 L364.9 65.4 L371.6 63.3 L378.4 61.4 L385.2 59.6 L392.1 57.8 L399.0 56.2 L405.9 54.7 L412.8 53.3 L419.7 52.0 L426.7 50.9 L433.6 49.8 L440.6 48.9 L447.6 48.1 L454.7 47.4 L461.7 46.8 L468.7 46.3 L475.8 46.0 L482.8 45.7 L489.8 45.6 L496.9 45.6 L503.9 45.7 L511.0 45.9 L518.0 46.2 L525.0 46.6 L532.1 47.2 L539.1 47.9 L546.1 48.6 L553.1 49.5 L560.0 50.5 L567.0 51.6 L573.9 52.8 L580.9 54.2 L587.8 55.6 L594.6 57.2 L601.5 58.8 L608.3 60.6 L615.1 62.5 L621.9 64.5 L628.6 66.5 L635.3 68.7 L642.0 71.0 L648.7 73.4 L655.3 76.0" fill="none" />
+          <path id="arrow-bottom" d="M315.6 955.8 L322.5 958.4 L329.5 961.0 L336.5 963.4 L343.5 965.7 L350.6 967.9 L357.7 970.0 L364.8 972.0 L372.0 973.9 L379.1 975.6 L386.4 977.3 L393.6 978.8 L400.8 980.3 L408.1 981.6 L415.4 982.8 L422.7 983.9 L430.1 984.9 L437.4 985.8 L444.8 986.5 L452.1 987.2 L459.5 987.7 L466.9 988.2 L474.2 988.5 L481.6 988.7 L489.0 988.9 L496.4 988.9 L503.8 988.8 L511.2 988.6 L518.5 988.3 L525.9 987.9 L533.3 987.4 L540.6 986.8 L548.0 986.1 L555.3 985.2 L562.6 984.3 L570.0 983.3 L577.2 982.2 L584.5 981.0 L591.8 979.6 L599.0 978.2 L606.3 976.7 L613.5 975.1 L620.7 973.4 L627.8 971.6 L635.0 969.7 L642.1 967.7 L649.2 965.6 L656.2 963.4 L663.3 961.2 L670.3 958.8 L677.2 956.3 L684.2 953.8 L691.1 951.2 L698.0 948.4 L704.9 945.6 L711.7 942.7 L718.5 939.7 L725.3 936.7 L732.0 933.5 L738.7 930.3 L745.3 926.9 L751.9 923.5 L758.5 920.0 L765.1 916.4 L771.6 912.8 L778.1 909.0 L784.5 905.2 L790.9 901.3 L797.2 897.3 L803.5 893.3" fill="none" />
+          <text><textPath href="#arrow-top" startOffset="30" textLength="440" lengthAdjust="spacing">{directions[0].label}</textPath></text>
+          <text><textPath href="#arrow-bottom" startOffset="30" textLength="440" lengthAdjust="spacing">{directions[1].label}</textPath></text>
+        </svg>
+        <span class="t td a" aria-hidden="true">I am trying to interpret you</span>
+        <span class="t td b" aria-hidden="true">I am trying to interpret you</span>
+        <span class="t th c" aria-hidden="true">We are trying to interpret you</span>
+      </div>
+      <figcaption>My research</figcaption>
+    </figure>
+    <div class="cell research-text">
       {directions.map((d) => (
         <div class="direction">
           <h2 class="direction-label">{d.label}</h2>
           <p>{d.text}</p>
         </div>
       ))}
-      <p class="currently">{currently}</p>
+      <p class="currently">{currently} <a href={url('/blog/why-ai-safety/')}>(why?)</a></p>
     </div>
   </section>
 
@@ -79,11 +97,19 @@ const news = getNews().slice(0, 5);
 </Base>
 
 <style>
-  .intro { display: grid; grid-template-columns: minmax(0, 17rem) minmax(0, 1fr); gap: var(--s3); align-items: start; margin-bottom: var(--s3); }
-  .intro-text { display: flex; flex-direction: column; gap: var(--s2); }
-  .intro-heading { margin: 0; font: 400 1.45rem/1.3 var(--font-body); }
+  /* Row 1: photo | name, heading, contact (centered on the photo). Row 2: directions | research image (tops aligned). */
+  .intro { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr) minmax(0, 19rem); gap: var(--s3) var(--s4); margin-bottom: var(--s3); }
+  .cell { margin: 0; min-width: 0; }
+  .photo { grid-column: 1; grid-row: 1; }
+  .top-text { grid-column: 2 / 4; grid-row: 1; align-self: center; display: flex; flex-direction: column; gap: var(--s2); }
+  .research { grid-column: 3; grid-row: 2; }
+  .research-text { grid-column: 1 / 3; grid-row: 2; align-self: start; display: flex; flex-direction: column; gap: var(--s2); }
+  .intro-name { margin: 0; font-size: 2.2rem; line-height: 1.1; }
+  .intro-heading { margin: 0; font: 400 1.6rem/1.3 var(--font-body); }
+  .photo img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; object-position: 50% 25%; border-radius: 6px; }
+  figcaption { margin-top: 0.35rem; font: italic 0.9rem/1.4 var(--font-body); text-align: right; }
   .direction { margin: 0; }
-  .direction-label { margin: 0 0 4px; font: 700 1.2rem/1.3 var(--font-ui); color: var(--text); }
+  .direction-label { margin: 0 0 4px; font: 700 1.4rem/1.3 var(--font-ui); color: var(--text); }
   .direction p { margin: 0; }
   .currently { margin: 0; color: var(--muted); }
   .position { margin: 0; }
@@ -98,11 +124,14 @@ const news = getNews().slice(0, 5);
   .t.a { left: 53.3%; top: 23.3%; width: 25%; font-size: 3.8cqw; }
   .t.b { left: 45.7%; top: 79.1%; width: 23%; font-size: 3.8cqw; }
   .t.c { left: 48.6%; top: 16.5%; width: 44%; font-size: 5.6cqw; }
+  .labels { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; transition: opacity 0.28s ease; }
+  .labels .gap { fill: none; stroke: var(--bg); stroke-width: 34; stroke-linecap: butt; }
+  .labels text { font-family: 'Patrick Hand', 'Comic Sans MS', cursive; font-size: 36px; fill: var(--text); }
   .t.th { opacity: 0; }
-  .stage:focus-visible .layer.d, .stage:focus-visible .t.td, .stage.on .layer.d, .stage.on .t.td { opacity: 0; }
+  .stage:focus-visible .layer.d, .stage:focus-visible .td, .stage.on .layer.d, .stage.on .td { opacity: 0; }
   .stage:focus-visible .layer.h, .stage:focus-visible .t.th, .stage.on .layer.h, .stage.on .t.th { opacity: 1; }
   @media (hover: hover) {
-    .stage:hover .layer.d, .stage:hover .t.td { opacity: 0; }
+    .stage:hover .layer.d, .stage:hover .td { opacity: 0; }
     .stage:hover .layer.h, .stage:hover .t.th { opacity: 1; }
   }
   @media (prefers-reduced-motion: reduce) { .layer, .t { transition: none; } }
@@ -117,7 +146,10 @@ const news = getNews().slice(0, 5);
 
 
   @media (max-width: 40rem) {
-    .intro { grid-template-columns: 1fr; gap: var(--s3); }
+    .intro { grid-template-columns: 1fr; gap: var(--s2); }
+    .photo, .top-text, .research, .research-text { grid-column: auto; grid-row: auto; }
+    .photo { max-width: 12rem; }
+    .research-text { margin-bottom: var(--s1); }
     .t.a, .t.b { font-size: 4.4cqw; }
     .t.c { font-size: 6.2cqw; }
     .news-list li { grid-template-columns: 1fr; gap: 0; }

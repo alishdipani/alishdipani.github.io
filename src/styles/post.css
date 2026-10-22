@@ -47,7 +47,7 @@
 .toc li { display: flex; gap: 0.5rem; margin: 0.25rem 0; }
 /* …and a sticky column on the left on wide screens */
 .toc-side { display: none; }
-.toc-sticky { position: sticky; top: var(--s3); font: 0.9rem/1.4 var(--font-ui); }
+.toc-sticky { position: sticky; top: calc(var(--header-h) + var(--s2)); font: 0.9rem/1.4 var(--font-ui); }
 .toc-sticky .section-label { margin-top: 0; line-height: 1.2; }
 .toc-sticky li { margin: 0 0 0.6rem; }
 .toc-sticky a { display: flex; gap: 0.25rem; color: var(--muted); }

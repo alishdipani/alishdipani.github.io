@@ -24,7 +24,8 @@
   --s3: 2rem;
   --s4: 3.5rem;
 
-  --page: 46rem;        /* header, footer and regular pages */
+  --page: 57.5rem;      /* header, footer and regular pages (1.25x the first version) */
+  --header-h: 4.75rem;  /* sticky header height, for scroll offsets */
   --measure: 68ch;      /* post reading column */
   --wide: 62rem;        /* wide figures */
   --margin-note: 15rem; /* sidenote column on wide screens */
@@ -110,6 +111,14 @@ main,
   padding-bottom: 1.25rem;
   border-bottom: 1px solid var(--border);
   font-family: var(--font-ui);
+  /* Always visible: stays at the top while scrolling. The shadow + clip-path paint the page
+     color across the full window width so content never shows beside it. */
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--bg);
+  box-shadow: 0 0 0 100vmax var(--bg);
+  clip-path: inset(0 -100vmax);
 }
 .site-name { font-weight: 700; color: var(--text); }
 .home-link { font-weight: 600; }
@@ -138,6 +147,7 @@ main,
 .site-header nav { display: flex; flex-wrap: wrap; gap: 1.1rem; font-weight: 600; font-size: 1rem; }
 .site-header nav a[aria-current='page'] { text-decoration-line: underline; text-decoration-thickness: 2px; }
 
+html { scroll-padding-top: calc(var(--header-h) + var(--s2)); }
 main { padding-top: var(--s3); padding-bottom: var(--s3); }
 main > :first-child { margin-top: 0; }
 main > :last-child, main > :last-child > :last-child { margin-bottom: 0; }
