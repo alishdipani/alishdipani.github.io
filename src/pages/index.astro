@@ -42,6 +42,7 @@ const contact = [
 const news = getNews().slice(0, 5);
 ---
 <Base fullTitle={SITE.homeTitle}>
+  <div class="intro-wrap">
   <section class="intro">
     <figure class="cell photo">
       <img src={url('/assets/img/AlishDipani_picture.jpg')} alt={SITE.name} width="600" height="600" />
@@ -85,6 +86,7 @@ const news = getNews().slice(0, 5);
       <p class="currently">{currently} <a href={url('/blog/why-ai-safety/')}>(why?)</a></p>
     </div>
   </section>
+  </div>
 
   <p class="position">
     {blurb.map((part) => (typeof part === 'string' ? part : <a href={part.href} target="_blank" rel="noopener">{part.text}</a>))}
@@ -108,7 +110,10 @@ const news = getNews().slice(0, 5);
 
 <style>
   /* Row 1: photo | name, heading, contact (centered on the photo). Row 2: directions | research image (tops aligned). */
-  .intro { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr) minmax(0, 22rem); gap: 2.75rem var(--s4); margin-bottom: var(--s3); }
+  /* --w3 is the width of the picture column: 22rem, less on narrow screens (100cqw is the width of .intro-wrap).
+     The research text below is aligned to the picture with it. */
+  .intro-wrap { container-type: inline-size; }
+  .intro { --w3: min(22rem, max(0px, calc(100cqw - 21rem))); display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr) var(--w3); gap: 2.75rem var(--s4); margin-bottom: var(--s3); }
   .cell { margin: 0; min-width: 0; }
   .photo { grid-column: 1; grid-row: 1; }
   .top-text { grid-column: 2 / 4; grid-row: 1; align-self: center; display: flex; flex-direction: column; gap: var(--s2); }
@@ -160,6 +165,19 @@ const news = getNews().slice(0, 5);
   .news-list { list-style: none; padding: 0; margin: 0; }
   .news-list li { display: grid; grid-template-columns: 7.5rem 1fr; gap: 0.75rem; margin: 0 0 var(--s1); }
 
+
+  /* Desktop: the text column is as tall as the picture (min-height = padding + picture + labels = 1.18 × its width),
+     so the three blocks spread out evenly. Its first heading sits on the baseline of the top label and its last line
+     on the baseline of the bottom label (offsets from the label size, 4.9% of the picture width, and the font metrics). */
+  @media (min-width: 40.0625rem) {
+    .research-text {
+      box-sizing: border-box;
+      min-height: calc(var(--w3) * 1.18);
+      justify-content: space-between;
+      padding-top: max(0px, calc(var(--w3) * 0.0817 - 1.4581rem));
+      padding-bottom: max(0px, calc(var(--w3) * 0.0325 - 0.4776rem));
+    }
+  }
 
   @media (max-width: 40rem) {
     .intro { grid-template-columns: 1fr; gap: var(--s2); }

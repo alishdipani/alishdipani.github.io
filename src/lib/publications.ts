@@ -21,7 +21,7 @@ export type Author = {
   equal: boolean;
 };
 
-// APA-style name: "Last, F. M." (prefixes kept, e.g. "t Hart, B. M."; single names as they are).
+// APA-style name: "Last, F. M." (prefixes kept, e.g. "’t Hart, B. M."; single names as they are).
 const initials = (first = '') => first.split(/[\s.]+/).filter(Boolean).map((p) => p.split('-').map((q) => q[0] + '.').join('-')).join(' ');
 const apaName = (a: any) => {
   const last = [a.prefix, a.lastName].filter(Boolean).join(' ') || a.name || '';
@@ -65,7 +65,8 @@ const isPreprint = (type: string, fields: Record<string, any>, venue: string) =>
 
 function cleanBibtex(raw: string) {
   const re = new RegExp(`^\\s*(${SITE_FIELDS.join('|')})\\s*=.*\\n`, 'gim');
-  return raw.replace(re, '').trim();
+  // The parser's raw input can run on into the next entry's leading "%" comment lines; drop them.
+  return raw.replace(re, '').replace(/(\n\s*%[^\n]*)+\s*$/, '').trim();
 }
 
 export function getPublications(file = 'src/data/publications.bib'): Publication[] {

@@ -18,8 +18,9 @@ const hasEqual = pubs.some((p) => p.authors.some((a) => a.equal));
 const contents = groups.map((g) => ({ slug: g.slug, text: g.title }));
 
 // Authors: the full list when it fits on one line (about AUTHOR_LINE characters on a desktop
-// screen). Otherwise the first two authors, …, Alish, …, the last author; and if that is still too
-// long, only the first author before Alish (Alish, in chat, Oct 21). "and others" in the bib ends in "…".
+// screen). Otherwise, when Alish is among the first four authors: the first four, then "…" (no last
+// author; Alish, Oct 22). Otherwise the first two authors, …, Alish, …, the last author; and if that
+// is still too long, only the first author before Alish (Alish, Oct 21). "and others" in the bib ends in "…".
 const AUTHOR_LINE = 105;
 type Shown = Author | '…';
 const lineLength = (shown: Shown[]) =>
@@ -40,6 +41,10 @@ function shownAuthors(authors: Author[]): Shown[] {
   const list = authors.filter((a) => a.name !== 'others');
   if (!others && lineLength(list) <= AUTHOR_LINE) return list;
   const self = list.findIndex((a) => a.name === SITE.name);
+  if (self >= 0 && self < 4) {
+    const shown = pick(list, [0, 1, 2, 3], others);
+    if (lineLength(shown) <= AUTHOR_LINE) return shown;
+  }
   const tail = others ? [] : [list.length - 1];
   for (const first of [[0, 1], [0]]) {
     const shown = pick(list, [...first, self, ...tail], others);
@@ -65,8 +70,9 @@ const venueName = (venue: string) => VENUE.find(([re]) => re.test(venue))?.[1] ?
 // Status after the venue: the entry's status, else "Preprint" for preprint-server entries.
 const statusOf = (p: Publication, group: string) =>
   group === 'publication' ? p.status ?? (p.preprint ? 'Preprint' : undefined) : p.status;
-// Link labels: presentations link to abstracts.
-const linkLabel = (label: string, group: string) => (group === 'presentation' && label === 'Paper' ? 'Abstract' : label);
+// Link labels: for presentations, the main link is the abstract and a PDF is the paper.
+const linkLabel = (label: string, group: string) =>
+  group === 'presentation' ? ({ Paper: 'Abstract', PDF: 'Paper' } as Record<string, string>)[label] ?? label : label;
 ---
 <Base title="Publications" wide>
   <div class="post-layout pubs-page has-toc">
