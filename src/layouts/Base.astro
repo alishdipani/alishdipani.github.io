@@ -21,10 +21,15 @@ interface Props {
   wide?: boolean;
   // Link previews (Open Graph): an image path and the page type.
   image?: string;
+  // Replaces "Page · Alish Dipani" (Home only).
+  fullTitle?: string;
   type?: 'website' | 'article';
 }
-const { title, description = SITE.description, noindex = false, credits = [], wide = false, image, type = 'website' } = Astro.props;
-const pageTitle = title ? `${title} · ${SITE.name}` : SITE.name;
+const { title, description = SITE.description, noindex = false, credits = [], wide = false, image, type = 'website', fullTitle } = Astro.props;
+const pageTitle = fullTitle ?? (title ? `${title} · ${SITE.name}` : SITE.name);
+// Pages without their own (NGC) image get the default 1200×630 preview image and the large Twitter card.
+const preview = image ?? SITE.ogImage;
+const largePreview = !image;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const path = Astro.url.pathname;
 const isHome = path === url('/');
@@ -40,12 +45,14 @@ const isCurrent = (href: string) => path.startsWith(url(href));
     {(PREVIEW || noindex) && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonical} />
     <meta property="og:type" content={type} />
-    <meta property="og:title" content={title ?? SITE.name} />
+    <meta property="og:title" content={fullTitle ?? title ?? SITE.name} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content={SITE.name} />
-    {image && <meta property="og:image" content={new URL(url(image), Astro.site)} />}
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={new URL(url(preview), Astro.site)} />
+    {largePreview && <meta property="og:image:width" content="1200" />}
+    {largePreview && <meta property="og:image:height" content="630" />}
+    <meta name="twitter:card" content={largePreview ? 'summary_large_image' : 'summary'} />
     <link rel="icon" href="data:," />
     <link rel="alternate" type="application/rss+xml" title={`${SITE.name} · Blog`} href={url('/feed.xml')} />
     <slot name="head" />

@@ -2,7 +2,13 @@ import { getCollection } from 'astro:content';
 
 export const SITE = {
   name: 'Alish Dipani',
-  description: 'Personal website of Alish Dipani.', // TODO(Alish): site description
+  // Draft wording (Command Center, Oct 22 21:38); Alish still has to confirm it.
+  description: 'Alish Dipani is a NeuroAI PhD student at Georgia Tech studying the perceptual and cognitive capabilities of AI systems, and building AI models of the brain.',
+  homeTitle: 'Alish Dipani · NeuroAI PhD student at Georgia Tech',
+  email: 'alish.dipani@gmail.com',
+  x: 'https://x.com/alishdipani',
+  // Link preview (Open Graph) image for pages without an NGC image; made by tools/og/make.mjs.
+  ogImage: '/images/og-default.png',
 };
 
 // '' for the real site, '/website-preview' for the preview build (see astro.config.mjs).

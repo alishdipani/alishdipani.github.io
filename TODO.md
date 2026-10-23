@@ -4,9 +4,9 @@ Things only Alish can provide or decide, and where each one goes. The site hides
 instead of showing placeholders, so nothing here is visible on the site until it's filled in.
 
 ## Content
-- **Home blurb, past places:** confirm the Northeastern University role/lab; add earlier places and undergrad.
-  → `src/pages/index.astro` (position paragraph)
-- **Overview image:** add the image and set `overviewImage` (src, alt). → `src/pages/index.astro`, image in `public/`
+- **Internships line on Home:** update or remove "Open to research internships for Summer or Fall 2027."
+  → `internships` constant in `src/pages/index.astro`
+- **Write the "Why AI safety?" post** (listed, says "Coming soon" until then). → `src/content/blog/why-ai-safety.mdx`
 - **News items:** date, text, optional link; Home shows the latest 5 and hides the section while empty.
   → `src/data/news.yml`
 - **Publication summaries:** one line per publication (`summary`), optional. All entries that have a
@@ -15,16 +15,14 @@ instead of showing placeholders, so nothing here is visible on the site until it
 - **Current CV PDF:** add the file and point the CV links at it (still the Aug 2024 Google Drive PDF).
   → `public/` + `cvPdf` in `src/pages/index.astro` and `src/pages/cv.astro`
 - **CV page content** beyond the PDF link, if wanted. → `src/pages/cv.astro`
-- **Site description** (search results / link previews). → `SITE.description` in `src/lib/site.ts`
-
 - **VSS 2026 poster link:** not online yet; add `url` to `dipani2026categoryvss` in `src/data/publications.bib`
   once VSS posts it (or once the abstract is in Journal of Vision).
 
 ## Setup
-- **Google Analytics:** Task 7 (needs Alish's account decision; the old site used G-2TPX3E1SKE).
-- **Online preview:** create `alishdipani/website-preview`, add a deploy key, store it as the
-  `PREVIEW_DEPLOY_KEY` secret, set its Pages source to `gh-pages`. The workflow is ready:
-  `.github/workflows/preview.yml`.
+- **Google Analytics:** Alish will set up a new ID later (don't reuse the old one).
+- **Online preview auto-update:** the repo `alishdipani/website-preview` exists, its Pages source is `gh-pages`
+  and it serves a manual snapshot. Still missing: a write deploy key on website-preview and the secret
+  `PREVIEW_DEPLOY_KEY` in alishdipani.github.io, so `.github/workflows/preview.yml` can publish on every push to v2.
 
 ## Optional
 - **NGC check pass:** stopped at 1,130 of 3,868 candidates (roughly NGC 1–1900); resume with

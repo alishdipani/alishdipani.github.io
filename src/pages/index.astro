@@ -6,7 +6,8 @@ import { getNews } from '../lib/news';
 
 // Content finalized with Alish in Claude chat (Oct 22). Layout: two-frame hover cartoon beside the text,
 // no name above the heading line, contact row under it, two directions, "Currently" line, then the blurb.
-const headingLine = 'I study the cognitive capabilities and internal representations of AI systems.';
+const headingLine = 'I study the perceptual and cognitive capabilities of AI systems, through their behavior and internal representations.';
+const internships = 'Open to research internships for Summer or Fall 2027.';
 const directions = [
   {
     label: 'Neuro & cognitive science for AI',
@@ -29,7 +30,7 @@ const contact = [
 
 const news = getNews().slice(0, 5);
 ---
-<Base>
+<Base fullTitle={SITE.homeTitle}>
   <section class="intro">
     <figure class="cell photo">
       <img src={url('/assets/img/AlishDipani_picture.jpg')} alt={SITE.name} width="600" height="600" />
@@ -43,6 +44,7 @@ const news = getNews().slice(0, 5);
         <span><a href={`mailto:${email}`}>Email</a> <span class="contact-email">{email}</span></span>
         {contact.map((c) => <a href={c.href}>{c.label}</a>)}
       </nav>
+      <p class="internships">{internships}</p>
     </div>
     <figure class="cell research">
       <div
@@ -105,6 +107,7 @@ const news = getNews().slice(0, 5);
   .research { grid-column: 3; grid-row: 2; }
   .research-text { grid-column: 1 / 3; grid-row: 2; align-self: start; display: flex; flex-direction: column; gap: var(--s2); }
   .intro-name { margin: 0; font-size: 2.2rem; line-height: 1.1; }
+  .internships { margin: 0; }
   .intro-heading { margin: 0; font: 400 1.6rem/1.3 var(--font-body); }
   .photo img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; object-position: 50% 25%; border-radius: 6px; }
   figcaption { margin-top: 0.35rem; font: italic 0.9rem/1.4 var(--font-body); text-align: right; }

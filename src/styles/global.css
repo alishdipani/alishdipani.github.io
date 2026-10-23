@@ -226,3 +226,21 @@ hr { border: 0; border-top: 1px solid var(--border); }
 .post-thumb-empty { display: inline-block; border: 1px solid var(--border); }
 /* Thumbnail in a fixed column on the left, then title and date */
 .post-list-thumbs li { display: grid; grid-template-columns: 42px 1fr; align-items: center; gap: 0.85rem; }
+
+/* Each post is an invisible tile: the title link is stretched over the whole row (one link per post).
+   Nothing shows at rest; hover and keyboard focus show a faint background and underline the title.
+   The padding is cancelled by a negative margin, so the text stays aligned and nothing shifts. */
+.post-list-thumbs li {
+  position: relative;
+  padding: 0.5rem 0.6rem;
+  margin: 0 -0.6rem var(--s1);
+  border-radius: 8px;
+  transition: background-color 0.15s;
+}
+.post-list-thumbs li:last-child { margin-bottom: 0; }
+.post-list-thumbs li a::after { content: ''; position: absolute; inset: 0; border-radius: 8px; }
+.post-list-thumbs li a:focus-visible { outline: none; }
+.post-list-thumbs li:has(a:focus-visible) { outline: 2px solid var(--link); outline-offset: 1px; }
+.post-list-thumbs li:hover, .post-list-thumbs li:has(a:focus-visible) { background: var(--surface); }
+.post-list-thumbs li:hover a, .post-list-thumbs li:has(a:focus-visible) a { text-decoration-line: underline; }
+@media (prefers-reduced-motion: reduce) { .post-list-thumbs li { transition: none; } }

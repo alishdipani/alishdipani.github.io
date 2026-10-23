@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+<style>
+  :root { --bg: #F1F4F8; --ink: #1B2430; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #0E1624; --ink: #E3E8EF; } }
+</style>
+<rect width="32" height="32" rx="7" fill="var(--bg)"/>
+<g fill="none" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M4.5 24L10 8l5.5 16M6.6 18.5h6.8"/>
+  <path d="M19 8v16h2.5c5.5 0 7-4 7-8s-1.5-8-7-8z"/>
+</g>
+</svg>

@@ -5,7 +5,7 @@ import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import HoverCards from '../../components/HoverCards.astro';
 import Contents from '../../components/Contents.astro';
-import { getPosts, formatDate, url, imageCredits } from '../../lib/site';
+import { getPosts, formatDate, url, imageCredits, SITE } from '../../lib/site';
 import { excerpt } from '../../lib/excerpt';
 
 export async function getStaticPaths() {
@@ -56,8 +56,40 @@ const credits = imageCredits([ngc]);
       <div class="post-body">
         <Content />
       </div>
+
+      <!-- Ending line on every post (Alish, Oct 22 21:38). The email link copies the address; mailto stays as the fallback. -->
+      <p class="post-end">
+        Thoughts or ideas?{' '}
+        <a href={`mailto:${SITE.email}`} data-copy-email={SITE.email}>Email me</a><span class="copied" role="status" aria-live="polite"></span>{' '}
+        or find me on <a href={SITE.x} target="_blank" rel="noopener">X</a>.
+      </p>
     </article>
   </div>
   <HoverCards />
 </Base>
+
+<style>
+  .post-end { margin: var(--s3) 0 0; font: 0.9rem/1.5 var(--font-ui); color: var(--muted); }
+  .post-end a { text-decoration-line: underline; }
+  .post-end .copied { margin-left: 0.4rem; color: var(--text); }
+</style>
+
+<script>
+  // Copy the address instead of opening a mail app; if that fails (no clipboard access, no JS), the mailto opens.
+  const link = document.querySelector<HTMLAnchorElement>('[data-copy-email]');
+  const note = document.querySelector<HTMLElement>('.post-end .copied');
+  let timer: number | undefined;
+  link?.addEventListener('click', async (e) => {
+    e.preventDefault();
+    try {
+      await navigator.clipboard.writeText(link.dataset.copyEmail ?? '');
+    } catch {
+      location.href = link.href;
+      return;
+    }
+    if (note) note.textContent = 'Copied';
+    clearTimeout(timer);
+    timer = window.setTimeout(() => note && (note.textContent = ''), 2000);
+  });
+</script>
 
