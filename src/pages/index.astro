@@ -110,10 +110,12 @@ const news = getNews().slice(0, 5);
 
 <style>
   /* Row 1: photo | name, heading, contact (centered on the photo). Row 2: directions | research image (tops aligned). */
-  /* --w3 is the width of the picture column: 22rem, less on narrow screens (100cqw is the width of .intro-wrap).
+  /* --w3 is the width of the picture column: 20rem, less on narrow screens (100cqw is the width of .intro-wrap).
      The research text below is aligned to the picture with it. */
   .intro-wrap { container-type: inline-size; }
-  .intro { --w3: min(22rem, max(0px, calc(100cqw - 21rem))); display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr) var(--w3); gap: 2.75rem var(--s4); margin-bottom: var(--s3); }
+  /* The global "section" margin would add 3.5rem above the photo here (the wrapper is main's first child, not the section): none; main's own padding gives the same 2rem under the header as the other pages. */
+  .intro { margin-top: 0; }
+  .intro { --w3: min(20rem, max(0px, calc(100cqw - 21rem))); display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr) var(--w3); gap: 2.75rem var(--s4); margin-bottom: var(--s3); }
   .cell { margin: 0; min-width: 0; }
   .photo { grid-column: 1; grid-row: 1; }
   .top-text { grid-column: 2 / 4; grid-row: 1; align-self: center; display: flex; flex-direction: column; gap: var(--s2); }
