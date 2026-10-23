@@ -16,6 +16,7 @@ const PAGES = {
   post: '/blog/neural-style-transfer-audio/',
   demo: '/blog/template-demo/',
   ngc: '/blog/ngc/',
+  'why-ai-safety': '/blog/why-ai-safety/',
   404: '/no-such-page/',
 };
 const WIDTHS = { desktop: 1280, phone: 390 };
