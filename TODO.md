@@ -4,7 +4,7 @@ Things only Alish can provide or decide, and where each one goes. The site hides
 instead of showing placeholders, so nothing here is visible on the site until it's filled in.
 
 ## Content
-- **Internships line on Home:** update or remove "Open to research internships for Summer or Fall 2027."
+- **Internships line on Home:** update or remove "Actively looking for research internships in Summer and/or Fall 2027."
   → `internships` constant in `src/pages/index.astro`
 - **Write the "Why AI safety?" post** (listed, says "Coming soon" until then). → `src/content/blog/why-ai-safety.mdx`
 - **News items:** date, text, optional link; Home shows the latest 5 and hides the section while empty.
@@ -13,7 +13,7 @@ instead of showing placeholders, so nothing here is visible on the site until it
   link online now have one (Task 7); the others stay without links by Alish's choice.
   → `src/data/publications.bib` (fields documented at its top)
 - **Current CV PDF:** add the file and point the CV links at it (still the Aug 2024 Google Drive PDF).
-  → `public/` + `cvPdf` in `src/pages/index.astro` and `src/pages/cv.astro`
+  → `public/` + `cvPdf` in `src/pages/cv.astro` (Home no longer links the CV; it's in the header nav)
 - **CV page content** beyond the PDF link, if wanted. → `src/pages/cv.astro`
 - **VSS 2026 poster link:** not online yet; add `url` to `dipani2026categoryvss` in `src/data/publications.bib`
   once VSS posts it (or once the abstract is in Journal of Vision).

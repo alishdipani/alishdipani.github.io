@@ -7,20 +7,32 @@ import { getNews } from '../lib/news';
 // Content finalized with Alish in Claude chat (Oct 22). Layout: two-frame hover cartoon beside the text,
 // no name above the heading line, contact row under it, two directions, "Currently" line, then the blurb.
 const headingLine = 'I study the perceptual and cognitive capabilities of AI systems, through their behavior and internal representations.';
-const internships = 'Open to research internships for Summer or Fall 2027.';
+const internships = 'Actively looking for research internships in Summer and/or Fall 2027.';
 const directions = [
   {
     label: 'Neuro & cognitive science for AI',
-    text: 'Probing AI systems with controlled experiments from human cognition and psychophysics, and with tools from cognitive neuroscience.',
+    text: 'Probing AI systems with controlled experiments from human cognition and psychophysics, plus tools from cognitive neuroscience.',
   },
   {
     label: 'AI for neuro & cognitive science',
-    text: 'Building AI models that predict human brain activity and behavior, and agents that conduct in-silico experiments.',
+    text: 'Building AI models that predict human brain activity and behavior, as well as agents that conduct in-silico experiments.',
   },
 ];
-const currently = 'Lately, I have started to grow more concerned about AI safety and have started learning about it.';
-const blurb = "I'm a NeuroAI PhD student at Georgia Tech, advised by Apurva Ratan Murty and Dobromir Rahnev, and supported by the CoCo Fellowship from the Center of Excellence in Computational Cognition. My background is in computer science, vision science, and computational cognitive neuroscience. Previously, I was a research assistant at MIT Brain and Cognitive Sciences, Northeastern University, and TCS Innovation Labs, and a machine learning engineer at Baylor College of Medicine. Beyond research, I do open-source development and content creation, mainly through Neuromatch Academy.";
-const cvPdf = 'https://drive.google.com/file/d/15s30n_O6cHSKVYm-3lO_9BS3PyalfNe9/view?usp=sharing';
+const currently = "Lately, I've also started doing technical AI safety research, out of growing concern about the risks.";
+// Blurb: plain strings and links (Alish's wording, Oct 22 22:54). Links open in a new tab; only these five are linked.
+const blurb: (string | { text: string; href: string })[] = [
+  "I'm a NeuroAI PhD student at Georgia Tech, advised by ",
+  { text: 'Apurva Ratan Murty', href: 'https://www.murtylab.com/' },
+  ' and ',
+  { text: 'Dobromir Rahnev', href: 'https://rahnevlab.gatech.edu/' },
+  ', supported by the CoCo Fellowship from the ',
+  { text: 'Center of Excellence in Computational Cognition', href: 'https://coco.psych.gatech.edu/' },
+  '. My background is in computer science, vision science, and computational cognitive neuroscience. Previously, I was a research assistant at MIT Brain and Cognitive Sciences, Northeastern University, and CNRS, as well as a machine learning engineer at Baylor College of Medicine. I also create content for ',
+  { text: 'Neuromatch Academy', href: 'https://neuroai.neuromatch.io/w1d5-tutorial2/' },
+  ', and do ',
+  { text: 'open-source development', href: 'https://github.com/alishdipani' },
+  '.',
+];
 const email = 'alish.dipani@gmail.com';
 const contact = [
   { label: 'Google Scholar', href: 'https://scholar.google.com/citations?user=i028n20AAAAJ' },
@@ -39,12 +51,11 @@ const news = getNews().slice(0, 5);
     <div class="cell top-text">
       <h1 class="intro-name">{SITE.name}</h1>
       <p class="intro-heading">{headingLine}</p>
-      <nav class="contact" aria-label="CV and contact">
-        <a href={cvPdf}>CV</a>
+      <p class="internships">{internships}</p>
+      <nav class="contact" aria-label="Contact">
         <span><a href={`mailto:${email}`}>Email</a> <span class="contact-email">{email}</span></span>
         {contact.map((c) => <a href={c.href}>{c.label}</a>)}
       </nav>
-      <p class="internships">{internships}</p>
     </div>
     <figure class="cell research">
       <div
@@ -80,7 +91,9 @@ const news = getNews().slice(0, 5);
     </div>
   </section>
 
-  <p class="position">{blurb}</p>
+  <p class="position">
+    {blurb.map((part) => (typeof part === 'string' ? part : <a href={part.href} target="_blank" rel="noopener">{part.text}</a>))}
+  </p>
 
   {news.length > 0 && (
     <section id="news">
@@ -100,7 +113,7 @@ const news = getNews().slice(0, 5);
 
 <style>
   /* Row 1: photo | name, heading, contact (centered on the photo). Row 2: directions | research image (tops aligned). */
-  .intro { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr) minmax(0, 19rem); gap: var(--s3) var(--s4); margin-bottom: var(--s3); }
+  .intro { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr) minmax(0, 19rem); gap: 2.75rem var(--s4); margin-bottom: var(--s3); }
   .cell { margin: 0; min-width: 0; }
   .photo { grid-column: 1; grid-row: 1; }
   .top-text { grid-column: 2 / 4; grid-row: 1; align-self: center; display: flex; flex-direction: column; gap: var(--s2); }
@@ -115,6 +128,7 @@ const news = getNews().slice(0, 5);
   .direction-label { margin: 0 0 4px; font: 700 1.4rem/1.3 var(--font-ui); color: var(--text); }
   .direction p { margin: 0; }
   .currently { margin: 0; color: var(--muted); }
+  .currently a { font-size: 0.8em; }
   .position { margin: 0; }
 
   /* Two-frame cartoon: ink PNGs are masks painted in the theme text color, so light and dark both work. */
