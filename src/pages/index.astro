@@ -58,7 +58,7 @@ const news = getNews().slice(0, 5);
       <p class="intro-heading">{headingLine}</p>
       <p class="internships">{internships}</p>
       <nav class="contact" aria-label="Contact">
-        <span><a href={`mailto:${email}`}>Email</a> <span class="contact-email">{email}</span></span>
+        <span><a href={`mailto:${email}`}>Email</a> <span class="contact-email" data-copy-event="email-copy">{email}</span></span>
         {contact.map((c) => <a href={c.href}>{c.label}</a>)}
       </nav>
     </div>
@@ -88,7 +88,7 @@ const news = getNews().slice(0, 5);
           <p>{d.text}</p>
         </div>
       ))}
-      <p class="currently">{currently.before}<a href={currently.link.href} target="_blank" rel="noopener">{currently.link.text}</a>{currently.after} <a class="why" href={url('/blog/why-ai-safety/')}>(why?)</a></p>
+      <p class="currently">{currently.before}<a href={currently.link.href} target="_blank" rel="noopener">{currently.link.text}</a>{currently.after} <a class="why" href={url('/blog/why-ai-safety/')} data-event="safety-why-click">(why?)</a></p>
     </div>
   </section>
   </div>

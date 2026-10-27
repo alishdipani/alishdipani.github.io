@@ -30,7 +30,7 @@ const credits = imageCredits([ngc]);
   <div class:list={['post-layout', 'post-page', hasToc && 'has-toc']}>
     {hasToc && <Contents items={items} variant="side" />}
 
-    <article class="post">
+    <article class="post" data-post={post.id}>
       <div class="post-top">
         <a href={url('/blog/')}>← Blog</a>
       </div>
@@ -75,6 +75,8 @@ const credits = imageCredits([ngc]);
 </style>
 
 <script>
+  import { track } from '../../lib/track';
+
   // Copy the address instead of opening a mail app; if that fails (no clipboard access, no JS), the mailto opens.
   const link = document.querySelector<HTMLAnchorElement>('[data-copy-email]');
   const note = document.querySelector<HTMLElement>('.post-end .copied');
@@ -84,12 +86,33 @@ const credits = imageCredits([ngc]);
     try {
       await navigator.clipboard.writeText(link.dataset.copyEmail ?? '');
     } catch {
+      track('email-click');
       location.href = link.href;
       return;
     }
+    track('email-copy');
     if (note) note.textContent = 'Copied';
     clearTimeout(timer);
     timer = window.setTimeout(() => note && (note.textContent = ''), 2000);
   });
+
+  // Analytics: blog-scroll once at each of 25, 50, 75 and 100% of the page scrolled (a page that fits on
+  // the screen counts as fully read). Properties: post (slug) and depth.
+  const post = document.querySelector<HTMLElement>('[data-post]')?.dataset.post ?? '';
+  const left = [25, 50, 75, 100];
+  const check = () => {
+    const doc = document.documentElement;
+    const seen = Math.min(100, ((window.scrollY + window.innerHeight) / doc.scrollHeight) * 100);
+    while (left.length && seen >= left[0] - 0.5) track('blog-scroll', { post, depth: left.shift()! });
+    if (!left.length) window.removeEventListener('scroll', onScroll);
+  };
+  let queued = false;
+  const onScroll = () => {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(() => { queued = false; check(); });
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('load', check, { once: true });
 </script>
 

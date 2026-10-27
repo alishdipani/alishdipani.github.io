@@ -59,6 +59,21 @@ const isCurrent = (href: string) => path.startsWith(url(href));
     <link rel="alternate" type="application/rss+xml" title={`${SITE.name} · Blog`} href={url('/feed.xml')} />
     <slot name="head" />
     <script is:inline>
+      // Analytics opt-out: visiting any page with ?notrack sets Umami's own opt-out flag in this browser
+      // (localStorage "umami.disabled"), so its visits are never counted; then ?notrack leaves the address bar.
+      try {
+        const u = new URL(location.href);
+        if (u.searchParams.has('notrack')) {
+          try { localStorage.setItem('umami.disabled', '1'); } catch {}
+          u.searchParams.delete('notrack');
+          history.replaceState(history.state, '', u.pathname + u.search + u.hash);
+        }
+      } catch {}
+    </script>
+    {/* Umami Cloud analytics (cookie-free). Counts only on alishdipani.github.io (never localhost), and
+        the preview build leaves it out (it shares that hostname). Events: src/lib/track.ts. */}
+    {!PREVIEW && <script is:inline defer src="https://cloud.umami.is/script.js" data-website-id="7fdba685-4133-4cc7-b87a-12e37b1bf54d" data-domains="alishdipani.github.io"></script>}
+    <script is:inline>
       // Apply the reader's stored theme before the page paints (no flash of the wrong theme).
       try {
         const t = localStorage.getItem('theme');
@@ -94,6 +109,10 @@ const isCurrent = (href: string) => path.startsWith(url(href));
       ))}
       <p>© {new Date().getFullYear()} {SITE.name} · Built with <a href="https://astro.build">Astro</a>, with help from Claude</p>
     </footer>
+    <script>
+      import { initClickTracking } from '../lib/track';
+      initClickTracking();
+    </script>
     <script>
       // Light/dark toggle: follows the system until the reader chooses, then remembers the choice.
       const root = document.documentElement;

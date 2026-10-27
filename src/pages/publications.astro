@@ -74,6 +74,11 @@ const venueName = (venue: string) => VENUE.find(([re]) => re.test(venue))?.[1] ?
 // Status after the venue: the entry's status, else "Preprint" for preprint-server entries.
 const statusOf = (p: Publication, group: string) =>
   group === 'publication' ? p.status ?? (p.preprint ? 'Preprint' : undefined) : p.status;
+// Analytics (src/lib/track.ts): clicks on a paper / abstract / arXiv link send publication-click.
+const shortTitle = (t: string) => (t.length > 60 ? t.slice(0, 57).trimEnd() + '…' : t);
+const LINK_TYPE: Record<string, string | undefined> = { Paper: 'paper', Abstract: 'abstract', arXiv: 'arxiv' };
+const pubEvent = (p: Publication, type?: string) =>
+  type ? { 'data-event': 'publication-click', 'data-event-title': shortTitle(p.title), 'data-event-link_type': type, 'data-event-highlighted': String(p.highlight) } : {};
 // Link labels: for presentations, the main link is the abstract and a PDF is the paper.
 const linkLabel = (label: string, group: string) =>
   group === 'presentation' ? ({ Paper: 'Abstract', PDF: 'Paper' } as Record<string, string>)[label] ?? label : label;
@@ -103,7 +108,7 @@ const linkLabel = (label: string, group: string) =>
                 <li class:list={['pub', p.highlight && 'highlight']} id={p.key}>
                   <span class="pub-num">[{g.items.length - i}]</span>
                   <div class="pub-body">
-                    <p class="pub-title">{p.url ? <a href={p.url} target="_blank" rel="noopener">{title}</a> : title}</p>
+                    <p class="pub-title">{p.url ? <a href={p.url} target="_blank" rel="noopener" {...pubEvent(p, g.id === 'presentation' ? 'abstract' : 'paper')}>{title}</a> : title}</p>
                     <p class="pub-authors">
                       {authors.map((a, j) => (
                         <>{sep(j, authors)}{a === '…' ? '…' : a.name === SITE.name ? <span class="self">{a.apa}</span> : a.apa}{a !== '…' && a.equal && '*'}</>
@@ -121,13 +126,13 @@ const linkLabel = (label: string, group: string) =>
                           ) : status}
                         </span>
                       )}
-                      {p.links.map((l) => <span class="dot"><a class="pub-link" href={l.href} target="_blank" rel="noopener">{linkLabel(l.label, g.id)}</a></span>)}
+                      {p.links.map((l) => <span class="dot"><a class="pub-link" href={l.href} target="_blank" rel="noopener" {...pubEvent(p, LINK_TYPE[linkLabel(l.label, g.id)])}>{linkLabel(l.label, g.id)}</a></span>)}
                       {g.id === 'publication' && (
                         <details class="bibtex dot">
                           <summary class="pub-link">BibTeX</summary>
                           <div class="bibtex-box">
                             <pre><code>{p.bibtex}</code></pre>
-                            <button type="button" class="pub-link copy" data-copy>Copy</button>
+                            <button type="button" class="pub-link copy" data-copy data-title={shortTitle(p.title)}>Copy</button>
                           </div>
                         </details>
                       )}
@@ -191,12 +196,14 @@ const linkLabel = (label: string, group: string) =>
 </style>
 
 <script>
+  import { track } from '../lib/track';
   for (const btn of document.querySelectorAll<HTMLButtonElement>('[data-copy]')) {
     btn.addEventListener('click', async () => {
       const text = btn.parentElement?.querySelector('code')?.textContent ?? '';
       try {
         await navigator.clipboard.writeText(text);
         btn.textContent = 'Copied';
+        track('bibtex-copy', { title: btn.dataset.title ?? '' });
       } catch {
         btn.textContent = 'Select and copy';
       }

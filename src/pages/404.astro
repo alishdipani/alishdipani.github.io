@@ -28,7 +28,15 @@ const slugs = (await getPosts()).map((p) => p.id);
         else if (/^\/blog\/(tag|category|page)\/|^\/blog\/\d{4}\/$/.test(p)) to = '/blog/';
         else if (/^\/news\//.test(p)) to = '/';
       }
-      if (to && base + to !== location.pathname) location.replace(base + to + location.search + location.hash);
+      if (to && base + to !== location.pathname) {
+        document.documentElement.dataset.redirecting = '';
+        location.replace(base + to + location.search + location.hash);
+      }
     })();
+  </script>
+  <script>
+    import { track } from '../lib/track';
+    // Analytics: a real "not found" (not an old address that the script above redirects).
+    if (!('redirecting' in document.documentElement.dataset)) track('404', { path: location.pathname + location.search });
   </script>
 </Base>
