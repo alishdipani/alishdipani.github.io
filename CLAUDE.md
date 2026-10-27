@@ -20,6 +20,7 @@ Key rules (full list on that page): **Alish approves every commit** — before c
 - `src/pages/` — Home, Publications, Blog (+ posts), CV, 404, feed.xml, sitemap.xml
 - `src/content/blog/` — posts (Markdown/MDX); URL is `/blog/<filename>/`
 - `src/data/publications.bib` — publication list and page data: optional `group={publication|presentation}`, `status` (marks a preprint), `summary`, `equal={1,2}`, link fields (`url`/`doi`, `pdf`, `arxiv`, `code`, `poster`, `slides`); see the comment at its top and `src/lib/publications.ts`
+- `public/cv/Alish_Dipani_CV.pdf` — the CV PDF, linked from `/cv/` (replace the file to update it; keep the name)
 - `src/data/news.yml` — Home news items (date, text, optional link); Home shows the latest 5
 - `migration/old-urls.txt` — every URL of the old site (166); `migration/redirects.yml` — old → new for those that moved
 - `legacy/` — old site files (PDFs, images, CSS/JS…) copied into the build at their exact old paths
