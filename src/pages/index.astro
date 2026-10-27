@@ -17,7 +17,12 @@ const directions = [
     text: 'Building AI models that predict human brain activity and behavior, as well as agents that conduct in-silico experiments.',
   },
 ];
-const currently = "Lately, I've also started doing technical AI safety research, out of growing concern about the risks.";
+// "Currently" line (Alish, Oct 26): text before the link, the link, text after it; then "(why?)".
+const currently = {
+  before: "Lately, I've also been expanding into technical AI safety through ",
+  link: { text: "Georgia Tech's AI Safety Initiative", href: 'https://www.aisi.dev/fellowships' },
+  after: ', out of concern about the risks.',
+};
 // Blurb: plain strings and links (Alish's wording, Oct 22 22:54). Links open in a new tab; only these five are linked.
 const blurb: (string | { text: string; href: string })[] = [
   "I'm a NeuroAI PhD student at Georgia Tech, advised by ",
@@ -83,7 +88,7 @@ const news = getNews().slice(0, 5);
           <p>{d.text}</p>
         </div>
       ))}
-      <p class="currently">{currently} <a href={url('/blog/why-ai-safety/')}>(why?)</a></p>
+      <p class="currently">{currently.before}<a href={currently.link.href} target="_blank" rel="noopener">{currently.link.text}</a>{currently.after} <a class="why" href={url('/blog/why-ai-safety/')}>(why?)</a></p>
     </div>
   </section>
   </div>
@@ -130,7 +135,7 @@ const news = getNews().slice(0, 5);
   .direction-label { margin: 0 0 4px; font: 700 1.4rem/1.3 var(--font-ui); color: var(--text); }
   .direction p { margin: 0; }
   .currently { margin: 0; color: var(--muted); }
-  .currently a { font-size: 0.8em; }
+  .currently .why { font-size: 0.8em; }
   .position { margin: 0; }
 
   /* Two-frame cartoon: ink PNGs are masks painted in the theme text color, so light and dark both work. */

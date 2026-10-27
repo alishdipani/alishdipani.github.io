@@ -27,7 +27,7 @@
 
   --page: 57.5rem;      /* header, footer and regular pages (1.25x the first version) */
   --header-h: 4.75rem;  /* sticky header height, for scroll offsets */
-  --measure: 68ch;      /* post reading column */
+  --measure: 78ch;      /* post reading column (wider per Alish, Oct 26; was 68ch) */
   --wide: 62rem;        /* wide figures */
   --margin-note: 15rem; /* sidenote column on wide screens */
 }
