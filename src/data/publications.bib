@@ -6,6 +6,8 @@
 %   summary={...}  one line under Publications entries
 %   equal={1,2}    author positions with equal contribution (marked *)
 %   url / doi (Paper chip + title link), pdf, arxiv, code, poster, slides (link chips)
+%   venue={…}    what the page shows as the venue, when it differs from journal/booktitle/publisher
+%                (e.g. "Poster @ …"); like the fields above, it is left out of the BibTeX box
 
 % Equal contribution (equal={…}) per Alish, Oct 21 15:43 and chat; statuses per Alish, Oct 21 16:53.
 % Links (doi/url/pdf) per Task 7, Oct 21 22:45, each checked against its title (Crossref or the page).
@@ -16,7 +18,7 @@
 @article{deb2026braintree,
   status={Under review},
   title={Braintree: An agentic framework for in-silico vision neuroscience},
-  author={Deb, Mainak and Wang, Ruolin and Dipani, Alish and Murty, N Apurva Ratan},
+  author={Deb, Mainak and Wang, Ruolin and Dipani, Alish and Ratan Murty, N. Apurva},
   journal={bioRxiv},
   year={2026},
   doi={10.64898/2026.10.07.756448},
@@ -24,12 +26,13 @@
 }
 
 % Zenodo, published 2026-10-01
-@article{ohue2026shared,
+@misc{ohue2026shared,
   title={What a Shared Week of Open Python Learning Revealed About Access, Motivation, and the Path into Computational Neuroscience},
   author={Ohue, Peter and Gbayisomore, Tolulope and Dipani, Alish and Guha, Aparajeeta and Kurmashev, Ruslan and Oladokun, Afeez and Oladele, Tolulope and Ranasinghe, Chathura and Sinha, Manisha and Yang, Apollo and Umoquit, Muriah},
-  journal={Zenodo},
+  publisher={Zenodo},
   year={2026},
   doi={10.5281/zenodo.23082542},
+  venue={Zenodo},
   group={publication},
   status={Report}
 }
@@ -39,7 +42,7 @@
   status={Under review},
   equal={1,2},
   title={Zero-shot evaluations expose structured generalization limits in predictive models of the brain},
-  author={Wang, Ruolin and Deb, Mayukh and Abate, Alex and Dipani, Alish and Dudipala, Kushal R and Chillarege, Sanjana and Ravikanti, Kruthik and Li, Yuxuan and Al-Tahan, Haider and Koushik, Ranjani and Mieczkowski, Elizabeth and Fung, Herrick and Kanwisher, Nancy and Murty, N Apurva Ratan},
+  author={Wang, Ruolin and Deb, Mayukh and Abate, Alex and Dipani, Alish and Dudipala, Kushal R and Chillarege, Sanjana and Ravikanti, Kruthik and Li, Yuxuan and Al-Tahan, Haider and Koushik, Ranjani and Mieczkowski, Elizabeth and Fung, Herrick and Kanwisher, Nancy and Ratan Murty, N. Apurva},
   journal={bioRxiv},
   year={2026},
   doi={10.64898/2026.09.15.751562},
@@ -51,7 +54,7 @@
   status={In revision, Communications Biology},
   statusurl={https://www.nature.com/commsbio/},
   title={Category selectivity observed in the human brain is distinct from category selectivity observed in artificial neural networks},
-  author={Dipani, Alish and Murty, N Apurva Ratan},
+  author={Dipani, Alish and Ratan Murty, N. Apurva},
   journal={bioRxiv},
   year={2026},
   doi={10.64898/2026.05.29.728609},
@@ -83,13 +86,14 @@
   equal={1,2},
   abbr={PNAS},
   title={Linking faces to social cognition: The temporal pole as a potential social switch},
-  author={Dipani, Alish and McNeal, Nikolas and Ratan Murty, N Apurva},
-  journal={Proceedings of the National Academy of Sciences (Commentary)},
+  author={Dipani, Alish and McNeal, Nikolas and Ratan Murty, N. Apurva},
+  journal={Proceedings of the National Academy of Sciences},
   volume={121},
   number={31},
   pages={e2411735121},
   year={2024},
   publisher={National Academy of Sciences},
+  venue={Proceedings of the National Academy of Sciences (Commentary)},
   selected={true}
 }
 
@@ -128,8 +132,11 @@
   title={Neuromatch Academy: a 3-week, online summer school in computational neuroscience},
   author={’t Hart, Bernard Marius and Achakulvisut, Titipat and Adeyemi, Ayoade and Akrami, Athena and Alicea, Bradly and Alonso-Andres, Alicia and Alzate-Correa, Diego and Ash, Arash and Ballesteros, Jesus J and Balwani, Aishwarya and Batty, Eleanor and Beierholm, Ulrik and Benjamin, Ari and Bhalla, Upinder and Blohm, Gunnar and Blohm, Joachim and Bonnen, Kathryn and Brigham, Marco and Brunton, Bingni and Butler, John and Caie, Brandon and Gajic, N and Chatterjee, Sharbatanu and Chavlis, Spyridon and Chen, Ruidong and Cheng, You and Chow, H.m. and Chua, Raymond and Dai, Yunwei and David, Isaac and DeWitt, Eric and Denis, Julien and Dipani, Alish and Dorschel, Arianna and Drugowitsch, Jan and Dwivedi, Kshitij and Escola, Sean and Fan, Haoxue and Farhoodi, Roozbeh and Fei, Yicheng and Fiquet, Pierre-Étienne and Fontolan, Lorenzo and Forest, Jeremy and Fujishima, Yuki and Galbraith, Byron and Galdamez, Mario and Gao, Richard and Gjorgjieva, Julijana and Gonzalez, Alexander and Gu, Qinglong and Guo, Yueqi and Guo, Ziyi and Gupta, Pankaj and Gurbuz, Busra and Haimerl, Caroline and Harrod, Jordan and Hyafil, Alexandre and Irani, Martin and Jacobson, Daniel and Johnson, Michelle and Jones, Ilenna and Karni, Gili and Kass, Robert and Kim, Hyosub and Kist, Andreas and Koene, Randal and Kording, Konrad and Krause, Matthew and Kumar, Arvind and Kühn, Norma and Lc, Ray and Laporte, Matthew and Lee, Junseok and Li, Songting and Lin, Sikun and Lin, Yang and Liu, Shuze and Liu, Tony and Livezey, Jesse and Lu, Linlin and Macke, Jakob and Mahaffy, Kelly and Martins, A and Martorell, Nicolás and Martínez, Manolo and Mattar, Marcelo and Menendez, Jorge and Miller, Kenneth and Mineault, Patrick and Mohammadi, Nosratullah and Mohsenzadeh, Yalda and Morgenroth, Elenor and Morshedzadeh, Taha and Mosberger, Alice and Muliya, Madhuvanthi and Mur, Marieke and Murray, John and Nd, Yashas and Naud, Richard and Nayak, Prakriti and Oak, Anushka and Castillo, Itzel and Orouji, Seyedmehdi and Otero-Millan, Jorge and Pachitariu, Marius and Pandey, Biraj and Paredes, Renato and Parent, Jesse and Park, Il and Peters, Megan and Pitkow, Xaq and Poirazi, Panayiota and Popal, Haroon and Prabhakaran, Sandhya and Qiu, Tian and Ragunathan, Srinidhi and Rodriguez-Cruces, Raul and Rolnick, David and Sahoo, Ashish and Salehinajafabadi, Saeed and Savin, Cristina and Saxena, Shreya and Schrater, Paul and Schroeder, Karen and Schwarze, Alice and Sedigh-Sarvestani, Madineh and Sekhar, K and Shadmehr, Reza and Shanechi, Maryam and Sharma, Siddhant and Shea-Brown, Eric and Shenoy, Krishna and Shimabukuro, Carolina and Shuvaev, Sergey and Sin, Man and Smith, Maurice and Steinmetz, Nicholas and Stosio, Karolina and Straley, Elizabeth and Strandquist, Gabrielle and Stringer, Carsen and Tomar, Rimjhim and Tran, Ngoc and Triantafillou, Sofia and Udeigwe, Lawrence and Valeriani, Davide and Valton, Vincent and Vaziri-Pashkam, Maryam and Vincent, Peter and Vishne, Gal and Wallisch, Pascal and Wang, Peiyuan and Ward, Claire and Waskom, Michael and Wei, Kunlin and Wu, Anqi and Wu, Zhengwei and Wyble, Brad and Zhang, Lei and Zysman, Daniel and Uquillas, Federico and van Viegen, Tara},
   journal={Journal of Open Source Education},
+  volume={5},
+  number={49},
+  pages={118},
   year={2022},
-  publisher={Technological University Dublin}
+  publisher={The Open Journal}
 }
 
 
@@ -220,16 +227,19 @@
 }
 
 # InterSpeech 2021
-@article{hu2021avatr,
+@inproceedings{hu2021avatr,
   url={https://www.isca-archive.org/interspeech_2021/hu21_interspeech.html},
   equal={1,2,3},
   group={publication},
-  arxiv={2105.00609},
   abbr={InterSpeech},
   title={AvaTr: One-shot speaker extraction with transformers},
   author={Hu, Shell Xu and Arefin, Md Rifat and Nguyen, Viet-Nhat and Dipani, Alish and Pitkow, Xaq and Tolias, Andreas Savas},
-  journal={Poster @ Interspeech},
-  year={2021}
+  booktitle={Interspeech 2021},
+  pages={3510--3514},
+  year={2021},
+  doi={10.21437/Interspeech.2021-1378},
+  publisher={ISCA},
+  venue={Poster @ Interspeech}
 }
 
 # MediaEval 2020

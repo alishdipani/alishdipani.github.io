@@ -7,7 +7,8 @@ import { parse } from '@retorquere/bibtex-parser';
 //   status   e.g. {Preprint}, {Report}: the label shown after the venue (also marks a preprint)
 //   summary  one line shown under Publications entries
 //   equal    author positions with equal contribution, e.g. {1,2} → marked with *
-//   pdf, code, poster, slides   links for the chips (url / doi / arxiv / eprint are standard)
+//   venue    what the page shows as the venue when it differs from journal / booktitle (e.g. {Poster @ Interspeech})
+//   arxiv, pdf, code, poster, slides   links for the chips (url / doi / eprint are standard BibTeX)
 export type Group = 'publication' | 'presentation';
 
 export const GROUPS: { id: Group; title: string }[] = [
@@ -45,7 +46,7 @@ export type Publication = {
   bibtex: string;             // the entry as BibTeX, without the site-only fields
 };
 
-const SITE_FIELDS = ['abbr', 'selected', 'group', 'summary', 'equal', 'status', 'statusurl', 'pdf', 'code', 'poster', 'slides'];
+const SITE_FIELDS = ['abbr', 'selected', 'group', 'summary', 'equal', 'status', 'statusurl', 'venue', 'arxiv', 'pdf', 'code', 'poster', 'slides'];
 
 const join = (v: unknown) => (Array.isArray(v) ? v.join(' and ') : ((v as string) ?? ''));
 
@@ -75,7 +76,7 @@ export function getPublications(file = 'src/data/publications.bib'): Publication
   return lib.entries
     .map((e) => {
       const f = e.fields as Record<string, any>;
-      const rawVenue = join(f.journal ?? f.booktitle ?? f.howpublished);
+      const rawVenue = join(f.venue ?? f.journal ?? f.booktitle ?? f.howpublished ?? f.publisher);
       const equal = new Set(join(f.equal).split(/[,\s]+/).filter(Boolean).map(Number));
       const url = join(f.url) || (f.doi ? `https://doi.org/${join(f.doi)}` : '');
       const arxivId = join(f.arxiv ?? (join(f.archiveprefix).toLowerCase() === 'arxiv' ? f.eprint : ''));
