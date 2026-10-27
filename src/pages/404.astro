@@ -8,7 +8,7 @@ import { loadRedirects } from '../lib/redirects.mjs';
 const table = loadRedirects();
 const slugs = (await getPosts()).map((p) => p.id);
 ---
-<Base title="Page not found">
+<Base title="Page not found" description="There is nothing at this address on alishdipani.github.io.">
   <h1>Page not found</h1>
   <p>There is nothing at this address. Try one of these:</p>
   <ul>

@@ -26,7 +26,7 @@ const metaDescription = description ?? excerpt(post.body);
 // (the demo's placeholder gets none).
 const credits = imageCredits([ngc]);
 ---
-<Base title={title} description={metaDescription} image={ngc?.image} type="article" noindex={unlisted} credits={credits} wide>
+<Base title={title} description={metaDescription} image={ngc?.image} imageAlt={ngc ? `${ngc.name}, ${ngc.description}` : undefined} type="article" noindex={unlisted} credits={credits} wide>
   <div class:list={['post-layout', 'post-page', hasToc && 'has-toc']}>
     {hasToc && <Contents items={items} variant="side" />}
 

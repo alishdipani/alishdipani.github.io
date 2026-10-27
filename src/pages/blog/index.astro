@@ -7,7 +7,7 @@ import { getPosts, url, imageCredits } from '../../lib/site';
 const posts = await getPosts();
 const credits = imageCredits(posts.map((p) => (p.data.ngc?.thumb ? p.data.ngc : undefined)));
 ---
-<Base title="Blog" credits={credits}>
+<Base title="Blog" description="Blog posts by Alish Dipani, each paired with an object from the New General Catalogue (NGC)." credits={credits}>
   <h1 class="sr-only">Blog</h1>
   <!-- Wording: Alish's decision (Command Center, Oct 21 15:34). -->
   <p class="page-note">

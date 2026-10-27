@@ -45,8 +45,22 @@ const contact = [
 ];
 
 const news = getNews().slice(0, 5);
+
+// SEO: the meta description is the heading line; the Person schema (JSON-LD) describes Alish for search engines.
+const headlineDescription = headingLine;
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: SITE.name,
+  jobTitle: 'PhD Student',
+  affiliation: { '@type': 'CollegeOrUniversity', name: 'Georgia Institute of Technology', url: 'https://www.gatech.edu/' },
+  url: 'https://alishdipani.github.io',
+  image: new URL(SITE.ogImage.src, Astro.site).href,
+  sameAs: SITE.sameAs,
+};
 ---
-<Base fullTitle={SITE.homeTitle}>
+<Base description={headlineDescription}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(person)} />
   <div class="intro-wrap">
   <section class="intro">
     <figure class="cell photo">

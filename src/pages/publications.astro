@@ -83,7 +83,7 @@ const pubEvent = (p: Publication, type?: string) =>
 const linkLabel = (label: string, group: string) =>
   group === 'presentation' ? ({ Paper: 'Abstract', PDF: 'Paper' } as Record<string, string>)[label] ?? label : label;
 ---
-<Base title="Publications" wide>
+<Base title="Publications" description="Publications and conference presentations by Alish Dipani." wide>
   <div class="post-layout pubs-page has-toc">
     <Contents items={contents} variant="side" />
 

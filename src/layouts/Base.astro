@@ -19,17 +19,18 @@ interface Props {
   credits?: Credit[];
   // Posts lay out their own wider grid (sticky contents, margin notes).
   wide?: boolean;
-  // Link previews (Open Graph): an image path and the page type.
+  // Link previews (Open Graph / Twitter): the page's own image (posts: their NGC image) and the page type.
+  // Pages without one use the photo from Home (SITE.ogImage).
   image?: string;
-  // Replaces "Page · Alish Dipani" (Home only).
-  fullTitle?: string;
+  imageAlt?: string;
   type?: 'website' | 'article';
 }
-const { title, description = SITE.description, noindex = false, credits = [], wide = false, image, type = 'website', fullTitle } = Astro.props;
-const pageTitle = fullTitle ?? (title ? `${title} · ${SITE.name}` : SITE.name);
-// Pages without their own (NGC) image get the default 1200×630 preview image and the large Twitter card.
-const preview = image ?? SITE.ogImage;
-const largePreview = !image;
+const { title, description = SITE.description, noindex = false, credits = [], wide = false, image, imageAlt, type = 'website' } = Astro.props;
+// Home is "Alish Dipani"; every other page "Page · Alish Dipani".
+const pageTitle = title ? `${title} · ${SITE.name}` : SITE.name;
+const ogTitle = title ?? SITE.name;
+const ogImage = image ? { src: image, alt: imageAlt ?? '' } : SITE.ogImage;
+const ogImageUrl = new URL(url(ogImage.src), Astro.site).href;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const path = Astro.url.pathname;
 const isHome = path === url('/');
@@ -45,14 +46,20 @@ const isCurrent = (href: string) => path.startsWith(url(href));
     {(PREVIEW || noindex) && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonical} />
     <meta property="og:type" content={type} />
-    <meta property="og:title" content={fullTitle ?? title ?? SITE.name} />
+    <meta property="og:title" content={ogTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content={SITE.name} />
-    <meta property="og:image" content={new URL(url(preview), Astro.site)} />
-    {largePreview && <meta property="og:image:width" content="1200" />}
-    {largePreview && <meta property="og:image:height" content="630" />}
-    <meta name="twitter:card" content={largePreview ? 'summary_large_image' : 'summary'} />
+    <meta property="og:image" content={ogImageUrl} />
+    {'width' in ogImage && <meta property="og:image:width" content={String(ogImage.width)} />}
+    {'height' in ogImage && <meta property="og:image:height" content={String(ogImage.height)} />}
+    {ogImage.alt && <meta property="og:image:alt" content={ogImage.alt} />}
+    {/* Square images (the photo, NGC images): the small card. */}
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={ogTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    {ogImage.alt && <meta name="twitter:image:alt" content={ogImage.alt} />}
     <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
     <link rel="icon" href={url('/favicon-32.png')} sizes="32x32" type="image/png" />
     <link rel="apple-touch-icon" href={url('/apple-touch-icon.png')} />

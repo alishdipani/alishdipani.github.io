@@ -4,11 +4,17 @@ export const SITE = {
   name: 'Alish Dipani',
   // Matches the Home heading line (Alish, Oct 26).
   description: 'Alish Dipani is a NeuroAI PhD student at Georgia Tech studying the visual perception and metacognition of AI models and agents, using human behavior and the brain as a reference.',
-  homeTitle: 'Alish Dipani · NeuroAI PhD student at Georgia Tech',
   email: 'alishdipani@gatech.edu',
   x: 'https://x.com/alishdipani',
-  // Link preview (Open Graph) image for pages without an NGC image; made by tools/og/make.mjs.
-  ogImage: '/images/og-default.png',
+  // Link preview (Open Graph / Twitter) image for pages without an NGC image: the photo on Home.
+  ogImage: { src: '/assets/img/AlishDipani_picture.jpg', width: 1222, height: 1282, alt: 'Photo of Alish Dipani' },
+  // Profiles for the Person schema on Home (JSON-LD sameAs), URLs from Alish (Oct 27).
+  sameAs: [
+    'https://scholar.google.com/citations?user=i028n20AAAAJ',
+    'https://github.com/alishdipani',
+    'https://www.linkedin.com/in/alish-dipani/',
+    'https://orcid.org/0000-0002-9201-1369',
+  ],
 };
 
 // '' for the real site, '/website-preview' for the preview build (see astro.config.mjs).

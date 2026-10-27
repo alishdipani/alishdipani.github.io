@@ -14,7 +14,7 @@ ngc:
   creditUrl: "https://www.legacysurvey.org/viewer?ra=53.40154&dec=-36.14039&layer=ls-dr10&zoom=13"
   objectUrl: "https://en.wikipedia.org/wiki/NGC_1365"
 ---
-Summary: Multi plots in Rubyplot.  
+Summary: The show and the plot functions in Rubyplot.  
 
 
 ## Introduction
