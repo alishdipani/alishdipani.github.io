@@ -8,7 +8,7 @@ export const SITE = {
   x: 'https://x.com/alishdipani',
   // Link preview (Open Graph / Twitter) image for pages without an NGC image: the photo on Home.
   ogImage: { src: '/assets/img/AlishDipani_picture.jpg', width: 1222, height: 1282, alt: 'Photo of Alish Dipani' },
-  // Profiles for the Person schema on Home (JSON-LD sameAs), URLs from Alish (Oct 27).
+  // Profiles for the Person schema on Home (JSON-LD sameAs), URLs from Alish (Oct 27); X (SITE.x) is added there too.
   sameAs: [
     'https://scholar.google.com/citations?user=i028n20AAAAJ',
     'https://github.com/alishdipani',

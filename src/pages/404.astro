@@ -4,7 +4,7 @@ import { NAV, BASE, getPosts, url } from '../lib/site';
 import { loadRedirects } from '../lib/redirects.mjs';
 
 // Fallback for anything that has no file: try the redirect table and a few
-// path patterns of the old site, otherwise show links to the main pages.
+// path patterns of the old site (and of the deleted /website-preview/), otherwise show links to the main pages.
 const table = loadRedirects();
 const slugs = (await getPosts()).map((p) => p.id);
 ---
@@ -27,6 +27,7 @@ const slugs = (await getPosts()).map((p) => p.id);
         if (post && slugs.indexOf(post[1].toLowerCase()) !== -1) to = '/blog/' + post[1].toLowerCase() + '/';
         else if (/^\/blog\/(tag|category|page)\/|^\/blog\/\d{4}\/$/.test(p)) to = '/blog/';
         else if (/^\/news\//.test(p)) to = '/';
+        else if (/^\/website-preview\//.test(p)) to = '/'; // the deleted online preview
       }
       if (to && base + to !== location.pathname) {
         document.documentElement.dataset.redirecting = '';

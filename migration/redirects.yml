@@ -52,3 +52,7 @@
 
 # New-site moves (not old-site URLs)
 /ngc/: /blog/ngc/
+
+# The old online preview (the website-preview repo was deleted Oct 27): its root goes to Home.
+# Deeper /website-preview/… paths are sent to Home by the 404 page.
+/website-preview/: /

@@ -27,6 +27,7 @@ const FALLBACKS = {
   '/blog/tag/anything/': '/blog/',
   '/news/some-old-item/': '/',
   '/awards': '/cv/',
+  '/website-preview/blog/ngc/': '/',
 };
 
 const server = createServer('dist');
