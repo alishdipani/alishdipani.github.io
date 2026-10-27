@@ -7,6 +7,7 @@
 %   equal={1,2}    author positions with equal contribution (marked *)
 %   url / doi (Paper chip + title link), pdf, arxiv, code, poster, slides (link chips)
 %   highlight={true}  tints the entry as representative work
+%   linklabel={Paper}  for a presentation whose link is a paper: the chip says Paper, not Abstract
 %   venue={…}    what the page shows as the venue, when it differs from journal/booktitle/publisher
 %                (e.g. "Poster @ …"); like the fields above, it is left out of the BibTeX box
 
@@ -75,14 +76,16 @@
   group={presentation}
 }
 
-% CCN 2026 poster (Alish, Oct 21 15:24); OpenReview link from Alish (OpenReview's browser check blocks scripted checks)
+% CCN 2026 poster (Alish, Oct 21 15:24); OpenReview link from Alish (OpenReview's browser check blocks scripted checks).
+% The OpenReview link is the full CCN paper, so it reads "Paper", not "Abstract" (Alish, Oct 27).
 @inproceedings{martinez2026encoding,
   url={https://openreview.net/forum?id=54FXwUPF34},
   title={Encoding models reveal selective differences in face representations in developmental prosopagnosia},
   author={Martinez-Addiego, Florencia and Stehr, Daniel and Dipani, Alish and Duchaine, Bradley and Murty, N Apurva Ratan},
   booktitle={Poster @ Conference on Cognitive Computational Neuroscience (CCN)},
   year={2026},
-  group={presentation}
+  group={presentation},
+  linklabel={Paper}
 }
 
 % VSS 2026 poster (May 16, before CCN 2026), from Alish, Oct 21 22:56. No link: the VSS page isn't

@@ -43,12 +43,13 @@ export type Publication = {
   year: string;
   summary?: string;
   highlight: boolean;         // highlight={true}: shown with a tint as representative work
+  linkLabel?: string;         // linklabel={Paper}: a presentation whose main link is a paper, not an abstract
   url?: string;               // title link: url field, else the DOI, else the PDF or arXiv link
   links: { label: string; href: string }[];
   bibtex: string;             // the entry as BibTeX, without the site-only fields
 };
 
-const SITE_FIELDS = ['abbr', 'selected', 'group', 'summary', 'equal', 'status', 'statusurl', 'highlight', 'venue', 'arxiv', 'pdf', 'code', 'poster', 'slides'];
+const SITE_FIELDS = ['abbr', 'selected', 'group', 'summary', 'equal', 'status', 'statusurl', 'highlight', 'linklabel', 'venue', 'arxiv', 'pdf', 'code', 'poster', 'slides'];
 
 const join = (v: unknown) => (Array.isArray(v) ? v.join(' and ') : ((v as string) ?? ''));
 
@@ -109,6 +110,7 @@ export function getPublications(file = 'src/data/publications.bib'): Publication
         year: join(f.year),
         summary: join(f.summary) || undefined,
         highlight: join(f.highlight) === 'true',
+        linkLabel: join(f.linklabel) || undefined,
         url: url || join(f.pdf) || arxiv || undefined,
         links,
         bibtex: cleanBibtex(e.input ?? ''),
