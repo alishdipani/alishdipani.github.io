@@ -1,15 +1,12 @@
-// Sitemap of the new site's pages (redirect pages are left out on purpose).
+// /sitemap.xml was the old site's sitemap address, so it keeps working: it is now a sitemap index that
+// points to the sitemap made by @astrojs/sitemap (sitemap-0.xml, the same as /sitemap-index.xml).
 import type { APIContext } from 'astro';
-import { getPosts, NAV, url } from '../lib/site';
 
-export async function GET(context: APIContext) {
-  const posts = await getPosts();
-  const paths = ['/', ...NAV.map((n) => n.href), ...posts.map((p) => `/blog/${p.id}/`)];
-  const urls = paths.map((p) => `  <url><loc>${new URL(url(p), context.site)}</loc></url>`).join('\n');
+export function GET(context: APIContext) {
   const body = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls}
-</urlset>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap><loc>${new URL('/sitemap-0.xml', context.site)}</loc></sitemap>
+</sitemapindex>
 `;
   return new Response(body, { headers: { 'Content-Type': 'application/xml' } });
 }

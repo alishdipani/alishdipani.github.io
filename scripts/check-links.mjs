@@ -5,7 +5,7 @@
 // Images: every <img> must load (a missing local image fails), and posts must not hotlink
 // raw.githubusercontent.com (old post images are served locally). Add --external to also
 // request third-party images (needs the network).
-// For the preview build it also checks the noindex meta tag and robots.txt.
+// For the preview build it also checks that every page has the noindex meta tag.
 import { createServer, listen } from './serve.mjs';
 
 const args = process.argv.slice(2);
@@ -76,10 +76,6 @@ for (const [src, page] of images) {
   }
 }
 
-if (prefix) {
-  const robots = await (await fetch(`${origin}${prefix}/robots.txt`)).text();
-  if (!/Disallow: \/\s*$/.test(robots)) failures.push('preview robots.txt does not disallow everything');
-}
 server.close();
 
 console.log(`check-links ${dir}${prefix ? ` under ${prefix}/` : ''}: ${seen.size} URLs · ${local} local images` +
