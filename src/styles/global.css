@@ -12,6 +12,7 @@
   --border: #c5ceda;
   --todo-bg: #fbefc5;
   --todo-text: #4a3b00;
+  --highlight: #e2eaf5;  /* tint for highlighted entries (Publications) */
 
   /* Sans for the name, nav, labels, dates and UI; serif for everything that's read. */
   --font-ui: 'Nunito Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -43,6 +44,7 @@
   --border: #2c3a50;
   --todo-bg: #33290c;
   --todo-text: #f1de9c;
+  --highlight: #18273f;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
@@ -55,6 +57,7 @@
     --border: #2c3a50;
     --todo-bg: #33290c;
     --todo-text: #f1de9c;
+    --highlight: #18273f;
   }
 }
 :root[data-theme='light'] { color-scheme: light; }

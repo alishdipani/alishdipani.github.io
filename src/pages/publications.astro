@@ -15,6 +15,7 @@ const pubs = getPublications();
 // entry, so adding a paper never renumbers older ones.
 const groups = GROUPS.map((g) => ({ ...g, slug: `${g.id}s`, items: pubs.filter((p) => p.group === g.id) })).filter((g) => g.items.length);
 const hasEqual = pubs.some((p) => p.authors.some((a) => a.equal));
+const hasHighlight = pubs.some((p) => p.highlight);
 const contents = groups.map((g) => ({ slug: g.slug, text: g.title }));
 
 // Authors: the full list when it fits on one line (about AUTHOR_LINE characters on a desktop
@@ -37,6 +38,9 @@ function pick(list: Author[], keep: number[], others: boolean): Shown[] {
   return shown;
 }
 function shownAuthors(authors: Author[]): Shown[] {
+  // "others" in the middle of the bib list: some authors aren't listed there; show the list as given.
+  const gap = authors.findIndex((a) => a.name === 'others');
+  if (gap >= 0 && gap < authors.length - 1) return authors.map((a) => (a.name === 'others' ? '…' : a));
   const others = authors.some((a) => a.name === 'others');
   const list = authors.filter((a) => a.name !== 'others');
   if (!others && lineLength(list) <= AUTHOR_LINE) return list;
@@ -82,7 +86,7 @@ const linkLabel = (label: string, group: string) =>
       <h1 class="sr-only">Publications</h1>
       <!-- One line, same style as the Blog note; wording per Alish, Oct 21 23:05. -->
       <p class="page-note">
-        Latest list on <a href="https://scholar.google.com/citations?user=i028n20AAAAJ" target="_blank" rel="noopener">Google Scholar</a>.{hasEqual && <> * denotes equal contribution</>}
+        Latest list on <a href="https://scholar.google.com/citations?user=i028n20AAAAJ" target="_blank" rel="noopener">Google Scholar</a>.{hasEqual && <> * denotes equal contribution</>}{hasHighlight && <><span class="legend-sep" aria-hidden="true">·</span><span class="swatch" aria-hidden="true"></span>Highlighted: representative work</>}
       </p>
       <Contents items={contents} variant="inline" />
 
@@ -96,7 +100,7 @@ const linkLabel = (label: string, group: string) =>
               const comma = status ? status.indexOf(', ') : -1;
               const title = p.title.replace(/\.$/, '');
               return (
-                <li class="pub" id={p.key}>
+                <li class:list={['pub', p.highlight && 'highlight']} id={p.key}>
                   <span class="pub-num">[{g.items.length - i}]</span>
                   <div class="pub-body">
                     <p class="pub-title">{p.url ? <a href={p.url} target="_blank" rel="noopener">{title}</a> : title}</p>
@@ -147,9 +151,12 @@ const linkLabel = (label: string, group: string) =>
   .pub-group h2 { scroll-margin-top: var(--s2); }
   .pubs { list-style: none; padding: 0; margin: 0; }
 
-  /* One entry: number in a narrow gutter, then three lines ~2px apart; ~20px between entries. */
-  .pub { display: grid; grid-template-columns: 2.1rem minmax(0, 1fr); margin: 0 0 1.25rem; }
+  /* One entry: number in a narrow gutter, then three lines ~2px apart; ~20px between entries.
+     Every entry is a tile with a little padding (cancelled by negative side margins, so the text stays aligned
+     with the headings); highlighted entries (representative work) get a subtle tint. */
+  .pub { display: grid; grid-template-columns: 2.1rem minmax(0, 1fr); margin: 0 -0.75rem 0.25rem; padding: 0.5rem 0.75rem; border-radius: 8px; }
   .pub:last-child { margin-bottom: 0; }
+  .pub.highlight { background: var(--highlight); }
   .pub p { margin: 0; }
   .pub-num { font: 400 0.8rem/1.55rem var(--font-ui); color: var(--muted); opacity: 0.75; font-variant-numeric: tabular-nums; }
   .pub-body > * + * { margin-top: 2px; }
@@ -160,6 +167,10 @@ const linkLabel = (label: string, group: string) =>
 
   .pub-authors, .pub-venue { font: 400 0.875rem/1.5 var(--font-ui); color: var(--muted); }
   .pub-authors .self { color: var(--text); font-weight: 600; }
+
+  /* Legend in the note: a small square in the highlight tint */
+  .legend-sep { margin: 0 0.45em; color: var(--border); font-weight: 700; }
+  .swatch { display: inline-block; width: 0.8em; height: 0.8em; margin-right: 0.35em; vertical-align: -0.05em; border-radius: 2px; background: var(--highlight); box-shadow: inset 0 0 0 1px var(--border); }
 
   .pub-venue em { font-family: var(--font-body); font-style: italic; }
   .pub-venue a { text-decoration-line: none; }

@@ -7,6 +7,7 @@ import { parse } from '@retorquere/bibtex-parser';
 //   status   e.g. {Preprint}, {Report}: the label shown after the venue (also marks a preprint)
 //   summary  one line shown under Publications entries
 //   equal    author positions with equal contribution, e.g. {1,2} → marked with *
+//   highlight {true}: tint the entry as representative work
 //   venue    what the page shows as the venue when it differs from journal / booktitle (e.g. {Poster @ Interspeech})
 //   arxiv, pdf, code, poster, slides   links for the chips (url / doi / eprint are standard BibTeX)
 export type Group = 'publication' | 'presentation';
@@ -41,12 +42,13 @@ export type Publication = {
   statusUrl?: string;         // links the part of the status after its first comma
   year: string;
   summary?: string;
+  highlight: boolean;         // highlight={true}: shown with a tint as representative work
   url?: string;               // title link: url field, else the DOI, else the PDF or arXiv link
   links: { label: string; href: string }[];
   bibtex: string;             // the entry as BibTeX, without the site-only fields
 };
 
-const SITE_FIELDS = ['abbr', 'selected', 'group', 'summary', 'equal', 'status', 'statusurl', 'venue', 'arxiv', 'pdf', 'code', 'poster', 'slides'];
+const SITE_FIELDS = ['abbr', 'selected', 'group', 'summary', 'equal', 'status', 'statusurl', 'highlight', 'venue', 'arxiv', 'pdf', 'code', 'poster', 'slides'];
 
 const join = (v: unknown) => (Array.isArray(v) ? v.join(' and ') : ((v as string) ?? ''));
 
@@ -106,6 +108,7 @@ export function getPublications(file = 'src/data/publications.bib'): Publication
         statusUrl: join(f.statusurl) || undefined,
         year: join(f.year),
         summary: join(f.summary) || undefined,
+        highlight: join(f.highlight) === 'true',
         url: url || join(f.pdf) || arxiv || undefined,
         links,
         bibtex: cleanBibtex(e.input ?? ''),
