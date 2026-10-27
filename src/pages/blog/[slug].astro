@@ -61,7 +61,7 @@ const credits = imageCredits([ngc]);
       <p class="post-end">
         Thoughts or ideas?{' '}
         <a href={`mailto:${SITE.email}`} data-copy-email={SITE.email}>Email me</a><span class="copied" role="status" aria-live="polite"></span>{' '}
-        or find me on <a href={SITE.x} target="_blank" rel="noopener">X</a>.
+        or find me on <a href={SITE.x} target="_blank" rel="noopener" data-event="profile-click" data-event-profile="x">X</a>.
       </p>
     </article>
   </div>
@@ -76,24 +76,11 @@ const credits = imageCredits([ngc]);
 
 <script>
   import { track } from '../../lib/track';
+  import { copyEmailOnClick } from '../../lib/copy-email';
 
-  // Copy the address instead of opening a mail app; if that fails (no clipboard access, no JS), the mailto opens.
-  const link = document.querySelector<HTMLAnchorElement>('[data-copy-email]');
-  const note = document.querySelector<HTMLElement>('.post-end .copied');
-  let timer: number | undefined;
-  link?.addEventListener('click', async (e) => {
-    e.preventDefault();
-    try {
-      await navigator.clipboard.writeText(link.dataset.copyEmail ?? '');
-    } catch {
-      track('email-click');
-      location.href = link.href;
-      return;
-    }
-    track('email-copy');
-    if (note) note.textContent = 'Copied';
-    clearTimeout(timer);
-    timer = window.setTimeout(() => note && (note.textContent = ''), 2000);
+  // "Email me" copies the address (no analytics event for the copy; if the mail app opens instead, email-click).
+  copyEmailOnClick(document.querySelector('.post-end [data-copy-email]'), document.querySelector('.post-end .copied'), {
+    fallback: () => track('email-click'),
   });
 
   // Analytics: blog-scroll once at each of 25, 50, 75 and 100% of the page scrolled (a page that fits on

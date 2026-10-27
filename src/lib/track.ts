@@ -3,10 +3,10 @@
 //
 // - track(name, props): sends an event if the tracker is loaded; otherwise does nothing. The tracker
 //   itself skips sends on other hostnames (data-domains) and in browsers that opted out (?notrack).
-// - initClickTracking(): one click listener for the whole page. Links tell it what to send with
-//   data-event="name" and data-event-<prop>="value" ("true"/"false" become booleans), and a few
-//   kinds of links are recognized by their address: CV links, mailto links and profile links.
-//   Copying text from inside an element with data-copy-event="name" sends that event.
+// - initClickTracking(): one delegated click listener for the whole page. A tracked element says what
+//   to send with data-event="name" and data-event-<prop>="value" ("true"/"false" become booleans),
+//   e.g. <a data-event="profile-click" data-event-profile="scholar">. Copying text from inside an
+//   element with data-copy-event="name" sends that event.
 
 type Props = Record<string, string | number | boolean>;
 type Umami = { track: (name: string, data?: Props) => void };
@@ -29,12 +29,6 @@ export function track(name: string, props?: Props) {
   }
 }
 
-const PROFILES: [RegExp, string][] = [
-  [/^https:\/\/scholar\.google\.com\//, 'google-scholar'],
-  [/^https:\/\/github\.com\/alishdipani\/?$/, 'github'],
-  [/^https:\/\/(x|twitter)\.com\/alishdipani\/?$/, 'x'],
-];
-
 function propsFrom(el: HTMLElement): Props {
   const props: Props = {};
   for (const [key, value] of Object.entries(el.dataset)) {
@@ -47,18 +41,10 @@ function propsFrom(el: HTMLElement): Props {
 }
 
 function onClick(e: MouseEvent) {
-  const a = (e.target as Element | null)?.closest?.('a');
-  if (!a) return;
-  if (a.dataset.event) return track(a.dataset.event, propsFrom(a));
-  const href = a.getAttribute('href') ?? '';
-  if (href.startsWith('mailto:')) {
-    // The post-ending "Email me" link copies the address instead; it sends email-copy itself.
-    if (!a.hasAttribute('data-copy-email')) track('email-click');
-    return;
-  }
-  const path = a.pathname.replace(/^\/website-preview(?=\/)/, '');
-  if (a.origin === location.origin && /^\/cv\/(Alish_Dipani_CV\.pdf)?$/.test(path)) return track('cv-open');
-  for (const [re, profile] of PROFILES) if (re.test(a.href)) return track('profile-click', { profile });
+  const el = (e.target as Element | null)?.closest?.<HTMLElement>('[data-event]');
+  if (!el?.dataset.event) return;
+  const props = propsFrom(el);
+  track(el.dataset.event, Object.keys(props).length ? props : undefined);
 }
 
 function onCopy() {

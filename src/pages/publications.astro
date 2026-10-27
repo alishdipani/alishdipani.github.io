@@ -91,7 +91,7 @@ const linkLabel = (label: string, group: string) =>
       <h1 class="sr-only">Publications</h1>
       <!-- One line, same style as the Blog note; wording per Alish, Oct 21 23:05. -->
       <p class="page-note">
-        Latest list on <a href="https://scholar.google.com/citations?user=i028n20AAAAJ" target="_blank" rel="noopener">Google Scholar</a>.{hasEqual && <> * denotes equal contribution</>}{hasHighlight && <><span class="legend-sep" aria-hidden="true">·</span><span class="swatch" aria-hidden="true"></span>Highlighted: representative work</>}
+        Latest list on <a href="https://scholar.google.com/citations?user=i028n20AAAAJ" target="_blank" rel="noopener" data-event="profile-click" data-event-profile="scholar">Google Scholar</a>.{hasEqual && <> * denotes equal contribution</>}{hasHighlight && <><span class="legend-sep" aria-hidden="true">·</span><span class="swatch" aria-hidden="true"></span>Highlighted: representative work</>}
       </p>
       <Contents items={contents} variant="inline" />
 

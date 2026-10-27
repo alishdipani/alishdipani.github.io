@@ -87,7 +87,7 @@ const isCurrent = (href: string) => path.startsWith(url(href));
       <div class="header-end">
         <nav aria-label="Main">
           {NAV.map((item) => (
-            <a href={url(item.href)} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a>
+            <a href={url(item.href)} aria-current={isCurrent(item.href) ? 'page' : undefined} data-event={item.href === '/cv/' ? 'cv-open' : undefined}>{item.label}</a>
           ))}
         </nav>
         <button type="button" class="theme-toggle" data-theme-toggle>

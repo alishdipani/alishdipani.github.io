@@ -24,7 +24,7 @@ const currently = {
   after: ', out of concern about the risks.',
 };
 // Blurb: plain strings and links (Alish's wording, Oct 22 22:54). Links open in a new tab; only these five are linked.
-const blurb: (string | { text: string; href: string })[] = [
+const blurb: (string | { text: string; href: string; event?: Record<string, string> })[] = [
   "I'm a NeuroAI PhD student at Georgia Tech, advised by ",
   { text: 'Apurva Ratan Murty', href: 'https://www.murtylab.com/' },
   ' and ',
@@ -34,14 +34,14 @@ const blurb: (string | { text: string; href: string })[] = [
   '. My background is in computer science, vision science, and computational cognitive neuroscience. Previously, I did research at MIT Brain and Cognitive Sciences, Northeastern University, and CNRS, and worked as a machine learning engineer at Baylor College of Medicine. I also teach and create content for ',
   { text: 'Neuromatch Academy', href: 'https://neuroai.neuromatch.io/w1d5-tutorial2/' },
   ', and contribute to ',
-  { text: 'open-source software', href: 'https://github.com/alishdipani' },
+  { text: 'open-source software', href: 'https://github.com/alishdipani', event: { 'data-event': 'profile-click', 'data-event-profile': 'github' } },
   '.',
 ];
 const email = SITE.email;
 const contact = [
-  { label: 'Google Scholar', href: 'https://scholar.google.com/citations?user=i028n20AAAAJ' },
-  { label: 'GitHub', href: 'https://github.com/alishdipani' },
-  { label: 'X', href: 'https://x.com/alishdipani' },
+  { label: 'Google Scholar', href: 'https://scholar.google.com/citations?user=i028n20AAAAJ', profile: 'scholar' },
+  { label: 'GitHub', href: 'https://github.com/alishdipani', profile: 'github' },
+  { label: 'X', href: 'https://x.com/alishdipani', profile: 'x' },
 ];
 
 const news = getNews().slice(0, 5);
@@ -58,8 +58,8 @@ const news = getNews().slice(0, 5);
       <p class="intro-heading">{headingLine}</p>
       <p class="internships">{internships}</p>
       <nav class="contact" aria-label="Contact">
-        <span><a href={`mailto:${email}`}>Email</a> <span class="contact-email" data-copy-event="email-copy">{email}</span></span>
-        {contact.map((c) => <a href={c.href}>{c.label}</a>)}
+        <span><a href={`mailto:${email}`} data-copy-email={email}>Email</a> <span class="contact-email" data-copy-event="email-copy">{email}</span><span class="copied" role="status" aria-live="polite"></span></span>
+        {contact.map((c) => <a href={c.href} data-event="profile-click" data-event-profile={c.profile}>{c.label}</a>)}
       </nav>
     </div>
     <figure class="cell research">
@@ -94,7 +94,7 @@ const news = getNews().slice(0, 5);
   </div>
 
   <p class="position">
-    {blurb.map((part) => (typeof part === 'string' ? part : <a href={part.href} target="_blank" rel="noopener">{part.text}</a>))}
+    {blurb.map((part) => (typeof part === 'string' ? part : <a href={part.href} target="_blank" rel="noopener" {...part.event}>{part.text}</a>))}
   </p>
 
   {news.length > 0 && (
@@ -168,6 +168,7 @@ const news = getNews().slice(0, 5);
   .contact-email { color: var(--muted); }
   .contact-email::before { content: '('; }
   .contact-email::after { content: ')'; }
+  .contact .copied:not(:empty) { margin-left: 0.4rem; color: var(--text); }
 
   .news-list { list-style: none; padding: 0; margin: 0; }
   .news-list li { display: grid; grid-template-columns: 7.5rem 1fr; gap: 0.75rem; margin: 0 0 var(--s1); }
@@ -196,6 +197,26 @@ const news = getNews().slice(0, 5);
 </style>
 
 <script>
+  import { track } from '../lib/track';
+  import { copyEmailOnClick } from '../lib/copy-email';
+
+  // "Email" copies the address instead of opening a mail app (email-copy; if the mail app opens instead, email-click).
+  copyEmailOnClick(document.querySelector('.contact [data-copy-email]'), document.querySelector('.contact .copied'), {
+    copied: () => track('email-copy'),
+    fallback: () => track('email-click'),
+  });
+
+  // Analytics: bio-reached, once per page load, when half of the bio paragraph is on screen.
+  const bio = document.querySelector('.position');
+  if (bio && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      if (!entries.some((e) => e.isIntersecting)) return;
+      io.disconnect();
+      track('bio-reached');
+    }, { threshold: 0.5 });
+    io.observe(bio);
+  }
+
   document.querySelectorAll<HTMLElement>('.stage').forEach((st) => {
     st.addEventListener('click', () => st.classList.toggle('on'));
     st.addEventListener('keydown', (e) => {
