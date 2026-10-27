@@ -5,12 +5,12 @@ import { getNews } from '../lib/news';
 
 // Content finalized with Alish in Claude chat (Oct 22). Layout: two-frame hover cartoon beside the text,
 // no name above the heading line, contact row under it, two directions, "Currently" line, then the blurb.
-const headingLine = 'I study the perceptual and cognitive capabilities of AI systems, through their behavior and internal representations.';
+const headingLine = 'I study the visual perception and metacognition of AI models and agents, using human behavior and the brain as a reference.';
 const internships = 'Actively looking for research internships in Summer and/or Fall 2027.';
 const directions = [
   {
     label: 'Neuro & cognitive science for AI',
-    text: 'Probing AI systems with controlled experiments from human cognition and psychophysics, plus tools from cognitive neuroscience.',
+    text: 'Probing AI models and agents with controlled experiments from psychophysics and metacognition, and comparing their internal representations with the human brain.',
   },
   {
     label: 'AI for neuro & cognitive science',
@@ -26,13 +26,13 @@ const blurb: (string | { text: string; href: string })[] = [
   { text: 'Dobromir Rahnev', href: 'https://rahnevlab.gatech.edu/' },
   ', supported by the CoCo Fellowship from the ',
   { text: 'Center of Excellence in Computational Cognition', href: 'https://coco.psych.gatech.edu/' },
-  '. My background is in computer science, vision science, and computational cognitive neuroscience. Previously, I was a research assistant at MIT Brain and Cognitive Sciences, Northeastern University, and CNRS, as well as a machine learning engineer at Baylor College of Medicine. I also create content for ',
+  '. My background is in computer science, vision science, and computational cognitive neuroscience. Previously, I did research at MIT Brain and Cognitive Sciences, Northeastern University, and CNRS, and worked as a machine learning engineer at Baylor College of Medicine. I also teach and create content for ',
   { text: 'Neuromatch Academy', href: 'https://neuroai.neuromatch.io/w1d5-tutorial2/' },
-  ', and do ',
-  { text: 'open-source development', href: 'https://github.com/alishdipani' },
+  ', and contribute to ',
+  { text: 'open-source software', href: 'https://github.com/alishdipani' },
   '.',
 ];
-const email = 'alish.dipani@gmail.com';
+const email = SITE.email;
 const contact = [
   { label: 'Google Scholar', href: 'https://scholar.google.com/citations?user=i028n20AAAAJ' },
   { label: 'GitHub', href: 'https://github.com/alishdipani' },
