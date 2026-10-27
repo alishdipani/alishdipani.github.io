@@ -1,5 +1,5 @@
 // Rehype plugin: prefix root-relative href/src in Markdown ("/blog/…") with the
-// base path, so post links and images also work in the preview build.
+// base path, so post links and images also work if the site is served under a sub-path.
 function walk(node, base) {
   if (node.type === 'element' && node.properties) {
     for (const attr of ['href', 'src']) {

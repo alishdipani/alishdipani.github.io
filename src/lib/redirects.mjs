@@ -15,9 +15,8 @@ export function loadRedirects(root = process.cwd()) {
   return map;
 }
 
-// noindex only for the preview build (every preview page is noindex); on the real site the instant
-// refresh and the canonical link already send search engines to the new page.
-export function redirectPage(to, site, noindex = false) {
+// The instant refresh and the canonical link send search engines to the new page (no noindex).
+export function redirectPage(to, site) {
   const abs = new URL(to, site).href;
   const js = JSON.stringify(to);
   return `<!doctype html>
@@ -25,7 +24,7 @@ export function redirectPage(to, site, noindex = false) {
 <head>
 <meta charset="utf-8">
 <title>Redirecting…</title>
-${noindex ? '<meta name="robots" content="noindex">\n' : ''}<link rel="canonical" href="${abs}">
+<link rel="canonical" href="${abs}">
 <meta http-equiv="refresh" content="0; url=${to}">
 <script>location.replace(${js} + (${js}.includes('#') ? '' : location.hash));</script>
 </head>

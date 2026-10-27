@@ -10,14 +10,13 @@ import sitemap from '@astrojs/sitemap';
 import fs from 'node:fs';
 import legacy from './integrations/legacy.mjs';
 
-// SITE_PREVIEW=1 builds the online preview: served under /website-preview/,
-// output in dist-preview/, marked noindex. The real build keeps the root path.
-const preview = process.env.SITE_PREVIEW === '1';
-const base = preview ? '/website-preview' : '';
+// The site is served at the root of alishdipani.github.io. (A base path still works: url() in
+// src/lib/site.ts and the rehype-base plugin prefix links with it.)
+const base = '';
 
 // Sitemap (sitemap-index.xml + sitemap-0.xml): real pages only. Left out: the 404 page, feeds and other
 // non-page files, unlisted (noindex) posts and the Search Console verification file. Redirect pages
-// for old URLs are written by the legacy integration and are never in it. Not built for the preview.
+// for old URLs are written by the legacy integration and are never in it.
 const unlisted = fs.readdirSync('src/content/blog')
   .filter((f) => /\.mdx?$/.test(f) && /^unlisted:\s*true\s*$/m.test(fs.readFileSync(`src/content/blog/${f}`, 'utf8')))
   .map((f) => `/blog/${f.replace(/^_/, '').replace(/\.mdx?$/, '')}/`);
@@ -28,10 +27,6 @@ const inSitemap = (page) => {
 
 export default defineConfig({
   site: 'https://alishdipani.github.io',
-  base: base || undefined,
-  outDir: preview ? './dist-preview' : './dist',
-  // Separate cache: rendered Markdown is cached and would otherwise leak between the two builds.
-  cacheDir: preview ? './node_modules/.astro-preview' : './node_modules/.astro',
   trailingSlash: 'always',
   build: { format: 'directory' },
   markdown: {
@@ -45,5 +40,5 @@ export default defineConfig({
       themes: { light: 'github-light', dark: 'github-dark' },
     },
   },
-  integrations: [mdx(), legacy(), ...(preview ? [] : [sitemap({ filter: inSitemap })])],
+  integrations: [mdx(), legacy(), sitemap({ filter: inSitemap })],
 });

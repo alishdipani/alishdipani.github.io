@@ -1,11 +1,9 @@
 // Crawls a build from its home page and fails on any internal link or asset that
-// doesn't load (following 301s and redirect pages). Run it on both builds:
-//   node scripts/check-links.mjs                                 (dist/, root path)
-//   node scripts/check-links.mjs dist-preview /website-preview   (preview build)
+// doesn't load (following 301s and redirect pages). Usage: node scripts/check-links.mjs [dir] [base path]
+// (default dist/ at the root path).
 // Images: every <img> must load (a missing local image fails), and posts must not hotlink
 // raw.githubusercontent.com (old post images are served locally). Add --external to also
 // request third-party images (needs the network).
-// For the preview build it also checks that every page has the noindex meta tag.
 import { createServer, listen } from './serve.mjs';
 
 const args = process.argv.slice(2);
@@ -29,9 +27,6 @@ while (queue.length) {
   }
   if (!(res.headers.get('content-type') ?? '').startsWith('text/html')) continue;
   const html = await res.text();
-  if (prefix && !html.includes('<meta name="robots" content="noindex, nofollow">') && !html.includes('content="noindex"')) {
-    failures.push(`missing noindex: ${path}`);
-  }
   for (const m of html.matchAll(/<img\b[^>]*\bsrc="([^"]+)"/g)) {
     const u = new URL(m[1], origin + path).href;
     if (!images.has(u)) images.set(u, path);

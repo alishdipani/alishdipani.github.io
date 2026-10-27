@@ -1,6 +1,6 @@
 // Static server for dist/ that behaves like GitHub Pages:
 // /dir/ serves /dir/index.html, /dir (no slash) 301s to /dir/, and anything
-// missing gets 404.html with status 404. With a prefix ('/website-preview'),
+// missing gets 404.html with status 404. With a prefix (a base path such as '/sub'),
 // the site is served under that path, like a GitHub Pages project site.
 // Usage: node scripts/serve.mjs [port] [dir] [prefix]   (default 4321 dist)
 import fs from 'node:fs';
@@ -28,7 +28,7 @@ export function createServer(root = 'dist', prefix = '') {
     try { rel = decodeURIComponent(url.pathname); } catch { rel = url.pathname; }
     if (prefix) {
       if (rel === prefix) { res.writeHead(301, { Location: prefix + '/' }).end(); return; }
-      if (!rel.startsWith(prefix + '/')) { res.writeHead(404, { 'Content-Type': 'text/plain' }).end('outside preview'); return; }
+      if (!rel.startsWith(prefix + '/')) { res.writeHead(404, { 'Content-Type': 'text/plain' }).end('outside base path'); return; }
       rel = rel.slice(prefix.length);
     }
     let file = path.join(root, rel);

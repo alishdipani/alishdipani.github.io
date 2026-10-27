@@ -17,9 +17,8 @@ export const SITE = {
   ],
 };
 
-// '' for the real site, '/website-preview' for the preview build (see astro.config.mjs).
+// The base path ('' for alishdipani.github.io; kept so the site could move under a sub-path).
 export const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
-export const PREVIEW = BASE !== '';
 
 // Prefix a root-relative path ('/blog/') with the base path.
 export const url = (path: string) => BASE + path;
