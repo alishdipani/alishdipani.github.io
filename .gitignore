@@ -7,3 +7,4 @@ tools/ngc/.venv/
 tools/ngc/cache/
 tools/ngc/out/
 tools/ngc/__pycache__/
+screenshots/

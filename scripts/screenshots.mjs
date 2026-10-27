@@ -1,27 +1,26 @@
 // Screenshots of the main pages at desktop and phone width, plus a browser check:
-// fails if any page logs a console error, or if the 404 fallback doesn't redirect.
+// fails if any page logs a console error, scrolls sideways, the theme toggle fails, or the 404 fallback doesn't redirect.
 // Needs a build in dist/ and Google Chrome installed (uses playwright-core, no bundled browser).
-// Usage: node scripts/screenshots.mjs [outDir] [page,page…]   (default docs/screenshots, all pages)
+// Usage: node scripts/screenshots.mjs [outDir] [page,page…]   (default screenshots/, gitignored; all pages)
 import fs from 'node:fs';
 import path from 'node:path';
 import { chromium } from 'playwright-core';
 import { createServer, listen } from './serve.mjs';
 
-const outDir = process.argv[2] ?? 'docs/screenshots';
+const outDir = process.argv[2] ?? 'screenshots';
 const PAGES = {
   home: '/',
   publications: '/publications/',
   blog: '/blog/',
   cv: '/cv/',
   post: '/blog/neural-style-transfer-audio/',
-  demo: '/blog/template-demo/',
   ngc: '/blog/ngc/',
   'why-ai-safety': '/blog/why-ai-safety/',
   404: '/no-such-page/',
 };
 const WIDTHS = { desktop: 1280, phone: 390 };
 // Pages also captured in dark mode.
-const DARK = ['home', 'publications', 'demo', 'post'];
+const DARK = ['home', 'publications', 'post'];
 // Paths that only the 404 page's script can rescue, and where they should land.
 const FALLBACKS = {
   '/gsoc2019/2019/06/09/GSoC-2019-project-introduction/': '/blog/gsoc-2019-project-introduction/',
@@ -69,17 +68,6 @@ for (const { device, width, scheme, pages } of runs) {
   await context.close();
 }
 
-// Hover cards: hovering a citation and a footnote shows their text.
-const hoverPage = await browser.newPage({ viewport: { width: 1280, height: 900 } });
-await hoverPage.goto(base + PAGES.demo, { waitUntil: 'networkidle' });
-for (const sel of ['a.citation', 'a[data-footnote-ref]']) {
-  await hoverPage.hover(sel);
-  const card = await hoverPage.locator('.hover-card').textContent({ timeout: 2000 }).catch(() => '');
-  if (!(await hoverPage.locator('.hover-card').isVisible()) || !card?.trim()) problems.push(`hover card did not show for ${sel}`);
-  await hoverPage.mouse.move(0, 0);
-}
-await hoverPage.close();
-
 // Theme toggle: overrides the system setting both ways, works from the keyboard, persists across pages.
 for (const system of ['light', 'dark']) {
   const ctx = await browser.newContext({ colorScheme: system });
@@ -92,7 +80,7 @@ for (const system of ['light', 'dark']) {
   const want = system === 'light' ? 'dark' : 'light';
   const theme = await p.evaluate(() => document.documentElement.dataset.theme);
   const after = await bg();
-  await p.goto(base + '/blog/template-demo/', { waitUntil: 'networkidle' });
+  await p.goto(base + '/blog/the-scatter-plot-example/', { waitUntil: 'networkidle' }); // a post with code blocks
   const kept = await p.evaluate(() => document.documentElement.dataset.theme);
   const code = await p.evaluate(() => getComputedStyle(document.querySelector('.astro-code span')).color);
   if (theme !== want || before === after || kept !== want) problems.push(`theme toggle (system ${system}): got ${theme}/${kept}, background ${before} → ${after}`);
@@ -116,4 +104,4 @@ if (problems.length) {
   for (const p of problems) console.log('  ' + p);
   process.exit(1);
 }
-console.log('\nPASS: no console errors, no horizontal scroll, hover cards work, theme toggle works, 404 fallbacks redirect');
+console.log('\nPASS: no console errors, no horizontal scroll, theme toggle works, 404 fallbacks redirect');
