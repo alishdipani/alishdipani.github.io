@@ -6,23 +6,19 @@ instead of showing placeholders, so nothing here is visible on the site until it
 ## Content
 - **Internships line on Home:** update or remove "Actively looking for research internships in Summer and/or Fall 2027."
   → `internships` constant in `src/pages/index.astro`
-- **Write the "Why AI safety?" post** (listed, says "Coming soon" until then). → `src/content/blog/why-ai-safety.mdx`
-- **News items:** date, text, optional link; Home shows the latest 5 and hides the section while empty.
-  → `src/data/news.yml`
-- **Publication summaries:** one line per publication (`summary`), optional. All entries that have a
-  link online now have one (Task 7); the others stay without links by Alish's choice.
-  → `src/data/publications.bib` (fields documented at its top)
-- **Current CV PDF:** add the file and point the CV links at it (still the Aug 2024 Google Drive PDF).
-  → `public/` + `cvPdf` in `src/pages/cv.astro` (Home no longer links the CV; it's in the header nav)
-- **CV page content** beyond the PDF link, if wanted. → `src/pages/cv.astro`
-- **VSS 2026 poster link:** not online yet; add `url` to `dipani2026categoryvss` in `src/data/publications.bib`
-  once VSS posts it (or once the abstract is in Journal of Vision).
 
 ## Setup
-- **Google Analytics:** Alish will set up a new ID later (don't reuse the old one).
-- **Online preview auto-update:** the repo `alishdipani/website-preview` exists, its Pages source is `gh-pages`
-  and it serves a manual snapshot. Still missing: a write deploy key on website-preview and the secret
-  `PREVIEW_DEPLOY_KEY` in alishdipani.github.io, so `.github/workflows/preview.yml` can publish on every push to v2.
+- **Google Analytics / analytics (needs Alish's decision, then a short task for Claude Code):** nothing is wired in yet.
+  GA4 with consent denied by default and no banner ("option B") would likely leave the reports empty on a small
+  site: Google only reports or models declined visits with at least 1,000 events a day from declined visitors for
+  7 days and at least 1,000 daily consented users (https://support.google.com/analytics/answer/11161109).
+  Options left: A, GA4 with cookies on and no banner; C, GA4 with a consent banner; or a cookie-free tool (Umami
+  Cloud or GoatCounter). Alish picks; then he (or Claude in Chrome) creates a NEW GA4 property and web data stream
+  (never reuse the old ID), Google signals off, data retention 14 months, links Search Console, and sends the
+  Measurement ID. Planned site work once chosen: the tag loads only on the production hostname (never the preview
+  or localhost); opt-out for Alish's own visits via a `?notrack` flag kept in localStorage; events for scroll depth
+  (25/50/75/100), blog section reached, CV opened, email copied and publication link clicks; optionally a one-line
+  privacy note (Alish writes the wording).
 
 ## Optional
 - **NGC check pass:** stopped at 1,130 of 3,868 candidates (roughly NGC 1–1900); resume with

@@ -196,7 +196,7 @@ time, .meta { font-family: var(--font-ui); color: var(--muted); font-size: 0.9re
 /* Code (Shiki dual themes: light by default, dark via data-theme or the system setting) */
 pre, code { font-family: var(--font-mono); }
 code { font-size: 0.88em; }
-:not(pre) > code { background: var(--surface); padding: 0.1em 0.3em; border-radius: 3px; }
+:not(pre) > code { background: var(--surface); padding: 0.1em 0.3em; border-radius: 3px; overflow-wrap: anywhere; } /* long inline snippets must not widen the page on phones */
 pre {
   overflow-x: auto;
   padding: 0.9rem 1rem;
