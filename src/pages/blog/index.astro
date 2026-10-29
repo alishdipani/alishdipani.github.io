@@ -11,7 +11,7 @@ const credits = imageCredits(posts.map((p) => (p.data.ngc?.thumb ? p.data.ngc : 
   <h1 class="sr-only">Blog</h1>
   <!-- Wording: Alish's decision (Command Center, Oct 21 15:34). -->
   <p class="page-note">
-    All posts written by me (a human). Each idea is paired with a New General Catalogue object&nbsp;(<a href={url('/blog/ngc/')} data-event="ngc-why-click">why?</a>)
+    All posts written by me (a human). Each post is paired with a New General Catalogue object&nbsp;(<a href={url('/blog/ngc/')} data-event="ngc-why-click">why?</a>)
   </p>
   <PostList posts={posts} />
 </Base>
