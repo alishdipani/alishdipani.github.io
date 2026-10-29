@@ -9,10 +9,16 @@
 /gsoc2019/2019/06/09/Rubyplot-installation-guide/: /blog/rubyplot-installation-guide/
 /gsoc2019/2019/06/10/The-Scatter-plot-example/: /blog/the-scatter-plot-example/
 /gsoc2019/2019/06/28/Simple-Plots-in-Rubyplot/: /blog/simple-plots-in-rubyplot/
-/gsoc2019/2019/07/13/Multi-plots-in-Rubyplot/: /blog/multi-plots-in-rubyplot/
+/gsoc2019/2019/07/13/Multi-plots-in-Rubyplot/: /blog/wrapping-up-gsoc-2019/
 /gsoc2019/2019/07/26/The-show-and-the-plot-functions/: /blog/the-show-and-the-plot-functions/
-/gsoc2019/2019/08/22/IRuby-integration-and-ticks/: /blog/iruby-integration-and-ticks/
+/gsoc2019/2019/08/22/IRuby-integration-and-ticks/: /blog/wrapping-up-gsoc-2019/
 /gsoc2019/2019/08/22/Wrapping-up-GSoC-2019/: /blog/wrapping-up-gsoc-2019/
+
+# Posts set to draft (Alish, Oct 29): their new URLs point to the GSoC wrap-up post
+/blog/multi-plots-in-rubyplot/: /blog/wrapping-up-gsoc-2019/
+/blog/iruby-integration-and-ticks/: /blog/wrapping-up-gsoc-2019/
+# Draft until Alish writes it (Oct 29); remove this line when it's published
+/blog/why-ai-safety/: /
 
 # Blog archives (no tag, category, year or page archives on the new site)
 /blog/2018/: /blog/

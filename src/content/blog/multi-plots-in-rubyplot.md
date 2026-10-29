@@ -1,6 +1,7 @@
 ---
 title: "Multi plots in Rubyplot"
 date: 2019-07-13
+draft: true
 tags: ["gsoc2019", "rubyplot"]
 category: "open-source development"
 ngc:

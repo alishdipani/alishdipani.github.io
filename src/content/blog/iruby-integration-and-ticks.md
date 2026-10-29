@@ -1,6 +1,7 @@
 ---
 title: "IRuby integration and ticks"
 date: 2019-08-22
+draft: true
 tags: ["gsoc2019", "rubyplot"]
 category: "open-source development"
 ngc:

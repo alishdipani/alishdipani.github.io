@@ -172,9 +172,9 @@ Code for Phase 3 can be found [here](https://github.com/SciRuby/rubyplot/pull/52
   2. [Rubyplot installation guide](/blog/rubyplot-installation-guide/)
   3. [The Scatter plot example](/blog/the-scatter-plot-example/)
   4. [Simple Plots in Rubyplot](/blog/simple-plots-in-rubyplot/)
-  5. [Multi plots in Rubyplot](/blog/multi-plots-in-rubyplot/)
+  5. Multi plots in Rubyplot
   6. [The show and the plot functions](/blog/the-show-and-the-plot-functions/)
-  7. [IRuby integration and ticks](/blog/iruby-integration-and-ticks/)
+  7. IRuby integration and ticks
   
 ## Future Work
 I plan to keep contributing to Rubyplot and also start contributing to other projects of SciRuby.  

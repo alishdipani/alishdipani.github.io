@@ -24,7 +24,9 @@ const slugs = (await getPosts()).map((p) => p.id);
       var to = table[p];
       if (!to) {
         var post = p.match(/^\/(?:gsoc2019|projects)\/\d{4}\/\d{2}\/(?:\d{2}\/)?([^/]+)\/$/);
-        if (post && slugs.indexOf(post[1].toLowerCase()) !== -1) to = '/blog/' + post[1].toLowerCase() + '/';
+        var slug = post && post[1].toLowerCase();
+        if (post && slugs.indexOf(slug) !== -1) to = '/blog/' + slug + '/';
+        else if (post && table['/blog/' + slug + '/']) to = table['/blog/' + slug + '/']; // draft posts
         else if (/^\/blog\/(tag|category|page)\/|^\/blog\/\d{4}\/$/.test(p)) to = '/blog/';
         else if (/^\/news\//.test(p)) to = '/';
         else if (/^\/website-preview\//.test(p)) to = '/'; // the deleted online preview
